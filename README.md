@@ -19,7 +19,7 @@
 - github : [ileshchanka](https://github.com/ileshchanka)
 
 - discord: @ileshchanka
-- mail:
+- mail: ihar.leshchanka@gmail.com
 
 ## API
 
