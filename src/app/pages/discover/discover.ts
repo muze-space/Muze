@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { PopularTracks } from "../../components/popular-tracks/popular-tracks";
 
 @Component({
   selector: 'app-discover',
-  imports: [],
+  imports: [PopularTracks],
   templateUrl: './discover.html',
   styleUrl: './discover.css',
 })
