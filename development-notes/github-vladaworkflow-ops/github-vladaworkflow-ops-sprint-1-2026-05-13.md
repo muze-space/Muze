@@ -1,0 +1,2 @@
+- **What was done:** Setup initial project, added Readme.md description of project, created diary folders
+- **What I learned:**  initialize an Angular project via CLI
