@@ -15,13 +15,31 @@
 
 ## Development server
 
+Clone the repository
+```
+git clone https://github.com/muze-space/Muze.git
+```
+
+Navigate to the project directory
+```
+cd Muze
+```
+
+Install dependencies
+```
+npm i
+```
+
 To start a local development server, run:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`
+After starting the server, open:
+```
+http://localhost:4200
+```
 
 ## Building
 
