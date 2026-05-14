@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopularTracks } from './popular-tracks';
+import { Header } from './header';
 
-describe('PopularTracks', () => {
-  let component: PopularTracks;
-  let fixture: ComponentFixture<PopularTracks>;
+describe('Header', () => {
+  let component: Header;
+  let fixture: ComponentFixture<Header>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PopularTracks],
+      imports: [Header],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PopularTracks);
+    fixture = TestBed.createComponent(Header);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
