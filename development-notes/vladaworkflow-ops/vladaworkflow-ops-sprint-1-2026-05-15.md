@@ -1,0 +1,2 @@
+- **What was done:** created footer component with styles
+- **What I learned:**  how to generating components with ng generate component, learn basic Angular project structure
