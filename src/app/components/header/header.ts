@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { Search } from '../search/search';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [Search],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
