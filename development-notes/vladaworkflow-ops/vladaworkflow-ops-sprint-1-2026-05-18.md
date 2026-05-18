@@ -1,0 +1,2 @@
+- **What was done:** add parent-child event communication for search flow
+- **What I learned:** researched emitting events via output()

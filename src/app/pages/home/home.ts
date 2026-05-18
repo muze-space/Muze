@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Header } from "../../components/header/header";
-import { Footer } from '../../footer/footer';
+import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-home',
@@ -8,4 +8,10 @@ import { Footer } from '../../footer/footer';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {}
+export class Home {
+  search = '';
+
+  onSearchChange(value: string): void {
+    this.search = value;
+  }
+}
