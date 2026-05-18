@@ -1,0 +1,6 @@
+<h2>Popular tracks</h2>
+<ul>
+  @for (track of tracks(); track track.id) {
+  <app-track-item [track]="track"></app-track-item>
+  }
+</ul>
