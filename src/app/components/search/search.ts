@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-search',
@@ -6,4 +6,12 @@ import { Component } from '@angular/core';
   templateUrl: './search.html',
   styleUrl: './search.css',
 })
-export class Search {}
+export class Search {
+  searchChange = output<string>();
+
+  onInput(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+
+    this.searchChange.emit(value);
+  }
+}

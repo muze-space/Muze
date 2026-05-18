@@ -2,7 +2,7 @@
   <a href="/">
     <img class="logo" src="/logo.png" alt="Muze" />
   </a>
-
+  <app-search (searchChange)="onSearchChange($event)"></app-search>
   <nav class="nav" aria-label="Primary">
     <ul>
       <li><a class="link" href="/">Discover</a></li>
@@ -11,6 +11,4 @@
       <li><a class="link" href="#">About Us</a></li>
     </ul>
   </nav>
-
-  <app-search></app-search>
 </header>
