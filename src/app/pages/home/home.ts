@@ -9,4 +9,6 @@ import { PopularTracks } from "../../components/popular-tracks/popular-tracks";
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {}
+export class Home {
+  popular_tracks_limit = 10;
+}

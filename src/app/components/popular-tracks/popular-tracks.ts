@@ -1,15 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { JamendoTrack, JamendoTracksResponse } from '../../model/track.model';
 import { API_CONFIG } from '../../config';
+import { TrackItem } from "../track-item/track-item";
 
 @Component({
   selector: 'app-popular-tracks',
-  imports: [],
+  imports: [TrackItem],
   templateUrl: './popular-tracks.html',
   styleUrl: './popular-tracks.css',
 })
 export class PopularTracks implements OnInit {
+
+  @Input() limit!: number;
+
   private httpClient = inject(HttpClient);
   tracks = signal<JamendoTrack[]>([]);
 
@@ -18,7 +22,7 @@ export class PopularTracks implements OnInit {
       params: {
         client_id: API_CONFIG.clientId,
         format: 'jsonpretty',
-        limit: '10',
+        limit: this.limit.toString(),
         order: 'popularity_total',
       },
     }).subscribe(response => this.tracks.set(response.results));

@@ -1,8 +1,6 @@
 <h2>Popular tracks</h2>
 <ul>
   @for (track of tracks(); track track.id) {
-  <li>{{ track.name }}</li>
-  } @empty {
-  <li>Loading...</li>
+  <app-track-item [track]="track"></app-track-item>
   }
 </ul>
