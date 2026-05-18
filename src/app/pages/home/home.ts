@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Header } from "../../components/header/header";
-import { Footer } from '../../footer/footer';
 import { PopularTracks } from "../../components/popular-tracks/popular-tracks";
+import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-home',
@@ -10,5 +10,11 @@ import { PopularTracks } from "../../components/popular-tracks/popular-tracks";
   styleUrl: './home.css',
 })
 export class Home {
+
   popular_tracks_limit = 10;
+  search = '';
+
+  onSearchChange(value: string): void {
+    this.search = value;
+  }
 }
