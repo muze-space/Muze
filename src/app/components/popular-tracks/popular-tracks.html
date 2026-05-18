@@ -1,1 +1,8 @@
-<p>popular-tracks works!</p>
+<h2>Popular tracks</h2>
+<ul>
+  @for (track of tracks(); track track.id) {
+  <li>{{ track.name }}</li>
+  } @empty {
+  <li>Loading...</li>
+  }
+</ul>
