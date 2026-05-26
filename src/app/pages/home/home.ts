@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Header } from "../../components/header/header";
-import { PopularTracks } from "../../components/popular-tracks/popular-tracks";
-import { Footer } from '../../components/footer/footer';
+import { PopularTracks } from "../../shared/components/popular-tracks/popular-tracks";
+import { Footer } from "../../shared/layouts/footer/footer";
+import { Header } from "../../shared/layouts/header/header";
 
 @Component({
   selector: 'app-home',

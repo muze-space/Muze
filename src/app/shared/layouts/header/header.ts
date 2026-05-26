@@ -1,5 +1,5 @@
 import { Component, output } from '@angular/core';
-import { Search } from '../search/search';
+import { Search } from '../../components/search/search';
 
 @Component({
   selector: 'app-header',

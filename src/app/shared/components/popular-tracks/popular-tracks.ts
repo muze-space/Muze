@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, Input, OnInit, signal } from '@angular/core';
-import { JamendoTrack, JamendoTracksResponse } from '../../model/track.model';
-import { API_CONFIG } from '../../config';
+import { JamendoTrack, JamendoTracksResponse } from '../../../core/models/track.model';
+import { API_CONFIG } from '../../../config';
 import { TrackItem } from "../track-item/track-item";
 
 @Component({
