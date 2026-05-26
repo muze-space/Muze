@@ -1,0 +1,1 @@
+- **What was done:** created not found page component, style was generated with AI
