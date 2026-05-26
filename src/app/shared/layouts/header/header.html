@@ -1,14 +1,15 @@
-<header class="header">
+<header>
   <a href="/">
     <img class="logo" src="/logo.png" alt="Muze" />
   </a>
-  <app-search (searchChange)="onSearchChange($event)"></app-search>
-  <nav class="nav" aria-label="Primary">
+  <!-- <app-search (searchChange)="onSearchChange($event)"></app-search> -->
+  <app-search></app-search>
+  <nav aria-label="Primary">
     <ul>
-      <li><a class="link" href="/">Discover</a></li>
-      <li><a class="link" href="#">Search</a></li>
-      <li><a class="link" href="#">Library</a></li>
-      <li><a class="link" href="#">About Us</a></li>
+      <li><a routerLink="{{ AppRoutes.Home }}" routerLinkActive="active">Discover</a></li>
+      <li><a routerLink="{{ AppRoutes.Search }}" routerLinkActive="active">Search</a></li>
+      <li><a routerLink="{{ AppRoutes.Library }}" routerLinkActive="active">Library</a></li>
+      <li><a routerLink="{{ AppRoutes.About }}" routerLinkActive="active">About Us</a></li>
     </ul>
   </nav>
 </header>

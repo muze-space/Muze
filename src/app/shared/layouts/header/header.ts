@@ -1,16 +1,20 @@
-import { Component, output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Search } from '../../components/search/search';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AppRoutes } from '../../../core/enums/app-routes';
 
 @Component({
   selector: 'app-header',
-  imports: [Search],
+  imports: [Search, RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
-  searchChange = output<string>();
+  protected readonly AppRoutes = AppRoutes;
 
-  onSearchChange(value: string): void {
-    this.searchChange.emit(value);
-  }
+  // searchChange = output<string>();
+
+  // onSearchChange(value: string): void {
+  //   this.searchChange.emit(value);
+  // }
 }
