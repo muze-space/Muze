@@ -3,4 +3,5 @@ export enum AppRoutes {
   Search = 'search',
   Library = 'library',
   About = 'about',
+  NotFound = 'not-found',
 }
