@@ -4,6 +4,7 @@ import { TracksResponse } from '../models/tracks-response.model';
 import { API_CONFIG } from '../../config';
 import { HttpParams } from '@angular/common/http';
 import { ApiResponseFormat } from '../enums/api-response-format.enum';
+import { TrackOrder } from '../enums/track-order.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class TracksService {
       .set('client_id', API_CONFIG.clientId)
       .set('format', ApiResponseFormat.JsonPretty)
       .set('limit', 10)
-      .set('order', 'popularity_total');
+      .set('order', TrackOrder.PopularityTotal);
 
     return this._apiService.get<TracksResponse>(
       `${API_CONFIG.baseUrl}${API_CONFIG.tracks}`,

@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Track } from '../../../core/models/track.model';
 import { TrackItem } from '../track-item/track-item';
 import { TracksService } from '../../../core/services/tracks.service';
