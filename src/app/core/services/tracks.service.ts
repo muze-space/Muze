@@ -6,6 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { ApiResponseFormat } from '../enums/api-response-format.enum';
 import { TrackOrder } from '../enums/track-order.enum';
 import { TrackGenre } from '../constants/genre.const';
+import { TrackImageSize } from '../enums/track-image-size.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,8 @@ export class TracksService {
       .set('client_id', API_CONFIG.clientId)
       .set('format', ApiResponseFormat.JsonPretty)
       .set('limit', limit)
-      .set('order', order);
+      .set('order', order)
+      .set('imagesize', TrackImageSize.Size50);
 
     if (tags) {
       params = params.set('tags', tags.value);

@@ -1,0 +1,31 @@
+li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  list-style: none;
+  padding: 8px 0;
+}
+
+.cover {
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.artist {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.duration {
+  font-size: 0.85rem;
+  color: #666;
+}
