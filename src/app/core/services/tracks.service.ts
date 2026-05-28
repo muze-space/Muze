@@ -5,7 +5,7 @@ import { API_CONFIG } from '../../config';
 import { HttpParams } from '@angular/common/http';
 import { ApiResponseFormat } from '../enums/api-response-format.enum';
 import { TrackOrder } from '../enums/track-order.enum';
-import { TrackGenre } from '../enums/track-genre.enum';
+import { TrackGenre } from '../constants/genre.const';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,7 @@ export class TracksService {
       .set('order', order);
 
     if (tags) {
-      params = params.set('tags', tags);
+      params = params.set('tags', tags.value);
     }
 
     return this._apiService.get<TracksResponse>(

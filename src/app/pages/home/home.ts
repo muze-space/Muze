@@ -1,4 +1,4 @@
-import { TrackGenre } from './../../core/enums/track-genre.enum';
+import { TRACK_GENRES } from '../../core/constants/genre.const';
 import { Component } from '@angular/core';
 import { Tracks } from '../../shared/components/tracks/tracks';
 import { TrackOrder } from '../../core/enums/track-order.enum';
@@ -11,5 +11,5 @@ import { TrackOrder } from '../../core/enums/track-order.enum';
 })
 export class Home {
   readonly trackOrder = TrackOrder;
-  readonly TrackGenre = TrackGenre;
+  readonly genres = TRACK_GENRES;
 }

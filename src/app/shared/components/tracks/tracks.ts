@@ -3,7 +3,7 @@ import { Track } from '../../../core/models/track.model';
 import { TrackItem } from '../track-item/track-item';
 import { TracksService } from '../../../core/services/tracks.service';
 import { TrackOrder } from '../../../core/enums/track-order.enum';
-import { TrackGenre } from '../../../core/enums/track-genre.enum';
+import { TrackGenre } from '../../../core/constants/genre.const';
 
 @Component({
   selector: 'app-tracks',

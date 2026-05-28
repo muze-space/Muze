@@ -2,4 +2,9 @@
 <app-tracks [order]="trackOrder.PopularityTotal"></app-tracks>
 <h2>New Releases</h2>
 <app-tracks [order]="trackOrder.ReleaseDateDesc"></app-tracks>
-<!-- <h2>Genre Tags</h2> -->
+<h2>Genre Tags</h2>
+<ul>
+  @for(genre of genres; track genre.value) {
+  <li>{{ genre.label }}</li>
+  }
+</ul>
