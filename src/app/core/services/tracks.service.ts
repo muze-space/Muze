@@ -12,12 +12,12 @@ import { TrackOrder } from '../enums/track-order.enum';
 export class TracksService {
   private readonly _apiService = inject(ApiService);
 
-  getPopularTracks() {
+  getTracks(order: TrackOrder, limit = 10) {
     const params = new HttpParams()
       .set('client_id', API_CONFIG.clientId)
       .set('format', ApiResponseFormat.JsonPretty)
-      .set('limit', 10)
-      .set('order', TrackOrder.PopularityTotal);
+      .set('limit', limit)
+      .set('order', order);
 
     return this._apiService.get<TracksResponse>(
       `${API_CONFIG.baseUrl}${API_CONFIG.tracks}`,

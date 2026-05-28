@@ -14,6 +14,7 @@ export enum TrackOrder {
   AlbumName = 'album_name',
   ArtistName = 'artist_name',
   ReleaseDate = 'releasedate',
+  ReleaseDateDesc = 'releasedate_desc',
   Duration = 'duration',
   Id = 'id',
 }

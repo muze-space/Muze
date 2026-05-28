@@ -1,16 +1,19 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Track } from '../../../core/models/track.model';
 import { TrackItem } from '../track-item/track-item';
 import { TracksService } from '../../../core/services/tracks.service';
+import { TrackOrder } from '../../../core/enums/track-order.enum';
 
 @Component({
-  selector: 'app-popular-tracks',
+  selector: 'app-tracks',
   imports: [TrackItem],
-  templateUrl: './popular-tracks.html',
-  styleUrl: './popular-tracks.css',
+  templateUrl: './tracks.html',
+  styleUrl: './tracks.css',
 })
-export class PopularTracks implements OnInit {
+export class Tracks implements OnInit {
   private readonly trackService = inject(TracksService);
+
+  order = input.required<TrackOrder>();
 
   tracks = signal<Track[]>([]);
   isLoading = signal<boolean>(false);
@@ -18,7 +21,7 @@ export class PopularTracks implements OnInit {
   ngOnInit() {
     this.isLoading.set(true);
 
-    this.trackService.getPopularTracks().subscribe((response) => {
+    this.trackService.getTracks(this.order()).subscribe((response) => {
       this.tracks.set(response.results);
       this.isLoading.set(false);
     });
