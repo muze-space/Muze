@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AboutUs } from './pages/about-us/about-us';
 import { Home } from './pages/home/home';
-import { AppRoutes } from './core/enums/app-routes';
+import { AppRoutes } from './core/enums/app-routes.enum';
 import { Search } from './pages/search/search';
 import { Library } from './pages/library/library';
 import { NotFound } from './pages/not-found/not-found';
@@ -23,10 +23,9 @@ export const routes: Routes = [
     path: AppRoutes.About,
     component: AboutUs,
   },
-  {path: AppRoutes.NotFound, component: NotFound},
+  { path: AppRoutes.NotFound, component: NotFound },
   {
     path: '**',
     redirectTo: AppRoutes.NotFound,
   },
-
 ];
