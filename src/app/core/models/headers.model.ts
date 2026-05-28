@@ -1,4 +1,4 @@
-export interface Headers {
+export interface ApiResponseHeaders {
   status: string;
   code: number;
   error_message: string;

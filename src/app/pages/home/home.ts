@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PopularTracks } from "../../shared/components/popular-tracks/popular-tracks";
+import { PopularTracks } from '../../shared/components/popular-tracks/popular-tracks';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +7,4 @@ import { PopularTracks } from "../../shared/components/popular-tracks/popular-tr
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
-
-  popular_tracks_limit = 10;
-}
+export class Home {}

@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { Track } from '../../../core/models/track.model';
-import { TracksResponse } from '../../../core/models/tracks-response.model';
-import { API_CONFIG } from '../../../config';
-import { TrackItem } from "../track-item/track-item";
+import { TrackItem } from '../track-item/track-item';
+import { TracksService } from '../../../core/services/tracks.service';
 
 @Component({
   selector: 'app-popular-tracks',
@@ -12,20 +10,17 @@ import { TrackItem } from "../track-item/track-item";
   styleUrl: './popular-tracks.css',
 })
 export class PopularTracks implements OnInit {
+  private readonly trackService = inject(TracksService);
 
-  @Input() limit!: number;
-
-  private httpClient = inject(HttpClient);
   tracks = signal<Track[]>([]);
+  isLoading = signal<boolean>(false);
 
   ngOnInit() {
-    this.httpClient.get<TracksResponse>(`${API_CONFIG.baseUrl}/tracks/`, {
-      params: {
-        client_id: API_CONFIG.clientId,
-        format: 'jsonpretty',
-        limit: this.limit.toString(),
-        order: 'popularity_total',
-      },
-    }).subscribe(response => this.tracks.set(response.results));
+    this.isLoading.set(true);
+
+    this.trackService.getPopularTracks().subscribe((response) => {
+      this.tracks.set(response.results);
+      this.isLoading.set(false);
+    });
   }
 }
