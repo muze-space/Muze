@@ -3,6 +3,7 @@ import { Track } from '../../../core/models/track.model';
 import { TrackItem } from '../track-item/track-item';
 import { TracksService } from '../../../core/services/tracks.service';
 import { TrackOrder } from '../../../core/enums/track-order.enum';
+import { TrackGenre } from '../../../core/enums/track-genre.enum';
 
 @Component({
   selector: 'app-tracks',
@@ -14,6 +15,7 @@ export class Tracks implements OnInit {
   private readonly trackService = inject(TracksService);
 
   order = input.required<TrackOrder>();
+  genre = input<TrackGenre>();
 
   tracks = signal<Track[]>([]);
   isLoading = signal<boolean>(false);
@@ -21,7 +23,7 @@ export class Tracks implements OnInit {
   ngOnInit() {
     this.isLoading.set(true);
 
-    this.trackService.getTracks(this.order()).subscribe((response) => {
+    this.trackService.getTracks(this.order(), this.genre()).subscribe((response) => {
       this.tracks.set(response.results);
       this.isLoading.set(false);
     });
