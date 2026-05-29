@@ -28,7 +28,7 @@ export class TracksService {
     }
 
     return this._apiService.get<TracksResponse>(
-      `${API_ENDPOINTS.baseUrl}${API_ENDPOINTS.tracks}`,
+      `${API_CONFIG.baseUrl}${API_ENDPOINTS.tracks}`,
       params,
     );
   }
