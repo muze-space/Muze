@@ -1,13 +1,4 @@
-export interface JamendoResponseHeaders {
-  status: string;
-  code: number;
-  error_message: string;
-  warnings: string;
-  results_count: number;
-  next: string;
-}
-
-export interface JamendoTrack {
+export interface Track {
   id: string;
   name: string;
   duration: number;
@@ -29,9 +20,4 @@ export interface JamendoTrack {
   image: string;
   audiodownload_allowed: boolean;
   content_id_free: boolean;
-}
-
-export interface JamendoTracksResponse {
-  headers: JamendoResponseHeaders;
-  results: JamendoTrack[];
 }

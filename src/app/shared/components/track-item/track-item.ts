@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { JamendoTrack } from '../../../core/models/track.model';
+import { Track } from '../../../core/models/track.model';
 
 @Component({
   selector: 'app-track-item',
@@ -8,5 +8,5 @@ import { JamendoTrack } from '../../../core/models/track.model';
   styleUrl: './track-item.css',
 })
 export class TrackItem {
-  @Input() track!: JamendoTrack;
+  @Input() track!: Track;
 }
