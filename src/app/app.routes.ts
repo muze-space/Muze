@@ -23,7 +23,10 @@ export const routes: Routes = [
     path: AppRoutes.About,
     component: AboutUs,
   },
-  { path: AppRoutes.NotFound, component: NotFound },
+  {
+    path: AppRoutes.NotFound,
+    loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFound),
+  },
   {
     path: '**',
     redirectTo: AppRoutes.NotFound,
