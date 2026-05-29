@@ -7,6 +7,7 @@ import { ApiResponseFormat } from '../enums/api-response-format.enum';
 import { TrackOrder } from '../enums/track-order.enum';
 import { TrackGenre } from '../constants/genre.const';
 import { TrackImageSize } from '../enums/track-image-size.enum';
+import { API_ENDPOINTS } from '../constants/api-endpoints.const';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class TracksService {
     }
 
     return this._apiService.get<TracksResponse>(
-      `${API_CONFIG.baseUrl}${API_CONFIG.tracks}`,
+      `${API_ENDPOINTS.baseUrl}${API_ENDPOINTS.tracks}`,
       params,
     );
   }

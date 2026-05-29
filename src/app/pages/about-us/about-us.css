@@ -1,0 +1,60 @@
+.about {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.title {
+  margin: 0 0 20px 0;
+}
+
+.cards {
+  display: flex;
+  gap: 16px;
+}
+
+.member-card {
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+.photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.name {
+  margin: 0;
+  font-size: 20px;
+}
+
+.role {
+  margin: 6px 0 10px;
+  font-weight: 600;
+  color: #444444;
+}
+
+.bio {
+  margin: 0 0 12px;
+  color: #222222;
+  line-height: 1.4;
+}
+
+.link {
+  color: #0a66c2;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.rs-school {
+  margin-top: 24px;
+  text-align: center;
+}
