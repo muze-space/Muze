@@ -1,0 +1,9 @@
+- **What was done:** Added a login component with its initial structure and configured routing for it.
+- **What I learned:** How Angular routing works.
+- **Problems:** The Jamendo API does not provide user registration or login functionality for creating and managing custom user profiles.
+- **Possible actions:**
+  - Implement a custom backend for authentication and integrate a database for storing user data.
+  - Integrate Google Authentication into the project and use a backend/database for storing user data.
+  - Use Jamendo OAuth authentication, allowing users to sign in with their Jamendo accounts.
+- **Current investigation:** Exploring the capabilities and limitations of Jamendo authentication.
+- **Decision for now:** Before making a final decision about the authentication approach, create a temporary login form component.
