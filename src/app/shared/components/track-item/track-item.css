@@ -29,3 +29,8 @@ li {
   font-size: 0.85rem;
   color: #666;
 }
+
+.play-btn {
+  width: 20px;
+  height: 20px;
+}
