@@ -1,0 +1,5 @@
+- **What was done:**
+  - Created audio player component
+  - Added play button to tracks
+  - Moved router outlet
+  - Changed tracks list from ul to ol
