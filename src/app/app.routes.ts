@@ -4,7 +4,6 @@ import { Home } from './pages/home/home';
 import { AppRoutes } from './core/enums/app-routes.enum';
 import { Search } from './pages/search/search';
 import { Library } from './pages/library/library';
-import { NotFound } from './pages/not-found/not-found';
 
 export const routes: Routes = [
   {
