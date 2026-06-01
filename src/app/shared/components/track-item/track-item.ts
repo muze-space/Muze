@@ -11,4 +11,8 @@ import { DatePipe } from '@angular/common';
 })
 export class TrackItem {
   @Input() track!: Track;
+
+  onTrackClick() {
+    // TODO Call PlayerService to play the track
+  }
 }

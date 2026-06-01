@@ -1,4 +1,4 @@
-<li>
+<li (click)="onTrackClick()" (keydown.enter)="onTrackClick()" tabindex="0">
   <img class="cover" [src]="track.album_image" [alt]="track.album_name" />
   <div class="info">
     <span class="title">{{ track.name }}</span>
