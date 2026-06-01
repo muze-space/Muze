@@ -1,3 +1,3 @@
-export const SEARCH_PARAMS = {
+export const QUERY_PARAMS = {
   genre: 'genre',
 };

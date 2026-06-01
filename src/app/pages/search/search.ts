@@ -4,7 +4,7 @@ import { Track } from '../../core/models/track.model';
 import { TracksService } from '../../core/services/tracks.service';
 import { TRACK_GENRES } from '../../core/constants/genre.const';
 import { TrackOrder } from '../../core/enums/track-order.enum';
-import { SEARCH_PARAMS } from '../../core/constants/search-params.const';
+import { QUERY_PARAMS } from '../../core/constants/search-params.const';
 
 @Component({
   selector: 'app-search',
@@ -20,9 +20,9 @@ export class Search implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      const genre = TRACK_GENRES.find((g) => g.value === params[SEARCH_PARAMS.genre]);
+      const genre = TRACK_GENRES.find((g) => g.value === params[QUERY_PARAMS.genre]);
 
-      if (params[SEARCH_PARAMS.genre]) {
+      if (params[QUERY_PARAMS.genre]) {
         this.trackService
           .getTracks(TrackOrder.PopularityTotal, genre)
           .subscribe((response) => this.tracks.set(response.results));
