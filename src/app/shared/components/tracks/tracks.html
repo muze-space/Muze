@@ -1,9 +1,9 @@
 @if (isLoading()) {
 <p>Loading…</p>
 } @else {
-<ul>
+<ol>
   @for (track of tracks(); track track.id) {
   <app-track-item [track]="track"></app-track-item>
   }
-</ul>
+</ol>
 }

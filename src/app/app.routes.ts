@@ -4,6 +4,7 @@ import { Home } from './pages/home/home';
 import { AppRoutes } from './core/enums/app-routes.enum';
 import { Search } from './pages/search/search';
 import { Library } from './pages/library/library';
+import { Login } from './feature/auth/login/login';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,10 @@ export const routes: Routes = [
   {
     path: AppRoutes.NotFound,
     loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFound),
+  },
+  {
+    path: AppRoutes.Login,
+    component: Login,
   },
   {
     path: '**',
