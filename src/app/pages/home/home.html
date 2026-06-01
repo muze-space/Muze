@@ -5,6 +5,6 @@
 <h2>Genre Tags</h2>
 <ul>
   @for(genre of genres; track genre.value) {
-  <li>{{ genre.label }}</li>
+  <li (click)="onGenreClick(genre.value)" (keydown.enter)="onGenreClick(genre.value)" tabindex="0">{{ genre.label }}</li>
   }
 </ul>
