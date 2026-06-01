@@ -4,7 +4,6 @@ import { Home } from './pages/home/home';
 import { AppRoutes } from './core/enums/app-routes.enum';
 import { Search } from './pages/search/search';
 import { Library } from './pages/library/library';
-import { NotFound } from './pages/not-found/not-found';
 import { Login } from './feature/auth/login/login';
 
 export const routes: Routes = [
@@ -25,10 +24,13 @@ export const routes: Routes = [
     component: AboutUs,
   },
   {
+    path: AppRoutes.NotFound,
+    loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFound),
+  },
+  {
     path: AppRoutes.Login,
     component: Login,
   },
-  { path: AppRoutes.NotFound, component: NotFound },
   {
     path: '**',
     redirectTo: AppRoutes.NotFound,

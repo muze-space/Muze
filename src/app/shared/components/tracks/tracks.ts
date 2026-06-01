@@ -23,9 +23,11 @@ export class Tracks implements OnInit {
   ngOnInit() {
     this.isLoading.set(true);
 
-    this.trackService.getTracks(this.order(), this.genre()).subscribe((response) => {
-      this.tracks.set(response.results);
-      this.isLoading.set(false);
-    });
+    this.trackService
+      .getTracks({ order: this.order(), genre: this.genre() })
+      .subscribe((response) => {
+        this.tracks.set(response.results);
+        this.isLoading.set(false);
+      });
   }
 }
