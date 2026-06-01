@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Track } from '../../../core/models/track.model';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { DatePipe } from '@angular/common';
@@ -10,7 +10,8 @@ import { DatePipe } from '@angular/common';
   styleUrl: './track-item.css',
 })
 export class TrackItem {
-  @Input() track!: Track;
+  track = input.required<Track>();
+  isSearchVersion = input<boolean>(false);
 
   onTrackClick() {
     // TODO Call PlayerService to play the track

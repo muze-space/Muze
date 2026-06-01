@@ -3,10 +3,11 @@ import { debounceTime, Subject } from 'rxjs';
 import { TracksService } from '../../../core/services/tracks.service';
 import { TrackOrder } from '../../../core/enums/track-order.enum';
 import { Track } from '../../../core/models/track.model';
+import { TrackItem } from '../track-item/track-item';
 
 @Component({
   selector: 'app-search',
-  imports: [],
+  imports: [TrackItem],
   templateUrl: './search.html',
   styleUrl: './search.css',
 })

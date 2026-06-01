@@ -6,10 +6,7 @@
   @if (isResultsWindowOpen()) {
   <ul class="dropdown">
     @for (track of suggestions(); track track.id) {
-    <li>
-      <span>{{ track.name }}</span>
-      <span>{{ track.artist_name }}</span>
-    </li>
+    <app-track-item [track]="track" [isSearchVersion]="true"></app-track-item>
     }
   </ul>
   }
