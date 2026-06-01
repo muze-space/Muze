@@ -26,3 +26,14 @@
 .search__button:hover {
   opacity: 0.8;
 }
+
+.dropdown {
+  position: absolute;
+  z-index: 1000;
+  background-color: lightgray;
+  padding: 0;
+}
+
+.dropdown li {
+  list-style: none;
+}

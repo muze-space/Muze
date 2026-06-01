@@ -52,4 +52,5 @@
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+  margin-bottom: 32px;
 }

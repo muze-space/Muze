@@ -3,8 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Track } from '../../core/models/track.model';
 import { TracksService } from '../../core/services/tracks.service';
 import { TRACK_GENRES } from '../../core/constants/genre.const';
-import { TrackOrder } from '../../core/enums/track-order.enum';
-import { QUERY_PARAMS } from '../../core/constants/search-params.const';
+import { QUERY_PARAMS } from '../../core/constants/query-params.const';
 
 @Component({
   selector: 'app-search',
@@ -24,7 +23,7 @@ export class Search implements OnInit {
 
       if (params[QUERY_PARAMS.genre]) {
         this.trackService
-          .getTracks(TrackOrder.PopularityTotal, genre)
+          .getTracks({ genre: genre })
           .subscribe((response) => this.tracks.set(response.results));
       }
     });
