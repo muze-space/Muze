@@ -5,6 +5,7 @@ import { AppRoutes } from './core/enums/app-routes.enum';
 import { Search } from './pages/search/search';
 import { Library } from './pages/library/library';
 import { NotFound } from './pages/not-found/not-found';
+import { Login } from './feature/auth/login/login';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,10 @@ export const routes: Routes = [
   {
     path: AppRoutes.About,
     component: AboutUs,
+  },
+  {
+    path: AppRoutes.Login,
+    component: Login,
   },
   { path: AppRoutes.NotFound, component: NotFound },
   {
