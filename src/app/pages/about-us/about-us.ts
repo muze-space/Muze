@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TeamMember } from './models/team-member.model';
+import { TeamMember } from '../../core/models/team-member.model';
 
 @Component({
   selector: 'app-about-us',
