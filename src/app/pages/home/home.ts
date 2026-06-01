@@ -4,10 +4,11 @@ import { Tracks } from '../../shared/components/tracks/tracks';
 import { TrackOrder } from '../../core/enums/track-order.enum';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../../core/enums/app-routes.enum';
+import { GenreItem } from '../../shared/components/genre-item/genre-item';
 
 @Component({
   selector: 'app-home',
-  imports: [Tracks],
+  imports: [Tracks, GenreItem],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

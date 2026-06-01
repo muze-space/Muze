@@ -7,6 +7,7 @@ li {
   padding: 8px;
   border-radius: 4px;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 li:hover {

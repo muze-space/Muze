@@ -47,3 +47,9 @@
 
   text-transform: capitalize;
 }
+
+.genres {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
