@@ -1,0 +1,12 @@
+li {
+  list-style: none;
+  background-color: lightgray;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+li:hover {
+  background-color: gray;
+  color: white;
+  cursor: pointer;
+}

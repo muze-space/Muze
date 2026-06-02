@@ -1,9 +1,13 @@
-<li>
-  <img class="cover" [src]="track.album_image" [alt]="track.album_name" />
+<li [class.search-version]="isSearchVersion()" (click)="onTrackClick()" (keydown.enter)="onTrackClick()" tabindex="0">
+  <img class="cover" [src]="track().album_image" [alt]="track().album_name" />
   <div class="info">
-    <span class="title">{{ track.name }}</span>
-    <span class="artist">{{ track.artist_name }}</span>
+    <span class="title">{{ track().name }}</span>
+    <span class="artist">{{ track().artist_name }}</span>
   </div>
-  <span class="duration">{{ track.duration }}</span>
+  @if (!isSearchVersion()) {
+  <span class="album">{{ track().album_name }}</span>
+  <span class="release-date">{{ track().releasedate | date:'yyyy' }}</span>
+  <span class="duration">{{ track().duration | duration}}</span>
+  }
   <span class="play-btn"></span>
 </li>

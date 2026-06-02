@@ -3,8 +3,8 @@
 <h2>New Releases</h2>
 <app-tracks [order]="trackOrder.ReleaseDateDesc"></app-tracks>
 <h2>Genre Tags</h2>
-<ul>
+<ul class="genres">
   @for(genre of genres; track genre.value) {
-  <li>{{ genre.label }}</li>
+  <app-genre-item [genreLabel]="genre.label" (click)=onGenreClick(genre.value) (keydown.enter)="onGenreClick(genre.value)" tabindex="0"></app-genre-item>
   }
 </ul>
