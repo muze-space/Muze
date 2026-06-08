@@ -2,7 +2,9 @@
 
 ## Muze - Music Streaming Service
 
-### A music streaming service clone where the user can search for tracks and artists, listen to music, build playlists, and maintain a favorites library.
+A music streaming service clone where the user can search for tracks and artists, listen to music, build playlists, and maintain a favorites library.
+
+Application is deployed here → [muze-space.github.io/Muze](https://muze-space.github.io/Muze/)
 
 ## Developers team
 
