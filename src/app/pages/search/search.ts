@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Track } from '../../core/models/track.model';
 import { TracksService } from '../../core/services/tracks.service';
@@ -12,10 +12,17 @@ import { QUERY_PARAMS } from '../../core/constants/query-params.const';
   styleUrl: './search.css',
 })
 export class Search implements OnInit {
+  tracks = signal<Track[]>([]);
+  tracksCount = computed(() => this.tracks().length);
   private route = inject(ActivatedRoute);
   private trackService = inject(TracksService);
 
-  tracks = signal<Track[]>([]);
+  constructor() {
+    effect(() => {
+      const count = this.tracksCount();
+      console.log(`Search results count: ${count}`);
+    });
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {

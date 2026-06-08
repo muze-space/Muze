@@ -1,7 +1,8 @@
 <h2>Search</h2>
+<p>{{ tracksCount() }} results</p>
 <ul>
-  @for(track of tracks(); track track.id) {
-  <!-- <li (click)="onGenreClick(genre.value)" (keydown.enter)="onGenreClick(genre.value)" tabindex="0">{{ genre.label }}</li> -->
-  <li>{{ track.name }}</li>
+  @for (track of tracks(); track track.id) {
+    <!-- <li (click)="onGenreClick(genre.value)" (keydown.enter)="onGenreClick(genre.value)" tabindex="0">{{ genre.label }}</li> -->
+    <li>{{ track.name }}</li>
   }
 </ul>
