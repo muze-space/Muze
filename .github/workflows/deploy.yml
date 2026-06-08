@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Build for GitHub Pages
-        run: ng build --configuration production --base-href /Muze/
+        run: npm run build -- --configuration production --base-href /Muze/
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
