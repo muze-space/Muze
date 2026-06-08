@@ -1,0 +1,54 @@
+li {
+  display: grid;
+  grid-template-columns: 50px 3fr 2fr 1fr 1fr auto;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  padding: 8px;
+  border-radius: 4px;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+li.search-version {
+  grid-template-columns: 50px 1fr auto;
+}
+
+li:hover {
+  background-color: lightgray;
+}
+
+.cover {
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.artist {
+  color: gray;
+}
+
+.album {
+  color: gray;
+}
+
+.release-date {
+  color: gray;
+}
+
+.duration {
+  color: gray;
+}
+
+.play-btn {
+  width: 20px;
+  height: 20px;
+}

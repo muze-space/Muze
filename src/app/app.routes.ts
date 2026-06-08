@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { AboutUs } from './pages/about-us/about-us';
 import { Home } from './pages/home/home';
-import { AppRoutes } from './core/enums/app-routes';
+import { AppRoutes } from './core/enums/app-routes.enum';
 import { Search } from './pages/search/search';
 import { Library } from './pages/library/library';
-import { NotFound } from './pages/not-found/not-found';
+import { Login } from './feature/auth/login/login';
 
 export const routes: Routes = [
   {
@@ -23,10 +23,16 @@ export const routes: Routes = [
     path: AppRoutes.About,
     component: AboutUs,
   },
-  {path: AppRoutes.NotFound, component: NotFound},
+  {
+    path: AppRoutes.NotFound,
+    loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFound),
+  },
+  {
+    path: AppRoutes.Login,
+    component: Login,
+  },
   {
     path: '**',
     redirectTo: AppRoutes.NotFound,
   },
-
 ];

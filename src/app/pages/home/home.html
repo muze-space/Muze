@@ -1,1 +1,10 @@
-<app-popular-tracks [limit]="popular_tracks_limit"></app-popular-tracks>
+<h2>Popular tracks</h2>
+<app-tracks [order]="trackOrder.PopularityTotal"></app-tracks>
+<h2>New Releases</h2>
+<app-tracks [order]="trackOrder.ReleaseDateDesc"></app-tracks>
+<h2>Genre Tags</h2>
+<ul class="genres">
+  @for(genre of genres; track genre.value) {
+  <app-genre-item [genreLabel]="genre.label" (click)=onGenreClick(genre.value) (keydown.enter)="onGenreClick(genre.value)" tabindex="0"></app-genre-item>
+  }
+</ul>

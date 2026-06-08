@@ -1,6 +1,9 @@
-<h2>Popular tracks</h2>
-<ul>
+@if (isLoading()) {
+<p>Loading…</p>
+} @else {
+<ol>
   @for (track of tracks(); track track.id) {
   <app-track-item [track]="track"></app-track-item>
   }
-</ul>
+</ol>
+}

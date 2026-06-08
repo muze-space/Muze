@@ -1,12 +1,19 @@
-import { Component, Input } from '@angular/core';
-import { JamendoTrack } from '../../../core/models/track.model';
+import { Component, input } from '@angular/core';
+import { Track } from '../../../core/models/track.model';
+import { DurationPipe } from '../../pipes/duration.pipe';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-track-item',
-  imports: [],
+  imports: [DurationPipe, DatePipe],
   templateUrl: './track-item.html',
   styleUrl: './track-item.css',
 })
 export class TrackItem {
-  @Input() track!: JamendoTrack;
+  track = input.required<Track>();
+  isSearchVersion = input<boolean>(false);
+
+  onTrackClick() {
+    // TODO Call PlayerService to play the track
+  }
 }

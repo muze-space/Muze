@@ -1,1 +1,23 @@
-<p>about-us works!</p>
+<section class="about">
+  <h1 class="title">About Us</h1>
+
+  <div class="cards">
+    @for (member of teamMembers; track member.githubUrl) {
+    <div class="member-card">
+      <img class="photo" [src]="member.photoUrl" [alt]="member.name" loading="lazy" />
+      <h2 class="name">{{ member.name }}</h2>
+      <p class="role">{{ member.role }}</p>
+      <p class="bio">{{ member.bio }}</p>
+      <a class="link" [href]="member.githubUrl" target="_blank" rel="noopener noreferrer">
+        GitHub Profile
+      </a>
+    </div>
+    }
+  </div>
+
+  <div class="rs-school">
+    <a href="https://rs.school/" target="_blank">
+      <img class="rs-school-logo" src="/icons/rs-school-js-logo.svg" alt="RS School logo" />
+    </a>
+  </div>
+</section>

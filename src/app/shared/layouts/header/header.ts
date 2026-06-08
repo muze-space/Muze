@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Search } from '../../components/search/search';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AppRoutes } from '../../../core/enums/app-routes';
+import { AppRoutes } from '../../../core/enums/app-routes.enum';
 
 @Component({
   selector: 'app-header',
