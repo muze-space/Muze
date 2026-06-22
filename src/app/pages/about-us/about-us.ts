@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { TeamMember } from '../../core/models/team-member.model';
+import { Feedback } from '../feedback/feedback.component';
 
 @Component({
   selector: 'app-about-us',
-  imports: [],
+  imports: [Feedback],
   templateUrl: './about-us.html',
   styleUrl: './about-us.css',
 })
