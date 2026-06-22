@@ -8,8 +8,8 @@ import { TrackItem } from '../track-item/track-item';
 @Component({
   selector: 'app-search',
   imports: [TrackItem],
-  templateUrl: './search.html',
-  styleUrl: './search.css',
+  templateUrl: './search.component.html',
+  styleUrl: './search.component.css',
 })
 export class Search {
   private _tracksService = inject(TracksService);

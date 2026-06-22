@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Search } from '../../components/search/search';
+import { Search } from '../../components/search/search.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AppRoutes } from '../../../core/enums/app-routes.enum';
 import { NgOptimizedImage } from '@angular/common';
