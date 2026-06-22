@@ -1,6 +1,6 @@
 <header>
   <a href="/">
-    <img class="logo" src="/logo.png" alt="Muze" />
+    <img alt="Muze" class="logo" height="500" ngSrc="/logo.png" width="500" />
   </a>
   <!-- <app-search (searchChange)="onSearchChange($event)"></app-search> -->
   <app-search></app-search>
@@ -13,8 +13,8 @@
     </ul>
   </nav>
   <nav class="header-nav">
-    <a routerLink="{{ AppRoutes.Login}}">
+    <button (click)="modalService.openLogin()" class="login-link" type="button">
       Login
-    </a>
+    </button>
   </nav>
 </header>

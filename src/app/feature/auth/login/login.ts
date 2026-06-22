@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { AppRoutes } from '../../../core/enums/app-routes.enum'
+import { Component, inject } from '@angular/core';
+import { ModalService } from '../../../core/services/modal.service';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
-  AppRoutes = AppRoutes;
+  protected readonly modalService = inject(ModalService);
 }
