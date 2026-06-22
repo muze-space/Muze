@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Search } from '../../components/search/search.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AppRoutes } from '../../../core/enums/app-routes.enum';
@@ -10,6 +10,7 @@ import { ModalService } from '../../../core/services/modal.service';
   imports: [Search, RouterLink, RouterLinkActive, NgOptimizedImage],
   templateUrl: './header.html',
   styleUrl: './header.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
   protected readonly AppRoutes = AppRoutes;

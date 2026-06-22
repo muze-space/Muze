@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TeamMember } from '../../core/models/team-member.model';
 import { Feedback } from '../feedback/feedback.component';
 
@@ -7,6 +7,7 @@ import { Feedback } from '../feedback/feedback.component';
   imports: [Feedback],
   templateUrl: './about-us.html',
   styleUrl: './about-us.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutUs {
   readonly teamMembers: TeamMember[] = [
