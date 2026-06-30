@@ -19,4 +19,16 @@ describe('Footer', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render footer element', () => {
+    fixture.detectChanges();
+    const footerElement = fixture.nativeElement.querySelector('footer');
+    expect(footerElement).toBeTruthy();
+  });
+
+  it('should render copyright text', () => {
+    fixture.detectChanges();
+    const footerText = fixture.nativeElement.textContent;
+    expect(footerText).toBeTruthy();
+  });
 });

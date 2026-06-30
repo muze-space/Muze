@@ -11,7 +11,7 @@ import { TrackItem } from '../track-item/track-item';
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
-export class Search {
+export class SearchComponent {
   suggestions = signal<Track[]>([]);
   isResultsWindowOpen = signal<boolean>(false);
   isLoading = signal<boolean>(false);

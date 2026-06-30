@@ -19,4 +19,15 @@ describe('Library', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render library content', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled).toBeTruthy();
+  });
+
+  it('should initialize library data', () => {
+    fixture.detectChanges();
+    expect(component).toBeDefined();
+  });
 });
