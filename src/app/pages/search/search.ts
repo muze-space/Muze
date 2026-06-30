@@ -1,12 +1,4 @@
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  OnInit,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs';
 import { Track } from '../../core/models/track.model';
@@ -18,7 +10,6 @@ import { QUERY_PARAMS } from '../../core/constants/query-params.const';
   selector: 'app-search',
   imports: [],
   templateUrl: './search.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search.css',
 })
 export class Search implements OnInit {
