@@ -13,6 +13,6 @@ export class NotFound {
   private readonly _router = inject(Router);
 
   goHome(): void {
-    this._router.navigate([AppRoutes.Home]).then(r => r);
+    this._router.navigate([AppRoutes.Home]).then((r) => r);
   }
 }
