@@ -4,7 +4,9 @@
 
 A music streaming service clone where the user can search for tracks and artists, listen to music, build playlists, and maintain a favorites library.
 
-Application is deployed here → [muze-space.github.io/Muze](https://muze-space.github.io/Muze/)
+Application is deployed [here](https://muze-space.github.io/Muze/)
+
+A short video (~1 min) demonstrating the 404, loading, and error states is available [here](https://drive.google.com/file/d/1knDmhkg8drqpLZzFq55UdSBIF1qz2B2c/view?usp=sharing)
 
 ## Developers team
 
