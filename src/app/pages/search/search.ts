@@ -1,5 +1,6 @@
 import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs';
 import { Track } from '../../core/models/track.model';
 import { TracksService } from '../../core/services/tracks.service';
 import { TRACK_GENRES } from '../../core/constants/genre.const';
@@ -14,6 +15,8 @@ import { QUERY_PARAMS } from '../../core/constants/query-params.const';
 export class Search implements OnInit {
   tracks = signal<Track[]>([]);
   tracksCount = computed(() => this.tracks().length);
+  isLoading = signal<boolean>(false);
+  error = signal<string | null>(null);
   private route = inject(ActivatedRoute);
   private trackService = inject(TracksService);
 
@@ -29,9 +32,18 @@ export class Search implements OnInit {
       const genre = TRACK_GENRES.find((g) => g.value === params[QUERY_PARAMS.genre]);
 
       if (params[QUERY_PARAMS.genre]) {
+        this.isLoading.set(true);
+        this.error.set(null);
         this.trackService
           .getTracks({ genre: genre })
-          .subscribe((response) => this.tracks.set(response.results));
+          .pipe(finalize(() => this.isLoading.set(false)))
+          .subscribe({
+            next: (response) => this.tracks.set(response.results),
+            error: (err) => this.error.set(err),
+          });
+      } else {
+        this.tracks.set([]);
+        this.error.set(null);
       }
     });
   }
