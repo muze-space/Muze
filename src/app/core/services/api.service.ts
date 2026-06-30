@@ -27,7 +27,7 @@ export class ApiService {
   }
 
   private formatErrorMessage(error: unknown): string {
-    if (!navigator.onLine) {
+    if (typeof navigator !== 'undefined' && !navigator.onLine) {
       return 'No internet connection. Please check your network.';
     }
     if (typeof error === 'object' && error !== null) {
