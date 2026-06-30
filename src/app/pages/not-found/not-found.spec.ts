@@ -19,4 +19,16 @@ describe('NotFound', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display 404 message', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('404');
+  });
+
+  it('should have home button', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled).toBeTruthy();
+  });
 });
