@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { debounceTime, Subject } from 'rxjs';
+import { debounceTime, finalize, Subject } from 'rxjs';
 import { TracksService } from '../../../core/services/tracks.service';
 import { TrackOrder } from '../../../core/enums/track-order.enum';
 import { Track } from '../../../core/models/track.model';
@@ -12,16 +12,21 @@ import { TrackItem } from '../track-item/track-item';
   styleUrl: './search.component.css',
 })
 export class Search {
-  private _tracksService = inject(TracksService);
-  private _searchSubject = new Subject<string>();
   suggestions = signal<Track[]>([]);
   isResultsWindowOpen = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
   query = '';
+
+  private _tracksService = inject(TracksService);
+  private _searchSubject = new Subject<string>();
 
   private _subscription = this._searchSubject.pipe(debounceTime(500)).subscribe((searchQuery) => {
     if (searchQuery.trim()) {
+      this.isLoading.set(true);
+
       this._tracksService
         .getTracks({ search: searchQuery, order: TrackOrder.Relevance })
+        .pipe(finalize(() => this.isLoading.set(false)))
         .subscribe((response) => {
           this.suggestions.set(response.results);
           this.isResultsWindowOpen.set(true);
@@ -30,6 +35,7 @@ export class Search {
     } else {
       this.suggestions.set([]);
       this.isResultsWindowOpen.set(false);
+      this.isLoading.set(false);
     }
   });
 
