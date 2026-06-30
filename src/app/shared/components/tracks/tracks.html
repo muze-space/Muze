@@ -1,9 +1,11 @@
-@if (isLoading()) {
-<p>Loading…</p>
+@if (error()) {
+  <div class="error-message" role="alert">{{ error() }}</div>
+} @else if (isLoading()) {
+  <p class="loading">Loading…</p>
 } @else {
-<ol>
-  @for (track of tracks(); track track.id) {
-  <app-track-item [track]="track"></app-track-item>
-  }
-</ol>
+  <ol>
+    @for (track of tracks(); track track.id) {
+      <app-track-item [track]="track"></app-track-item>
+    }
+  </ol>
 }
