@@ -5,7 +5,7 @@
 } @else {
   <ol>
     @for (track of tracks(); track track.id) {
-      <app-track-item [track]="track"></app-track-item>
+      <app-track-item [queue]="tracks()" [track]="track"></app-track-item>
     }
   </ol>
 }

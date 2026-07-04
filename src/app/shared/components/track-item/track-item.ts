@@ -13,9 +13,10 @@ import { PlayerService } from '../../../core/services/player.service';
 export class TrackItem {
   track = input.required<Track>();
   isSearchVersion = input<boolean>(false);
+  queue = input<Track[]>([]);
   private readonly playerService = inject(PlayerService);
 
   onTrackClick() {
-    this.playerService.toggle(this.track());
+    this.playerService.toggle(this.track(), this.queue());
   }
 }
