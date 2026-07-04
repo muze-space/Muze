@@ -1,9 +1,8 @@
 <div class="audio-player-container">
-  @if (currentTrack(); as track) {
-    <audio #audioElement [src]="track.audio" controls>
-      Your browser does not support the audio element.
-    </audio>
-  } @else {
+  @if (!currentTrack()) {
     <span>No track selected</span>
   }
+  <audio #audioElement [hidden]="!currentTrack()" controls>
+    Your browser does not support the audio element.
+  </audio>
 </div>
