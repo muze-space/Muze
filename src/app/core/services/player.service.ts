@@ -5,15 +5,23 @@ import { Track } from '../models/track.model';
 export class PlayerService {
   readonly currentTrack = signal<Track | null>(null);
   readonly isPlaying = signal<boolean>(false);
-  readonly playRequestId = signal(0);
 
   play(track: Track): void {
     this.currentTrack.set(track);
     this.isPlaying.set(true);
-    this.playRequestId.update((id) => id + 1);
   }
 
   pause(): void {
     this.isPlaying.set(false);
+  }
+
+  toggle(track: Track): void {
+    const isSameTrack = this.currentTrack()?.id === track.id;
+
+    if (isSameTrack && this.isPlaying()) {
+      this.pause();
+    } else {
+      this.play(track);
+    }
   }
 }

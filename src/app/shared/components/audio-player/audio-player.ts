@@ -12,20 +12,27 @@ export class AudioPlayer {
   private readonly playerService = inject(PlayerService);
   readonly currentTrack = this.playerService.currentTrack;
   private readonly audioRef = viewChild<ElementRef<HTMLAudioElement>>('audioElement');
-
   constructor() {
     effect(() => {
       const track = this.currentTrack();
-      this.playerService.playRequestId();
+      const isPlaying = this.playerService.isPlaying();
       const audio = this.audioRef()?.nativeElement;
 
       if (!track || !audio) {
         return;
       }
 
-      audio.src = track.audio;
-      audio.load();
-      audio.play().catch((err) => console.error('Playback failed:', err));
+      if (audio.dataset['trackId'] !== track.id) {
+        audio.src = track.audio;
+        audio.dataset['trackId'] = track.id;
+        audio.load();
+      }
+
+      if (isPlaying) {
+        audio.play().catch((err) => console.error('Playback failed:', err));
+      } else {
+        audio.pause();
+      }
     });
   }
 }

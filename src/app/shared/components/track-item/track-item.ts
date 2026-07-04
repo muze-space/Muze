@@ -16,6 +16,6 @@ export class TrackItem {
   private readonly playerService = inject(PlayerService);
 
   onTrackClick() {
-    this.playerService.play(this.track());
+    this.playerService.toggle(this.track());
   }
 }
