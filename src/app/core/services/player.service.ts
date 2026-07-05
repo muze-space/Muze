@@ -11,9 +11,15 @@ export class PlayerService {
   readonly volume = signal<number>(1);
 
   play(track: Track, queue?: Track[]): void {
+    const isDifferentTrack = this.currentTrack()?.id !== track.id;
+
     this.currentTrack.set(track);
     this.isPlaying.set(true);
-    this.currentTime.set(0);
+
+    if (isDifferentTrack) {
+      this.currentTime.set(0);
+      this.duration.set(0);
+    }
 
     if (queue) {
       this.queue.set(queue);
