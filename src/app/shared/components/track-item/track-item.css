@@ -18,6 +18,15 @@ li:hover {
   background-color: lightgray;
 }
 
+li.active {
+  background-color: #eafbf1;
+}
+
+li.active .title,
+li.active .artist {
+  color: #1db954;
+}
+
 .cover {
   object-fit: cover;
   border-radius: 4px;
@@ -51,4 +60,9 @@ li:hover {
 .play-btn {
   width: 20px;
   height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1db954;
+  font-size: 0.8rem;
 }

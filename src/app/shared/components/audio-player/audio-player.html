@@ -1,6 +1,62 @@
-<div class="audio-player-container">
-  <audio controls>
-    <source [src]="audioUrl" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+<div class="player-bar">
+  <audio
+    #audioElement
+    (ended)="onEnded()"
+    (loadedmetadata)="onLoadedMetadata($event)"
+    (timeupdate)="onTimeUpdate($event)"
+    hidden
+  ></audio>
+
+  @if (currentTrack(); as track) {
+    <div class="player-bar__track">
+      <img [alt]="track.album_name" [src]="track.album_image" class="player-bar__cover" />
+      <div class="player-bar__info">
+        <span class="player-bar__title">{{ track.name }}</span>
+        <span class="player-bar__artist">{{ track.artist_name }}</span>
+      </div>
+    </div>
+
+    <div class="player-bar__center">
+      <div class="player-bar__buttons">
+        <button (click)="onPrevious()" aria-label="Previous track" class="player-bar__btn" type="button">⏮</button>
+        <button
+          (click)="onTogglePlay()"
+          [attr.aria-label]="isPlaying() ? 'Pause' : 'Play'"
+          class="player-bar__btn player-bar__btn--play"
+          type="button"
+        >
+          {{ isPlaying() ? '⏸' : '▶' }}
+        </button>
+        <button (click)="onNext()" aria-label="Next track" class="player-bar__btn" type="button">⏭</button>
+      </div>
+
+      <div class="player-bar__seek">
+        <span class="player-bar__time">{{ currentTime() | duration }}</span>
+        <input
+          (input)="onSeek($event)"
+          [max]="duration() || 0"
+          [value]="currentTime()"
+          class="player-bar__range"
+          min="0"
+          type="range"
+        />
+        <span class="player-bar__time">{{ duration() | duration }}</span>
+      </div>
+    </div>
+
+    <div class="player-bar__volume">
+      <span class="player-bar__volume-icon">🔊</span>
+      <input
+        (input)="onVolumeChange($event)"
+        [value]="volume()"
+        class="player-bar__range player-bar__range--volume"
+        max="1"
+        min="0"
+        step="0.01"
+        type="range"
+      />
+    </div>
+  } @else {
+    <div class="player-bar__empty">No track selected</div>
+  }
 </div>

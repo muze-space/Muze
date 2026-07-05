@@ -11,7 +11,7 @@
       } @else {
         <ul class="dropdown__list">
           @for (track of suggestions(); track track.id) {
-            <app-track-item [isSearchVersion]="true" [track]="track"></app-track-item>
+            <app-track-item [isSearchVersion]="true" [queue]="suggestions()" [track]="track"></app-track-item>
           }
         </ul>
       }
