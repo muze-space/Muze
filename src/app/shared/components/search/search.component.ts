@@ -4,10 +4,11 @@ import { TracksService } from '../../../core/services/tracks.service';
 import { TrackOrder } from '../../../core/enums/track-order.enum';
 import { Track } from '../../../core/models/track.model';
 import { TrackItem } from '../track-item/track-item';
+import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 
 @Component({
   selector: 'app-search',
-  imports: [TrackItem],
+  imports: [TrackItem, ClickOutsideDirective],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
@@ -53,5 +54,9 @@ export class SearchComponent {
     console.log('onInput: ', this.query);
 
     this._searchSubject.next(this.query);
+  }
+
+  closeResults(): void {
+    this.isResultsWindowOpen.set(false);
   }
 }
