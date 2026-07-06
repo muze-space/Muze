@@ -19,4 +19,10 @@ describe('AudioPlayer', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render audio element', () => {
+    fixture.detectChanges();
+    const audioElement = fixture.nativeElement.querySelector('audio');
+    expect(audioElement).toBeTruthy();
+  });
 });

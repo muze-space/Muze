@@ -1,5 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { noWhitespaceValidator } from '../../shared/utils/no-whitespace.validator';
+import { AutofocusDirective } from '../../shared/directives/autofocus.directive';
 
 interface FeedbackForm {
   name: string;
@@ -9,29 +11,30 @@ interface FeedbackForm {
 
 @Component({
   selector: 'app-feedback',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AutofocusDirective],
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.css',
 })
-export class Feedback implements OnInit {
-  feedbackForm!: FormGroup;
+export class Feedback {
   isSubmitted = false;
   submitSuccess = false;
   submitError: string | null = null;
 
   private fb = inject(FormBuilder);
 
-  ngOnInit(): void {
-    this.initializeForm();
-  }
-
-  private initializeForm(): void {
-    this.feedbackForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      message: ['', [Validators.required, Validators.minLength(10)]],
-    });
-  }
+  feedbackForm = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3), noWhitespaceValidator]],
+    email: ['', [Validators.required, Validators.email]],
+    message: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(1000),
+        noWhitespaceValidator,
+      ],
+    ],
+  });
 
   onSubmit(): void {
     this.isSubmitted = true;

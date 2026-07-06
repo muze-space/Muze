@@ -19,4 +19,17 @@ describe('AboutUs', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display about us content', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toBeTruthy();
+  });
+
+  it('should render team members section', () => {
+    fixture.detectChanges();
+    const content = fixture.nativeElement.textContent;
+    expect(content).toBeTruthy();
+  });
 });
+

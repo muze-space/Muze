@@ -13,10 +13,9 @@ import { GenreItem } from '../../shared/components/genre-item/genre-item';
   styleUrl: './home.css',
 })
 export class Home {
-  private router = inject(Router);
-
   readonly trackOrder = TrackOrder;
   readonly genres = TRACK_GENRES;
+  private router = inject(Router);
 
   onGenreClick(value: string) {
     this.router.navigate([AppRoutes.Search], {

@@ -19,4 +19,16 @@ describe('Login', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render login form', () => {
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled).toBeTruthy();
+  });
+
+  it('should compile without errors', () => {
+    expect(() => {
+      fixture.detectChanges();
+    }).not.toThrow();
+  });
 });
