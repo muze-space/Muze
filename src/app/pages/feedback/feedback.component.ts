@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { noWhitespaceValidator } from '../../shared/utils/no-whitespace.validator';
+import { AutofocusDirective } from '../../shared/directives/autofocus.directive';
 
 interface FeedbackForm {
   name: string;
@@ -10,7 +11,7 @@ interface FeedbackForm {
 
 @Component({
   selector: 'app-feedback',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AutofocusDirective],
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.css',
 })
