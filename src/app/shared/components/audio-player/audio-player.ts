@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, inject, viewChild } from '@angular/core';
+import { Component, effect, ElementRef, HostListener, inject, viewChild } from '@angular/core';
 import { PlayerService } from '../../../core/services/player.service';
 import { DurationPipe } from '../../pipes/duration.pipe';
 
@@ -90,5 +90,30 @@ export class AudioPlayer {
   onVolumeChange(event: Event): void {
     const value = Number((event.target as HTMLInputElement).value);
     this.playerService.setVolume(value);
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent): void {
+    const target = event.target as HTMLElement;
+    const isTyping = ['INPUT', 'TEXTAREA'].includes(target.tagName) || target.isContentEditable;
+
+    if (isTyping) {
+      return;
+    }
+
+    switch (event.code) {
+      case 'Space':
+        event.preventDefault();
+        this.onTogglePlay();
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.playerService.setVolume(Math.min(1, this.volume() + 0.1));
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.playerService.setVolume(Math.max(0, this.volume() - 0.1));
+        break;
+    }
   }
 }
