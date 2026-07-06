@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { ModalService } from '../../../core/services/modal.service';
 
 @Component({
@@ -9,4 +9,9 @@ import { ModalService } from '../../../core/services/modal.service';
 })
 export class Login {
   protected readonly modalService = inject(ModalService);
+
+  @HostListener('document:keydown')
+  onKeyDown() {
+    this.modalService.closeLogin();
+  }
 }
