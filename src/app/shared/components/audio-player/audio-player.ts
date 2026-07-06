@@ -103,6 +103,9 @@ export class AudioPlayer {
 
     switch (event.code) {
       case 'Space':
+        if (!this.currentTrack()) {
+          return;
+        }
         event.preventDefault();
         this.onTogglePlay();
         break;
