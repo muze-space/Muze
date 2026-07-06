@@ -16,15 +16,15 @@
     </div>
   }
 
-  <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" class="feedback-form">
+  <form (ngSubmit)="onSubmit()" [formGroup]="feedbackForm" class="feedback-form">
     <div class="form-group">
       <label for="name">Name <span class="required">*</span></label>
       <input
-        id="name"
-        type="text"
-        formControlName="name"
-        placeholder="Your full name"
         class="form-input"
+        formControlName="name"
+        id="name"
+        placeholder="Your full name"
+        type="text"
       />
       <div class="error-messages">
         @if (feedbackForm.get('name')?.hasError('required') && (feedbackForm.get('name')?.touched || isSubmitted)) {
@@ -33,17 +33,20 @@
         @if (feedbackForm.get('name')?.hasError('minlength') && (feedbackForm.get('name')?.touched || isSubmitted)) {
           <span class="error-text">Name must be at least 3 characters</span>
         }
+        @if (feedbackForm.get('name')?.hasError('whitespace') && (feedbackForm.get('name')?.touched || isSubmitted)) {
+          <span class="error-text">Name cannot be only whitespace</span>
+        }
       </div>
     </div>
 
     <div class="form-group">
       <label for="email">Email <span class="required">*</span></label>
       <input
-        id="email"
-        type="email"
-        formControlName="email"
-        placeholder="your.email@example.com"
         class="form-input"
+        formControlName="email"
+        id="email"
+        placeholder="your.email@example.com"
+        type="email"
       />
       <div class="error-messages">
         @if (feedbackForm.get('email')?.hasError('required') && (feedbackForm.get('email')?.touched || isSubmitted)) {
@@ -58,11 +61,11 @@
     <div class="form-group">
       <label for="message">Message <span class="required">*</span></label>
       <textarea
-        id="message"
+        class="form-textarea"
         formControlName="message"
+        id="message"
         placeholder="Please describe your feedback in detail..."
         rows="6"
-        class="form-textarea"
       ></textarea>
       <div class="char-count">
         {{ feedbackForm.get('message')?.value?.length || 0 }} / 1000 characters
@@ -79,16 +82,16 @@
 
     <div class="form-actions">
       <button
-        type="submit"
         [disabled]="isSubmitted"
         class="btn btn-primary"
+        type="submit"
       >
         {{ isSubmitted ? 'Sending...' : 'Send Feedback' }}
       </button>
       <button
-        type="button"
         (click)="resetForm()"
         class="btn btn-secondary"
+        type="button"
       >
         Clear
       </button>
