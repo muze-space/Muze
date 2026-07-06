@@ -1,6 +1,6 @@
 <div (appClickOutside)="closeResults()" class="search-section">
-  <form (submit)="$event.preventDefault()" class="search" role="search">
-    <input (input)="onInput($event)" [value]="query" class="search__input" id="header-search" name="query"
+  <form (ngSubmit)="$event.preventDefault()" [formGroup]="searchForm" class="search" role="search">
+    <input class="search__input" formControlName="query" id="header-search" name="query"
            placeholder="Search…" type="search" />
     <button class="search__button" type="submit">Find</button>
   </form>
