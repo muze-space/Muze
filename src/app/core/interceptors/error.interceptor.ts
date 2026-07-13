@@ -9,7 +9,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       } else if (error.status >= 500) {
         console.debug(`[ErrorInterceptor] Server error: ${req.url}`);
       }
-      return throwError(() => error); // пробросить дальше, чтобы конкретный вызывающий код тоже мог обработать
+      return throwError(() => error); // rethrow so the calling code can also handle it
     }),
   );
 };

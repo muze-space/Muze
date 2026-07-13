@@ -21,8 +21,6 @@ export class ApiService {
 
   post<B, R>(url: string, body: B, params: HttpParams): Observable<R> {
     return this._httpClient.post<R>(url, body, { params }).pipe(
-      shareReplay(1),
-      distinctUntilChanged(),
       catchError((error) => {
         console.error('API error:', error);
         return throwError(() => this.formatErrorMessage(error));
