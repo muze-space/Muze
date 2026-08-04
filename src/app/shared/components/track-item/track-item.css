@@ -15,16 +15,16 @@ li.search-version {
 }
 
 li:hover {
-  background-color: lightgray;
+  background-color: #282828;
 }
 
 li.active {
-  background-color: #eafbf1;
+  background-color: rgba(29, 185, 84, 0.15);
 }
 
 li.active .title,
 li.active .artist {
-  color: #1db954;
+  color: var(--spotify-green);
 }
 
 .cover {
@@ -42,19 +42,19 @@ li.active .artist {
 }
 
 .artist {
-  color: gray;
+  color: var(--spotify-light-gray);
 }
 
 .album {
-  color: gray;
+  color: var(--spotify-light-gray);
 }
 
 .release-date {
-  color: gray;
+  color: var(--spotify-light-gray);
 }
 
 .duration {
-  color: gray;
+  color: var(--spotify-light-gray);
 }
 
 .play-btn {
@@ -63,6 +63,6 @@ li.active .artist {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1db954;
+  color: var(--spotify-green);
   font-size: 0.8rem;
 }

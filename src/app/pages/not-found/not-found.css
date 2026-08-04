@@ -33,7 +33,7 @@
 
   margin-bottom: 24px;
 
-  color: #666;
+  color: var(--spotify-light-gray);
 }
 
 .not-found__button {

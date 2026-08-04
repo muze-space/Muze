@@ -13,8 +13,8 @@
   height: 90px;
   padding: 0 24px;
 
-  background-color: #181818;
-  color: #fff;
+  background-color: var(--spotify-dark-gray);
+  color: var(--spotify-white);
   border-top: 1px solid #282828;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
@@ -22,7 +22,7 @@
 .player-bar__empty {
   grid-column: 1 / -1;
   text-align: center;
-  color: #b3b3b3;
+  color: var(--spotify-light-gray);
 }
 
 .player-bar__track {
@@ -54,7 +54,7 @@
 }
 
 .player-bar__artist {
-  color: #b3b3b3;
+  color: var(--spotify-light-gray);
   font-size: 0.85rem;
   white-space: nowrap;
   overflow: hidden;
@@ -80,7 +80,7 @@
 .player-bar__btn {
   background: none;
   border: none;
-  color: #b3b3b3;
+  color: var(--spotify-light-gray);
   font-size: 1.1rem;
   cursor: pointer;
   padding: 4px 8px;
@@ -88,12 +88,12 @@
 }
 
 .player-bar__btn:hover {
-  color: #fff;
+  color: var(--spotify-white);
 }
 
 .player-bar__btn--play {
-  background-color: #fff;
-  color: #000;
+  background-color: var(--spotify-white);
+  color: var(--spotify-black);
   width: 32px;
   height: 32px;
   display: flex;
@@ -105,7 +105,7 @@
 }
 
 .player-bar__btn--play:hover {
-  color: #000;
+  color: var(--spotify-black);
   transform: scale(1.05);
 }
 
@@ -118,14 +118,14 @@
 
 .player-bar__time {
   font-size: 0.75rem;
-  color: #b3b3b3;
+  color: var(--spotify-light-gray);
   min-width: 34px;
   text-align: center;
 }
 
 .player-bar__range {
   flex: 1;
-  accent-color: #1db954;
+  accent-color: var(--spotify-green);
   cursor: pointer;
 }
 

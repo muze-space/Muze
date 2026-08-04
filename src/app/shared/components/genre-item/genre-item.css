@@ -1,12 +1,13 @@
 li {
   list-style: none;
-  background-color: lightgray;
+  background-color: var(--spotify-dark-gray);
+  color: var(--spotify-white);
   padding: 8px;
   border-radius: 4px;
 }
 
 li:hover {
-  background-color: gray;
-  color: white;
+  background-color: #282828;
+  color: var(--spotify-green);
   cursor: pointer;
 }

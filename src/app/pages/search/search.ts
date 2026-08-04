@@ -1,50 +1,31 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs';
-import { Track } from '../../core/models/track.model';
-import { TracksService } from '../../core/services/tracks.service';
+import { map } from 'rxjs';
 import { TRACK_GENRES } from '../../core/constants/genre.const';
 import { QUERY_PARAMS } from '../../core/constants/query-params.const';
+import { TrackOrder } from '../../core/enums/track-order.enum';
+import { Tracks } from '../../shared/components/tracks/tracks';
 
 @Component({
   selector: 'app-search',
-  imports: [],
+  imports: [Tracks],
   templateUrl: './search.html',
   styleUrl: './search.css',
 })
-export class Search implements OnInit {
-  tracks = signal<Track[]>([]);
-  tracksCount = computed(() => this.tracks().length);
-  isLoading = signal<boolean>(false);
-  error = signal<string | null>(null);
-  private route = inject(ActivatedRoute);
-  private trackService = inject(TracksService);
+export class Search {
+  protected readonly trackOrder = TrackOrder;
+  private readonly route = inject(ActivatedRoute);
 
-  constructor() {
-    effect(() => {
-      const count = this.tracksCount();
-      console.log(`Search results count: ${count}`);
-    });
-  }
+  protected readonly query = toSignal(
+    this.route.queryParams.pipe(map((params) => params[QUERY_PARAMS.query] as string | undefined)),
+  );
 
-  ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      const genre = TRACK_GENRES.find((g) => g.value === params[QUERY_PARAMS.genre]);
+  protected readonly genre = toSignal(
+    this.route.queryParams.pipe(
+      map((params) => TRACK_GENRES.find((g) => g.value === params[QUERY_PARAMS.genre])),
+    ),
+  );
 
-      if (params[QUERY_PARAMS.genre]) {
-        this.isLoading.set(true);
-        this.error.set(null);
-        this.trackService
-          .getTracks({ genre: genre })
-          .pipe(finalize(() => this.isLoading.set(false)))
-          .subscribe({
-            next: (response) => this.tracks.set(response.results),
-            error: (err) => this.error.set(err),
-          });
-      } else {
-        this.tracks.set([]);
-        this.error.set(null);
-      }
-    });
-  }
+  protected readonly hasCriteria = computed(() => !!this.query() || !!this.genre());
 }

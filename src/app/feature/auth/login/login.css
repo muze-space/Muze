@@ -17,7 +17,7 @@
   width: 100%;
   max-width: 420px;
 
-  background: #fff;
+  background: var(--spotify-dark-gray);
   border-radius: 16px;
 
   padding: 32px;
@@ -36,7 +36,7 @@
 
 .modal p {
   font-size: 14px;
-  color: #666;
+  color: var(--spotify-light-gray);
   margin-bottom: 24px;
   line-height: 1.5;
 }
@@ -49,8 +49,8 @@
   border: none;
   border-radius: 10px;
 
-  background: #2d6cdf;
-  color: white;
+  background: var(--spotify-green);
+  color: var(--spotify-black);
 
   font-size: 15px;
   font-weight: 600;
@@ -61,7 +61,7 @@
 }
 
 .login-btn:hover {
-  background: #2457b8;
+  background: #1ed760;
   transform: translateY(-1px);
 }
 
@@ -76,13 +76,13 @@
   font-size: 20px;
   cursor: pointer;
 
-  color: #666;
+  color: var(--spotify-light-gray);
 
   transition: color 0.2s ease;
 }
 
 .close-btn:hover {
-  color: #000;
+  color: var(--spotify-white);
 }
 
 @keyframes fadeIn {

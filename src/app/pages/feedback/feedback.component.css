@@ -9,20 +9,21 @@
 .form-select,
 .form-textarea {
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid #282828;
   border-radius: 4px;
   font-size: 1rem;
   font-family: inherit;
   transition: all 0.2s ease;
-  background-color: white;
+  background-color: var(--spotify-dark-gray);
+  color: var(--spotify-white);
 }
 
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  border-color: var(--spotify-green);
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.15);
 }
 
 .form-textarea {
@@ -32,7 +33,7 @@
 
 .char-count {
   font-size: 0.85rem;
-  color: #999;
+  color: var(--spotify-light-gray);
   margin-top: 0.5rem;
   text-align: right;
 }
@@ -46,7 +47,7 @@
 
 .error-text {
   font-size: 0.85rem;
-  color: #dc3545;
+  color: #f15e5e;
 }
 
 .form-actions {
@@ -72,25 +73,25 @@
 }
 
 .btn-primary {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--spotify-green);
+  color: var(--spotify-black);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #0056b3;
-  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+  background-color: #1ed760;
+  box-shadow: 0 2px 8px rgba(29, 185, 84, 0.3);
 }
 
 .btn-primary:disabled {
-  background-color: #ccc;
-  opacity: 0.7;
+  background-color: var(--spotify-light-gray);
+  opacity: 0.5;
 }
 
 .btn-secondary {
-  background-color: #6c757d;
-  color: white;
+  background-color: #282828;
+  color: var(--spotify-white);
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268;
+  background-color: #3a3a3a;
 }

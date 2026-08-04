@@ -13,10 +13,10 @@
 }
 
 .member-card {
-  border: 1px solid #dddddd;
+  border: 1px solid #282828;
   border-radius: 10px;
   padding: 16px;
-  background: #ffffff;
+  background: var(--spotify-dark-gray);
 }
 
 .photo {
@@ -36,17 +36,17 @@
 .role {
   margin: 6px 0 10px;
   font-weight: 600;
-  color: #444444;
+  color: var(--spotify-green);
 }
 
 .bio {
   margin: 0 0 12px;
-  color: #222222;
+  color: var(--spotify-light-gray);
   line-height: 1.4;
 }
 
 .link {
-  color: #0a66c2;
+  color: var(--spotify-green);
   text-decoration: none;
 }
 
@@ -62,6 +62,6 @@
 .feedback-section {
   margin-top: 4rem;
   padding-top: 2rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #282828;
 }
 

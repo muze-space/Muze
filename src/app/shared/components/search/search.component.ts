@@ -7,6 +7,9 @@ import { TrackItem } from '../track-item/track-item';
 import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { AppRoutes } from '../../../core/enums/app-routes.enum';
+import { QUERY_PARAMS } from '../../../core/constants/query-params.const';
 
 @Component({
   selector: 'app-search',
@@ -25,6 +28,7 @@ export class SearchComponent {
   });
 
   private _tracksService = inject(TracksService);
+  private _router = inject(Router);
 
   constructor() {
     this.searchForm.controls.query.valueChanges
@@ -63,5 +67,16 @@ export class SearchComponent {
 
   closeResults(): void {
     this.isResultsWindowOpen.set(false);
+  }
+
+  submitSearch(): void {
+    const query = this.searchForm.controls.query.value.trim();
+
+    if (!query) {
+      return;
+    }
+
+    this.closeResults();
+    this._router.navigate([AppRoutes.Search], { queryParams: { [QUERY_PARAMS.query]: query } });
   }
 }

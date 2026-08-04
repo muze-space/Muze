@@ -1,17 +1,13 @@
-<h2>Search</h2>
-
-@if (error()) {
-  <div class="error-message" role="alert">{{ error() }}</div>
+@if (query()) {
+  <h2>Search results for "{{ query() }}"</h2>
+} @else if (genre()) {
+  <h2>{{ genre()!.label }}</h2>
 } @else {
-  <p>{{ tracksCount() }} results</p>
+  <h2>Search</h2>
+}
 
-  @if (isLoading()) {
-    <p class="loading">Loading tracks…</p>
-  } @else {
-    <ul>
-      @for (track of tracks(); track track.id) {
-        <li>{{ track.name }}</li>
-      }
-    </ul>
-  }
+@if (hasCriteria()) {
+  <app-tracks [genre]="genre()" [order]="trackOrder.Relevance" [search]="query()"></app-tracks>
+} @else {
+  <p>Start typing in the search box above to find tracks.</p>
 }
