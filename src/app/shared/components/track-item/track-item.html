@@ -6,7 +6,6 @@
   [attr.aria-pressed]="isPlaying()"
   [class.active]="isCurrentTrack()"
   [class.playing]="isPlaying()"
-  [class.search-version]="isSearchVersion()"
   role="button"
   tabindex="0"
 >
@@ -21,23 +20,21 @@
       >{{ track().artist_name }}</a
     >
   </div>
-  @if (!isSearchVersion()) {
-    <span class="album">{{ track().album_name }}</span>
-    <span class="release-date">{{ track().releasedate | date:'yyyy' }}</span>
-    <span class="duration">{{ track().duration | duration }}</span>
-    <button
-      (click)="onLikeClick($event)"
-      (keydown.enter)="$event.stopPropagation()"
-      (keydown.space)="$event.stopPropagation()"
-      [attr.aria-label]="isLiked() ? 'Unlike' : 'Like'"
-      [attr.aria-pressed]="isLiked()"
-      [class.liked]="isLiked()"
-      class="like-btn"
-      type="button"
-    >
-      {{ isLiked() ? '♥' : '♡' }}
-    </button>
-  }
+  <span class="album">{{ track().album_name }}</span>
+  <span class="release-date">{{ track().releasedate | date:'yyyy' }}</span>
+  <span class="duration">{{ track().duration | duration }}</span>
+  <button
+    (click)="onLikeClick($event)"
+    (keydown.enter)="$event.stopPropagation()"
+    (keydown.space)="$event.stopPropagation()"
+    [attr.aria-label]="isLiked() ? 'Unlike' : 'Like'"
+    [attr.aria-pressed]="isLiked()"
+    [class.liked]="isLiked()"
+    class="like-btn"
+    type="button"
+  >
+    {{ isLiked() ? '♥' : '♡' }}
+  </button>
   @if (isCurrentTrack()) {
     <span class="play-btn">
       {{ isPlaying() ? '⏸' : '▶' }}

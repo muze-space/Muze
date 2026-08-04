@@ -10,10 +10,6 @@ li {
   cursor: pointer;
 }
 
-li.search-version {
-  grid-template-columns: 50px 1fr auto;
-}
-
 li:hover {
   background-color: #282828;
 }

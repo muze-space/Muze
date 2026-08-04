@@ -16,7 +16,6 @@ import { AppRoutes } from '../../../core/enums/app-routes.enum';
 export class TrackItem {
   protected readonly AppRoutes = AppRoutes;
   track = input.required<Track>();
-  isSearchVersion = input<boolean>(false);
   queue = input<Track[]>([]);
   private readonly playerService = inject(PlayerService);
   private readonly likedTracksService = inject(LikedTracksService);

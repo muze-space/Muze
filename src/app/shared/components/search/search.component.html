@@ -1,20 +1,7 @@
-<div (appClickOutside)="closeResults()" class="search-section">
+<div class="search-section">
   <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="search" role="search">
     <input class="search__input" formControlName="query" id="header-search" name="query"
            placeholder="Search…" type="search" />
     <button class="search__button" type="submit">Find</button>
   </form>
-  @if (isResultsWindowOpen()) {
-    <div class="dropdown">
-      @if (isLoading()) {
-        <div class="dropdown__loading">Loading...</div>
-      } @else {
-        <ul class="dropdown__list">
-          @for (track of suggestions(); track track.id) {
-            <app-track-item [isSearchVersion]="true" [queue]="suggestions()" [track]="track"></app-track-item>
-          }
-        </ul>
-      }
-    </div>
-  }
 </div>
