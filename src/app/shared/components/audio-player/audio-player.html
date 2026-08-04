@@ -18,16 +18,6 @@
 
     <div class="player-bar__center">
       <div class="player-bar__buttons">
-        <button
-          (click)="onToggleShuffle()"
-          [attr.aria-pressed]="shuffle()"
-          [class.player-bar__btn--active]="shuffle()"
-          aria-label="Shuffle"
-          class="player-bar__btn player-bar__btn--secondary"
-          type="button"
-        >
-          🔀
-        </button>
         <button (click)="onPrevious()" aria-label="Previous track" class="player-bar__btn" type="button">⏮</button>
         <button
           (click)="onTogglePlay()"
@@ -38,16 +28,6 @@
           {{ isPlaying() ? '⏸' : '▶' }}
         </button>
         <button (click)="onNext()" aria-label="Next track" class="player-bar__btn" type="button">⏭</button>
-        <button
-          (click)="onCycleRepeat()"
-          [attr.aria-label]="'Repeat: ' + repeatMode()"
-          [attr.aria-pressed]="repeatMode() !== 'off'"
-          [class.player-bar__btn--active]="repeatMode() !== 'off'"
-          class="player-bar__btn player-bar__btn--secondary"
-          type="button"
-        >
-          {{ repeatMode() === 'one' ? '🔂' : '🔁' }}
-        </button>
       </div>
 
       <div class="player-bar__seek">
