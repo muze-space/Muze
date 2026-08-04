@@ -6,10 +6,11 @@ import { Sidebar } from './shared/layouts/sidebar/sidebar';
 import { AudioPlayer } from './shared/components/audio-player/audio-player';
 import { Login } from './feature/auth/login/login';
 import { ModalService } from './core/services/modal.service';
+import { Toast } from './shared/components/toast/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Sidebar, Footer, AudioPlayer, Login],
+  imports: [RouterOutlet, Header, Sidebar, Footer, AudioPlayer, Login, Toast],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
