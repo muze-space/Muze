@@ -1,13 +1,15 @@
 <div class="app-shell">
-  <app-sidebar></app-sidebar>
+  <div class="app-body">
+    <app-sidebar></app-sidebar>
 
-  <div class="app-main">
-    <app-header></app-header>
-    <main class="content">
-      <router-outlet></router-outlet>
-    </main>
-    <app-footer></app-footer>
+    <div class="app-main">
+      <app-header></app-header>
+      <main class="content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
   </div>
+  <app-footer></app-footer>
 </div>
 
 @if (modalService.isLoginOpen()) {
