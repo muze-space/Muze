@@ -27,15 +27,11 @@
   }
 
   <h2>Tracks</h2>
-  @if (tracks().length) {
-    <ol class="tracks">
-      @for (track of tracks(); track track.id) {
-        <app-track-item [queue]="tracks()" [track]="track"></app-track-item>
-      }
-    </ol>
-  } @else {
-    <p>No tracks found for this artist.</p>
-  }
+  <app-tracks
+    [artistId]="artistId()"
+    [order]="trackOrder.PopularityTotal"
+    emptyMessage="No tracks found for this artist."
+  ></app-tracks>
 } @else {
   <p>Artist not found.</p>
 }
