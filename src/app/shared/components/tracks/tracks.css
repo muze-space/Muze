@@ -14,3 +14,37 @@
   color: var(--spotify-light-gray);
   font-weight: 500;
 }
+
+.empty {
+  padding: 16px;
+  color: var(--spotify-light-gray);
+}
+
+.load-more {
+  display: block;
+  margin: 16px auto 0;
+  padding: 10px 24px;
+
+  background-color: var(--spotify-dark-gray);
+  color: var(--spotify-white);
+  border: 1px solid #282828;
+  border-radius: 20px;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.load-more:hover:not(:disabled) {
+  background-color: #282828;
+  border-color: var(--spotify-green);
+  color: var(--spotify-green);
+}
+
+.load-more:disabled {
+  cursor: default;
+  opacity: 0.6;
+}

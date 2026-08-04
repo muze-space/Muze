@@ -2,10 +2,17 @@
   <div class="error-message" role="alert">{{ error() }}</div>
 } @else if (isLoading()) {
   <p class="loading">Loading…</p>
+} @else if (!tracks().length) {
+  <p class="empty">{{ emptyMessage() }}</p>
 } @else {
   <ol>
     @for (track of tracks(); track track.id) {
       <app-track-item [queue]="tracks()" [track]="track"></app-track-item>
     }
   </ol>
+  @if (hasMore()) {
+    <button (click)="loadMore()" [disabled]="isLoadingMore()" class="load-more" type="button">
+      {{ isLoadingMore() ? 'Loading…' : 'Load more' }}
+    </button>
+  }
 }
