@@ -1,3 +1,5 @@
+<button (click)="location.back()" class="back-button" type="button">← Back</button>
+
 @if (isLoading()) {
   <p class="loading">Loading artist…</p>
 } @else if (error()) {

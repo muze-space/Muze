@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { finalize, map } from 'rxjs';
 import { TracksService } from '../../core/services/tracks.service';
 import { TrackOrder } from '../../core/enums/track-order.enum';
@@ -20,6 +20,7 @@ const ALBUM_TRACKS_LIMIT = 50;
 })
 export class AlbumPage {
   protected readonly AppRoutes = AppRoutes;
+  protected readonly location = inject(Location);
   private readonly route = inject(ActivatedRoute);
   private readonly tracksService = inject(TracksService);
 

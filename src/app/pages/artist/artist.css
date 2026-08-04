@@ -1,3 +1,19 @@
+.back-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 16px;
+
+  color: var(--spotify-light-gray);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  color: var(--spotify-white);
+}
+
 .artist-header {
   display: flex;
   align-items: flex-end;
