@@ -16,6 +16,8 @@ export class AudioPlayer {
   readonly currentTime = this.playerService.currentTime;
   readonly duration = this.playerService.duration;
   readonly volume = this.playerService.volume;
+  readonly shuffle = this.playerService.shuffle;
+  readonly repeatMode = this.playerService.repeatMode;
   private readonly audioRef = viewChild<ElementRef<HTMLAudioElement>>('audioElement');
 
   constructor() {
@@ -73,7 +75,27 @@ export class AudioPlayer {
   }
 
   onEnded(): void {
-    this.playerService.next();
+    if (this.repeatMode() === 'one') {
+      const audio = this.audioRef()?.nativeElement;
+
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch((err) => console.error('Playback failed:', err));
+      }
+
+      this.playerService.setCurrentTime(0);
+      return;
+    }
+
+    this.playerService.onTrackEnded();
+  }
+
+  onToggleShuffle(): void {
+    this.playerService.toggleShuffle();
+  }
+
+  onCycleRepeat(): void {
+    this.playerService.cycleRepeatMode();
   }
 
   onSeek(event: Event): void {

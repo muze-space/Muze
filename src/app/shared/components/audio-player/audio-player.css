@@ -109,6 +109,14 @@
   transform: scale(1.05);
 }
 
+.player-bar__btn--secondary {
+  font-size: 0.9rem;
+}
+
+.player-bar__btn--active {
+  color: var(--spotify-green);
+}
+
 .player-bar__seek {
   display: flex;
   align-items: center;
