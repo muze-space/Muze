@@ -16,7 +16,7 @@
     <a
       (click)="$event.stopPropagation()"
       (keydown.enter)="$event.stopPropagation()"
-      [routerLink]="[AppRoutes.Artist, track().artist_id]"
+      [routerLink]="['/' + AppRoutes.Artist, track().artist_id]"
       class="artist"
       >{{ track().artist_name }}</a
     >
