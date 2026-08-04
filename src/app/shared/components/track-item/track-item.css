@@ -1,6 +1,6 @@
 li {
   display: grid;
-  grid-template-columns: 50px 3fr 2fr 1fr 1fr auto;
+  grid-template-columns: 50px 3fr 2fr 1fr 1fr auto auto;
   align-items: center;
   gap: 16px;
   list-style: none;
@@ -74,4 +74,41 @@ li.active .artist {
   justify-content: center;
   color: var(--spotify-green);
   font-size: 0.8rem;
+}
+
+.like-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--spotify-light-gray);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.like-btn:hover {
+  color: var(--spotify-white);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.like-btn.liked {
+  color: #f15e9c;
+}
+
+.like-btn.liked:hover {
+  color: #f582b3;
+  background-color: rgba(241, 94, 156, 0.15);
+}
+
+.like-btn.liked:active {
+  transform: scale(0.9);
 }

@@ -1,14 +1,22 @@
 <section class="library">
   <h1 class="library__title">Your Library</h1>
 
-  <div class="library__empty">
-    <div class="library__empty-icon">
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-        <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" />
-      </svg>
+  @if (likedTracks().length) {
+    <ol>
+      @for (track of likedTracks(); track track.id) {
+        <app-track-item [queue]="likedTracks()" [track]="track"></app-track-item>
+      }
+    </ol>
+  } @else {
+    <div class="library__empty">
+      <div class="library__empty-icon">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" />
+        </svg>
+      </div>
+      <h2>Saved tracks will show up here</h2>
+      <p>Songs you like will appear in your library once you start saving them.</p>
+      <a [routerLink]="AppRoutes.Home" class="library__cta">Find something to play</a>
     </div>
-    <h2>Saved tracks will show up here</h2>
-    <p>Songs you like will appear in your library once you start saving them.</p>
-    <a [routerLink]="AppRoutes.Home" class="library__cta">Find something to play</a>
-  </div>
+  }
 </section>
