@@ -16,9 +16,11 @@
     <ul class="albums">
       @for (album of albums(); track album.id) {
         <li class="album-card">
-          <img [alt]="album.name" [src]="album.image" class="album-card__image" />
-          <span class="album-card__name">{{ album.name }}</span>
-          <span class="album-card__year">{{ album.releasedate | date: 'yyyy' }}</span>
+          <a [routerLink]="['/' + AppRoutes.Album, album.id]" class="album-card__link">
+            <img [alt]="album.name" [src]="album.image" class="album-card__image" />
+            <span class="album-card__name">{{ album.name }}</span>
+            <span class="album-card__year">{{ album.releasedate | date: 'yyyy' }}</span>
+          </a>
         </li>
       }
     </ul>

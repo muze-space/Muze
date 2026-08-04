@@ -1,6 +1,6 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { finalize, forkJoin, map } from 'rxjs';
 import { ArtistService } from '../../core/services/artist.service';
@@ -8,14 +8,16 @@ import { Artist } from '../../core/models/artist.model';
 import { ArtistAlbum } from '../../core/models/artist-albums-response.model';
 import { Track } from '../../core/models/track.model';
 import { TrackItem } from '../../shared/components/track-item/track-item';
+import { AppRoutes } from '../../core/enums/app-routes.enum';
 
 @Component({
   selector: 'app-artist',
-  imports: [TrackItem, DatePipe],
+  imports: [TrackItem, DatePipe, RouterLink],
   templateUrl: './artist.html',
   styleUrl: './artist.css',
 })
 export class ArtistPage {
+  protected readonly AppRoutes = AppRoutes;
   private readonly route = inject(ActivatedRoute);
   private readonly artistService = inject(ArtistService);
 

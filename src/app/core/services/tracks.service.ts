@@ -36,6 +36,10 @@ export class TracksService {
       params = params.set('search', options.search);
     }
 
+    if (options.albumId) {
+      params = params.set('album_id', options.albumId);
+    }
+
     return this.retryOnEmptyResults(() =>
       this._apiService.get<TracksResponse>(`${this._apiConfig.baseUrl}${API_ENDPOINTS.tracks}`, params),
     );
@@ -62,4 +66,5 @@ export interface TrackRequestOption {
   genre?: TrackGenre;
   search?: string;
   limit?: number;
+  albumId?: string;
 }

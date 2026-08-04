@@ -56,6 +56,14 @@ describe('TracksService', () => {
     req.flush(nonEmptyResponse());
   });
 
+  it('includes the album id filter when provided', () => {
+    service.getTracks({ albumId: '33' }).subscribe();
+
+    const req = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    expect(req.request.params.get('album_id')).toBe('33');
+    req.flush(nonEmptyResponse());
+  });
+
   it('returns the response as-is when results are non-empty', () => {
     let result: TracksResponse | undefined;
     service.getTracks({}).subscribe((res) => (result = res));

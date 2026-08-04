@@ -5,6 +5,7 @@ import { AppRoutes } from './core/enums/app-routes.enum';
 import { Search } from './pages/search/search';
 import { Library } from './pages/library/library';
 import { ArtistPage } from './pages/artist/artist';
+import { AlbumPage } from './pages/album/album';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -24,6 +25,10 @@ export const routes: Routes = [
   {
     path: `${AppRoutes.Artist}/:id`,
     component: ArtistPage,
+  },
+  {
+    path: `${AppRoutes.Album}/:id`,
+    component: AlbumPage,
   },
   {
     path: AppRoutes.About,

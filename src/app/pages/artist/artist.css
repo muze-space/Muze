@@ -37,7 +37,9 @@
 .album-card {
   list-style: none;
   width: 170px;
+}
 
+.album-card__link {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -46,10 +48,13 @@
   border-radius: 8px;
   background-color: var(--spotify-dark-gray);
 
+  color: inherit;
+  text-decoration: none;
+
   transition: background-color 0.2s ease;
 }
 
-.album-card:hover {
+.album-card__link:hover {
   background-color: #282828;
 }
 
