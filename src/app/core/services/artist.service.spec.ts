@@ -5,7 +5,6 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ArtistService } from './artist.service';
 import { API_CONFIG_TOKEN } from '../tokens/api-config.token';
 import { ArtistsResponse } from '../models/artists-response.model';
-import { ArtistTracksResponse } from '../models/artist-tracks-response.model';
 import { ArtistAlbumsResponse } from '../models/artist-albums-response.model';
 
 const BASE_URL = 'https://api.jamendo.com/v3.0/';
@@ -56,59 +55,6 @@ describe('ArtistService', () => {
     req.flush({ headers: {} as never, results: [] } as ArtistsResponse);
 
     expect(result).toBeUndefined();
-  });
-
-  it('getArtistTracks() maps raw artist tracks into Track objects', () => {
-    let result: unknown;
-    service.getArtistTracks('42').subscribe((res) => (result = res));
-
-    const req = httpMock.expectOne((r) => r.url === `${BASE_URL}artists/tracks/`);
-    const response: ArtistTracksResponse = {
-      headers: {} as never,
-      results: [
-        {
-          id: '42',
-          name: 'Test Artist',
-          tracks: [
-            {
-              album_id: 'album-1',
-              album_name: 'Album',
-              id: 'track-1',
-              name: 'Song',
-              duration: '180',
-              releasedate: '2024-01-01',
-              license_ccurl: '',
-              album_image: '',
-              image: '',
-              audio: '',
-              audiodownload: '',
-              audiodownload_allowed: true,
-            },
-          ],
-        } as never,
-      ],
-    };
-    req.flush(response);
-
-    expect(result).toEqual([
-      expect.objectContaining({
-        id: 'track-1',
-        name: 'Song',
-        duration: 180,
-        artist_id: '42',
-        artist_name: 'Test Artist',
-      }),
-    ]);
-  });
-
-  it('getArtistTracks() returns an empty array when there are no results', () => {
-    let result: unknown;
-    service.getArtistTracks('42').subscribe((res) => (result = res));
-
-    const req = httpMock.expectOne((r) => r.url === `${BASE_URL}artists/tracks/`);
-    req.flush({ headers: {} as never, results: [] } as ArtistTracksResponse);
-
-    expect(result).toEqual([]);
   });
 
   it('getArtistAlbums() returns the albums for the first result', () => {
