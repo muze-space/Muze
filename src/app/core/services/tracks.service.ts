@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { Observable, of, switchMap, timer } from 'rxjs';
 import { ApiService } from './api.service';
 import { TracksResponse } from '../models/tracks-response.model';
 import { HttpParams } from '@angular/common/http';
@@ -8,6 +9,9 @@ import { TrackImageSize } from '../enums/track-image-size.enum';
 import { API_ENDPOINTS } from '../constants/api-endpoints.const';
 import { TrackGenre } from '../constants/genre.const';
 import { API_CONFIG_TOKEN } from '../tokens/api-config.token';
+
+const EMPTY_RESULTS_MAX_RETRIES = 3;
+const EMPTY_RESULTS_RETRY_DELAY_MS = 500;
 
 @Injectable({
   providedIn: 'root',
@@ -32,9 +36,23 @@ export class TracksService {
       params = params.set('search', options.search);
     }
 
-    return this._apiService.get<TracksResponse>(
-      `${this._apiConfig.baseUrl}${API_ENDPOINTS.tracks}`,
-      params,
+    return this.retryOnEmptyResults(() =>
+      this._apiService.get<TracksResponse>(`${this._apiConfig.baseUrl}${API_ENDPOINTS.tracks}`, params),
+    );
+  }
+
+  private retryOnEmptyResults(
+    request: () => Observable<TracksResponse>,
+    retriesLeft = EMPTY_RESULTS_MAX_RETRIES,
+  ): Observable<TracksResponse> {
+    return request().pipe(
+      switchMap((response) =>
+        response.results.length === 0 && retriesLeft > 0
+          ? timer(EMPTY_RESULTS_RETRY_DELAY_MS).pipe(
+              switchMap(() => this.retryOnEmptyResults(request, retriesLeft - 1)),
+            )
+          : of(response),
+      ),
     );
   }
 }
