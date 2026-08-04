@@ -5,6 +5,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TracksService } from './tracks.service';
 import { API_CONFIG_TOKEN } from '../tokens/api-config.token';
 import { TrackOrder } from '../enums/track-order.enum';
+import { TrackImageSize } from '../enums/track-image-size.enum';
 import { TracksResponse } from '../models/tracks-response.model';
 
 const BASE_URL = 'https://api.jamendo.com/v3.0/';
@@ -44,6 +45,15 @@ describe('TracksService', () => {
     const req = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
     expect(req.request.params.get('client_id')).toBe('test-client');
     expect(req.request.params.get('order')).toBe(TrackOrder.PopularityTotal);
+    expect(req.request.params.get('imagesize')).toBe(String(TrackImageSize.Size50));
+    req.flush(nonEmptyResponse());
+  });
+
+  it('uses a custom image size when provided', () => {
+    service.getTracks({ imageSize: TrackImageSize.Size300 }).subscribe();
+
+    const req = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    expect(req.request.params.get('imagesize')).toBe(String(TrackImageSize.Size300));
     req.flush(nonEmptyResponse());
   });
 

@@ -27,7 +27,7 @@ export class TracksService {
       .set('limit', options.limit || 10)
       .set('offset', options.offset ?? 0)
       .set('order', options.order || TrackOrder.PopularityTotal)
-      .set('imagesize', TrackImageSize.Size50);
+      .set('imagesize', options.imageSize || TrackImageSize.Size50);
 
     if (options.genre) {
       params = params.set('tags', options.genre.value);
@@ -74,4 +74,5 @@ export interface TrackRequestOption {
   offset?: number;
   albumId?: string;
   artistId?: string;
+  imageSize?: TrackImageSize;
 }

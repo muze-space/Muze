@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { finalize, map } from 'rxjs';
 import { TracksService } from '../../core/services/tracks.service';
 import { TrackOrder } from '../../core/enums/track-order.enum';
+import { TrackImageSize } from '../../core/enums/track-image-size.enum';
 import { Track } from '../../core/models/track.model';
 import { TrackItem } from '../../shared/components/track-item/track-item';
 import { AppRoutes } from '../../core/enums/app-routes.enum';
@@ -43,7 +44,12 @@ export class AlbumPage {
       this.error.set(null);
 
       this.tracksService
-        .getTracks({ albumId: id, order: TrackOrder.Id, limit: ALBUM_TRACKS_LIMIT })
+        .getTracks({
+          albumId: id,
+          order: TrackOrder.Id,
+          limit: ALBUM_TRACKS_LIMIT,
+          imageSize: TrackImageSize.Size300,
+        })
         .pipe(finalize(() => this.isLoading.set(false)))
         .subscribe({
           next: (response) => this.tracks.set(response.results),
