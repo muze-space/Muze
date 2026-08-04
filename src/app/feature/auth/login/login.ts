@@ -17,6 +17,9 @@ export class Login {
     }
   }
 
+  // TODO: this is a demo login, not real authentication. Wiring up real Jamendo OAuth
+  // requires a client secret and a redirect URI registered with Jamendo, which this
+  // project doesn't have. Swap this out for a proper OAuth flow once those are available.
   onLogin(): void {
     localStorage.setItem('isAuthenticated', 'true');
     this.modalService.closeLogin();
