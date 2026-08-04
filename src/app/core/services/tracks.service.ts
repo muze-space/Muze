@@ -25,6 +25,7 @@ export class TracksService {
       .set('client_id', this._apiConfig.clientId)
       .set('format', ApiResponseFormat.JsonPretty)
       .set('limit', options.limit || 10)
+      .set('offset', options.offset ?? 0)
       .set('order', options.order || TrackOrder.PopularityTotal)
       .set('imagesize', TrackImageSize.Size50);
 
@@ -38,6 +39,10 @@ export class TracksService {
 
     if (options.albumId) {
       params = params.set('album_id', options.albumId);
+    }
+
+    if (options.artistId) {
+      params = params.set('artist_id', options.artistId);
     }
 
     return this.retryOnEmptyResults(() =>
@@ -66,5 +71,7 @@ export interface TrackRequestOption {
   genre?: TrackGenre;
   search?: string;
   limit?: number;
+  offset?: number;
   albumId?: string;
+  artistId?: string;
 }

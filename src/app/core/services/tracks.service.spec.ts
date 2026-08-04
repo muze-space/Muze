@@ -64,6 +64,26 @@ describe('TracksService', () => {
     req.flush(nonEmptyResponse());
   });
 
+  it('includes the artist id filter when provided', () => {
+    service.getTracks({ artistId: '5' }).subscribe();
+
+    const req = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    expect(req.request.params.get('artist_id')).toBe('5');
+    req.flush(nonEmptyResponse());
+  });
+
+  it('defaults the offset to 0 and forwards a custom offset', () => {
+    service.getTracks({}).subscribe();
+    const firstReq = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    expect(firstReq.request.params.get('offset')).toBe('0');
+    firstReq.flush(nonEmptyResponse());
+
+    service.getTracks({ offset: 20 }).subscribe();
+    const secondReq = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    expect(secondReq.request.params.get('offset')).toBe('20');
+    secondReq.flush(nonEmptyResponse());
+  });
+
   it('returns the response as-is when results are non-empty', () => {
     let result: TracksResponse | undefined;
     service.getTracks({}).subscribe((res) => (result = res));
@@ -77,6 +97,19 @@ describe('TracksService', () => {
   it('retries the request when the API returns an empty result set', async () => {
     let result: TracksResponse | undefined;
     service.getTracks({}).subscribe((res) => (result = res));
+
+    const firstReq = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    firstReq.flush(emptyResponse());
+
+    const secondReq = await vi.waitFor(() => httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`));
+    secondReq.flush(nonEmptyResponse());
+
+    expect(result?.results.length).toBe(1);
+  });
+
+  it('retries an empty result set for a page past the first too', async () => {
+    let result: TracksResponse | undefined;
+    service.getTracks({ offset: 10 }).subscribe((res) => (result = res));
 
     const firstReq = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
     firstReq.flush(emptyResponse());
