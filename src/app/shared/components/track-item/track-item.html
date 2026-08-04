@@ -20,7 +20,13 @@
       >{{ track().artist_name }}</a
     >
   </div>
-  <span class="album">{{ track().album_name }}</span>
+  <a
+    (click)="$event.stopPropagation()"
+    (keydown.enter)="$event.stopPropagation()"
+    [routerLink]="['/' + AppRoutes.Album, track().album_id]"
+    class="album"
+    >{{ track().album_name }}</a
+  >
   <span class="release-date">{{ track().releasedate | date:'yyyy' }}</span>
   <span class="duration">{{ track().duration | duration }}</span>
   <button

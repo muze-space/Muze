@@ -51,7 +51,17 @@ li.active .artist {
 }
 
 .album {
+  width: fit-content;
   color: var(--spotify-light-gray);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.album:hover {
+  color: var(--spotify-white);
+  text-decoration: underline;
 }
 
 .release-date {
