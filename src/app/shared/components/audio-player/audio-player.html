@@ -36,6 +36,7 @@
           (input)="onSeek($event)"
           [max]="duration() || 0"
           [value]="currentTime()"
+          aria-label="Seek"
           class="player-bar__range"
           min="0"
           type="range"
@@ -49,6 +50,7 @@
       <input
         (input)="onVolumeChange($event)"
         [value]="volume()"
+        aria-label="Volume"
         class="player-bar__range player-bar__range--volume"
         max="1"
         min="0"

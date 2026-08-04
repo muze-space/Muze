@@ -1,9 +1,13 @@
 <li
   (click)="onTrackClick()"
   (keydown.enter)="onTrackClick()"
+  (keydown.space)="$event.preventDefault(); onTrackClick()"
+  [attr.aria-label]="track().name + ' — ' + track().artist_name"
+  [attr.aria-pressed]="isPlaying()"
   [class.active]="isCurrentTrack()"
   [class.playing]="isPlaying()"
   [class.search-version]="isSearchVersion()"
+  role="button"
   tabindex="0"
 >
   <img [alt]="track().album_name" [src]="track().album_image" class="cover" />
