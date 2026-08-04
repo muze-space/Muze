@@ -1,17 +1,5 @@
 <header>
-  <a href="/">
-    <img alt="Muze" class="logo" height="500" ngSrc="/logo.png" width="500" />
-  </a>
-  <!-- <app-search (searchChange)="onSearchChange($event)"></app-search> -->
   <app-search></app-search>
-  <nav aria-label="Primary">
-    <ul>
-      <li><a routerLink="{{ AppRoutes.Home }}" routerLinkActive="active">Discover</a></li>
-      <li><a routerLink="{{ AppRoutes.Search }}" routerLinkActive="active">Search</a></li>
-      <li><a routerLink="{{ AppRoutes.Library }}" routerLinkActive="active">Library</a></li>
-      <li><a routerLink="{{ AppRoutes.About }}" routerLinkActive="active">About Us</a></li>
-    </ul>
-  </nav>
   <nav class="header-nav">
     <button (click)="modalService.openLogin()" class="login-link" type="button">
       Login

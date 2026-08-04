@@ -1,29 +1,22 @@
 header {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
   align-items: center;
+  gap: 20px;
+
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 16px 32px;
+
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  background-color: var(--spotify-black);
 }
 
-.logo {
-  width: 48px;
-  height: 48px;
-}
-
-nav ul {
-  display: flex;
-  gap: 16px;
-}
-
-nav ul li {
-  list-style: none;
-}
-
-li a {
-  text-decoration: none;
-  color: var(--spotify-white);
-}
-
-li a:hover {
-  opacity: 0.7;
+@media (max-width: 900px) {
+  header {
+    padding: 16px 20px;
+  }
 }

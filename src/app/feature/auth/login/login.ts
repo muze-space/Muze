@@ -16,4 +16,9 @@ export class Login {
       this.modalService.closeLogin();
     }
   }
+
+  onLogin(): void {
+    localStorage.setItem('isAuthenticated', 'true');
+    this.modalService.closeLogin();
+  }
 }

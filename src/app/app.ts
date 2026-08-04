@@ -2,13 +2,14 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Footer } from './shared/layouts/footer/footer';
 import { Header } from './shared/layouts/header/header';
+import { Sidebar } from './shared/layouts/sidebar/sidebar';
 import { AudioPlayer } from './shared/components/audio-player/audio-player';
 import { Login } from './feature/auth/login/login';
 import { ModalService } from './core/services/modal.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, AudioPlayer, Login],
+  imports: [RouterOutlet, Header, Sidebar, Footer, AudioPlayer, Login],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

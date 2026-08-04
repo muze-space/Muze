@@ -1,8 +1,16 @@
-<!-- <app-header (searchChange)="onSearchChange($event)"></app-header> -->
-<app-header></app-header>
-<router-outlet></router-outlet>
+<div class="app-shell">
+  <app-sidebar></app-sidebar>
+
+  <div class="app-main">
+    <app-header></app-header>
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  </div>
+</div>
+
 @if (modalService.isLoginOpen()) {
   <app-login></app-login>
 }
-<app-footer></app-footer>
 <app-audio-player></app-audio-player>
