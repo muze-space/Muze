@@ -4,6 +4,7 @@ import { Home } from './pages/home/home';
 import { AppRoutes } from './core/enums/app-routes.enum';
 import { Search } from './pages/search/search';
 import { Library } from './pages/library/library';
+import { ArtistPage } from './pages/artist/artist';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -19,6 +20,10 @@ export const routes: Routes = [
     path: AppRoutes.Library,
     component: Library,
     canActivate: [authGuard],
+  },
+  {
+    path: `${AppRoutes.Artist}/:id`,
+    component: ArtistPage,
   },
   {
     path: AppRoutes.About,

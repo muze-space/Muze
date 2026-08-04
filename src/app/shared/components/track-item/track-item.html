@@ -9,7 +9,13 @@
   <img [alt]="track().album_name" [src]="track().album_image" class="cover" />
   <div class="info">
     <span class="title">{{ track().name }}</span>
-    <span class="artist">{{ track().artist_name }}</span>
+    <a
+      (click)="$event.stopPropagation()"
+      (keydown.enter)="$event.stopPropagation()"
+      [routerLink]="[AppRoutes.Artist, track().artist_id]"
+      class="artist"
+      >{{ track().artist_name }}</a
+    >
   </div>
   @if (!isSearchVersion()) {
     <span class="album">{{ track().album_name }}</span>

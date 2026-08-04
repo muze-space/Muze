@@ -1,16 +1,19 @@
 import { Component, computed, effect, ElementRef, inject, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Track } from '../../../core/models/track.model';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { DatePipe } from '@angular/common';
 import { PlayerService } from '../../../core/services/player.service';
+import { AppRoutes } from '../../../core/enums/app-routes.enum';
 
 @Component({
   selector: 'app-track-item',
-  imports: [DurationPipe, DatePipe],
+  imports: [DurationPipe, DatePipe, RouterLink],
   templateUrl: './track-item.html',
   styleUrl: './track-item.css',
 })
 export class TrackItem {
+  protected readonly AppRoutes = AppRoutes;
   track = input.required<Track>();
   isSearchVersion = input<boolean>(false);
   queue = input<Track[]>([]);

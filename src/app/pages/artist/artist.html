@@ -1,0 +1,39 @@
+@if (isLoading()) {
+  <p class="loading">Loading artist…</p>
+} @else if (error()) {
+  <div class="error-message" role="alert">{{ error() }}</div>
+} @else if (artist(); as currentArtist) {
+  <section class="artist-header">
+    <img [alt]="currentArtist.name" [src]="currentArtist.image" class="artist-header__image" />
+    <div class="artist-header__info">
+      <span class="artist-header__label">Artist</span>
+      <h1 class="artist-header__name">{{ currentArtist.name }}</h1>
+    </div>
+  </section>
+
+  @if (albums().length) {
+    <h2>Albums</h2>
+    <ul class="albums">
+      @for (album of albums(); track album.id) {
+        <li class="album-card">
+          <img [alt]="album.name" [src]="album.image" class="album-card__image" />
+          <span class="album-card__name">{{ album.name }}</span>
+          <span class="album-card__year">{{ album.releasedate | date: 'yyyy' }}</span>
+        </li>
+      }
+    </ul>
+  }
+
+  <h2>Tracks</h2>
+  @if (tracks().length) {
+    <ol class="tracks">
+      @for (track of tracks(); track track.id) {
+        <app-track-item [queue]="tracks()" [track]="track"></app-track-item>
+      }
+    </ol>
+  } @else {
+    <p>No tracks found for this artist.</p>
+  }
+} @else {
+  <p>Artist not found.</p>
+}
