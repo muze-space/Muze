@@ -37,6 +37,13 @@ export class TrackItem {
     () => this.authService.isAuthenticated() && this.likedTracksService.isLiked(this.track().id),
   );
 
+  readonly playLabel = computed(() => {
+    const track = this.track();
+    const action = this.isPlaying() ? 'Pause' : 'Play';
+
+    return `${action} ${track.name} by ${track.artist_name}`;
+  });
+
   onTrackClick() {
     this.playerService.toggle(this.track(), this.queue());
   }

@@ -1,15 +1,13 @@
-<li
-  (click)="onTrackClick()"
-  (keydown.enter)="onTrackClick()"
-  (keydown.space)="$event.preventDefault(); onTrackClick()"
-  [attr.aria-label]="track().name + ' — ' + track().artist_name"
-  [attr.aria-pressed]="isPlaying()"
-  [class.active]="isCurrentTrack()"
-  [class.playing]="isPlaying()"
-  role="button"
-  tabindex="0"
->
-  <img [alt]="track().album_name" [src]="track().album_image | cover: 100" class="cover" />
+<li [class.active]="isCurrentTrack()" [class.playing]="isPlaying()" class="row">
+  <button
+    (click)="onTrackClick()"
+    [attr.aria-label]="playLabel()"
+    [attr.aria-pressed]="isPlaying()"
+    class="play-btn"
+    type="button"
+  >
+    <img [alt]="track().album_name" [src]="track().album_image | cover: 100" class="cover" />
+  </button>
   <div class="info">
     <span class="title">{{ track().name }}</span>
     <a
@@ -47,9 +45,9 @@
     <app-icon [name]="isLiked() ? 'heart-filled' : 'heart'"></app-icon>
   </button>
   @if (isCurrentTrack()) {
-    <span [attr.aria-label]="isPlaying() ? 'Playing' : 'Paused'" class="play-btn">
+    <span aria-hidden="true" class="state">
       @if (isPlaying()) {
-        <span aria-hidden="true" class="equalizer">
+        <span class="equalizer">
           <span class="equalizer__bar"></span>
           <span class="equalizer__bar"></span>
           <span class="equalizer__bar"></span>

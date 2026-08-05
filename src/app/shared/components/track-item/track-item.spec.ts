@@ -4,6 +4,7 @@ import { TrackItem } from './track-item';
 import { AuthService } from '../../../core/services/auth.service';
 import { ModalService } from '../../../core/services/modal.service';
 import { LikedTracksService } from '../../../core/services/liked-tracks.service';
+import { PlayerService } from '../../../core/services/player.service';
 import { Track } from '../../../core/models/track.model';
 
 function makeTrack(id: string): Track {
@@ -50,6 +51,30 @@ describe('TrackItem', () => {
     fixture.componentRef.setInput('track', makeTrack('a'));
     await fixture.whenStable();
     fixture.detectChanges();
+  });
+
+  function playButton(): HTMLButtonElement {
+    return fixture.nativeElement.querySelector('.play-btn');
+  }
+
+  it('exposes one accessible control for playing the row', () => {
+    expect(playButton().getAttribute('aria-label')).toBe('Play Track a by Artist');
+    expect(fixture.nativeElement.querySelector('li').hasAttribute('role')).toBe(false);
+    expect(fixture.nativeElement.querySelector('li').hasAttribute('tabindex')).toBe(false);
+  });
+
+  it('plays the track from the play button', () => {
+    playButton().click();
+
+    expect(TestBed.inject(PlayerService).currentTrack()?.id).toBe('a');
+  });
+
+  it('reflects the playing state on that same control', () => {
+    playButton().click();
+    fixture.detectChanges();
+
+    expect(playButton().getAttribute('aria-pressed')).toBe('true');
+    expect(playButton().getAttribute('aria-label')).toBe('Pause Track a by Artist');
   });
 
   it('renders the track name', () => {
