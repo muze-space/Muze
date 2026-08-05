@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject, signal } from '@angular/core';
 import { PlayerService } from '../../../core/services/player.service';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { CoverPipe } from '../../pipes/cover.pipe';
@@ -8,6 +8,7 @@ import { CoverPipe } from '../../pipes/cover.pipe';
   imports: [DurationPipe, CoverPipe],
   templateUrl: './queue-panel.html',
   styleUrl: './queue-panel.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QueuePanel {
   private readonly playerService = inject(PlayerService);

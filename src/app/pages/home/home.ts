@@ -1,5 +1,5 @@
 import { TRACK_GENRES } from '../../core/constants/genre.const';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Tracks } from '../../shared/components/tracks/tracks';
 import { TrackOrder } from '../../core/enums/track-order.enum';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { PlayHistoryService } from '../../core/services/play-history.service';
   imports: [Tracks, GenreItem, TrackCardRow],
   templateUrl: './home.html',
   styleUrl: './home.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Home {
   readonly trackOrder = TrackOrder;

@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Modal } from '../../../shared/components/modal/modal';
@@ -18,6 +18,7 @@ import { AppRoutes } from '../../../core/enums/app-routes.enum';
   imports: [Modal, ReactiveFormsModule, AutofocusDirective],
   templateUrl: './playlist-form-modal.html',
   styleUrl: './playlist-form-modal.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaylistFormModal {
   protected readonly nameMaxLength = PLAYLIST_NAME_MAX_LENGTH;

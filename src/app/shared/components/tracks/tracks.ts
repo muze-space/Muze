@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY, map, merge, Subject, switchMap, tap } from 'rxjs';
 import { Track } from '../../../core/models/track.model';
@@ -27,6 +27,7 @@ interface PageRequest {
   imports: [TrackItem],
   templateUrl: './tracks.html',
   styleUrl: './tracks.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Tracks {
   order = input.required<TrackOrder>();

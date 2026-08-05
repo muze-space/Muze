@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../../core/enums/app-routes.enum';
 
@@ -8,6 +8,7 @@ import { AppRoutes } from '../../core/enums/app-routes.enum';
   imports: [],
   templateUrl: './not-found.html',
   styleUrl: './not-found.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotFound {
   private readonly _router = inject(Router);

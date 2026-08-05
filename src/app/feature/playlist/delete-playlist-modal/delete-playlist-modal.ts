@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Modal } from '../../../shared/components/modal/modal';
 import { ModalService } from '../../../core/services/modal.service';
@@ -11,6 +11,7 @@ import { AppRoutes } from '../../../core/enums/app-routes.enum';
   imports: [Modal],
   templateUrl: './delete-playlist-modal.html',
   styleUrl: './delete-playlist-modal.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeletePlaylistModal {
   private readonly router = inject(Router);

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Footer } from './shared/layouts/footer/footer';
 import { Header } from './shared/layouts/header/header';
@@ -27,6 +27,7 @@ import { DeletePlaylistModal } from './feature/playlist/delete-playlist-modal/de
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
   protected readonly title = signal('muze');

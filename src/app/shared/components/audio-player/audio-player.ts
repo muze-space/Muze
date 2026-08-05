@@ -1,10 +1,11 @@
 import {
-  afterNextRender,
+  ChangeDetectionStrategy,
   Component,
-  computed,
-  effect,
   ElementRef,
   HostListener,
+  afterNextRender,
+  computed,
+  effect,
   inject,
   untracked,
   viewChild,
@@ -29,6 +30,7 @@ const MEDIA_SESSION_ARTWORK_SIZE = 500;
   imports: [DurationPipe, CoverPipe, QueuePanel, NowPlaying, Icon, RouterLink],
   templateUrl: './audio-player.html',
   styleUrl: './audio-player.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AudioPlayer {
   protected readonly RepeatMode = RepeatMode;

@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
@@ -12,6 +12,7 @@ import { Tracks } from '../../shared/components/tracks/tracks';
   imports: [Tracks],
   templateUrl: './search.html',
   styleUrl: './search.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Search {
   protected readonly trackOrder = TrackOrder;

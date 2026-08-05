@@ -30,6 +30,19 @@ describe('Feedback', () => {
     return fixture.nativeElement.querySelector('.alert')?.textContent ?? '';
   }
 
+  it('shows a validation message after the field is touched and left empty', async () => {
+    vi.useRealTimers();
+    fixture.autoDetectChanges();
+
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('#name');
+    input.value = '';
+    input.dispatchEvent(new Event('input'));
+    input.dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.textContent).toContain('Name is required');
+  });
+
   it('rejects an empty submit without pretending to send', () => {
     component.onSubmit();
     fixture.detectChanges();

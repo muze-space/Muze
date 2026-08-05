@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
@@ -19,6 +19,7 @@ type LibraryTab = (typeof TABS)[number];
   imports: [RouterLink, TrackItem, PlayCollection, CoverPipe],
   templateUrl: './library.html',
   styleUrl: './library.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Library {
   protected readonly AppRoutes = AppRoutes;

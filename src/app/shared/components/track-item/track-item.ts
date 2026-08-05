@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Track } from '../../../core/models/track.model';
 import { DurationPipe } from '../../pipes/duration.pipe';
@@ -17,6 +17,7 @@ import { ModalService } from '../../../core/services/modal.service';
   imports: [DurationPipe, CoverPipe, DatePipe, RouterLink, TrackMenu, Icon],
   templateUrl: './track-item.html',
   styleUrl: './track-item.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackItem {
   protected readonly AppRoutes = AppRoutes;

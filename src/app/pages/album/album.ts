@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
@@ -19,6 +19,7 @@ const ALBUM_TRACKS_LIMIT = 50;
   imports: [TrackItem, DatePipe, RouterLink, PlayCollection, CoverPipe],
   templateUrl: './album.html',
   styleUrl: './album.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlbumPage {
   protected readonly AppRoutes = AppRoutes;

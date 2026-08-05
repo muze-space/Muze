@@ -1,4 +1,4 @@
-import { Component, HostListener, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PlayerService } from '../../../core/services/player.service';
 import { DurationPipe } from '../../pipes/duration.pipe';
@@ -12,6 +12,7 @@ import { Icon } from '../icon/icon';
   imports: [DurationPipe, CoverPipe, RouterLink, Icon],
   templateUrl: './now-playing.html',
   styleUrl: './now-playing.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NowPlaying {
   protected readonly AppRoutes = AppRoutes;

@@ -1,4 +1,11 @@
-import { Component, computed, inject, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
@@ -18,6 +25,7 @@ import { CoverPipe } from '../../shared/pipes/cover.pipe';
   imports: [Tracks, DatePipe, RouterLink, PlayCollection, CoverPipe],
   templateUrl: './artist.html',
   styleUrl: './artist.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArtistPage {
   protected readonly AppRoutes = AppRoutes;

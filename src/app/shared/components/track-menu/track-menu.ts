@@ -1,8 +1,9 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  computed,
   ElementRef,
   HostListener,
+  computed,
   inject,
   input,
   output,
@@ -27,6 +28,7 @@ const MENU_HEIGHT_ESTIMATE = 260;
   imports: [],
   templateUrl: './track-menu.html',
   styleUrl: './track-menu.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TrackMenu {
   readonly track = input.required<Track>();
