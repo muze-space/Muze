@@ -168,3 +168,16 @@ li.active .artist {
 .like-btn.liked:active {
   transform: scale(0.9);
 }
+
+/* Album and year are the first things to go when the row runs out of room. */
+@media (max-width: 700px) {
+  li {
+    grid-template-columns: 50px minmax(0, 1fr) auto 28px 28px 20px;
+    gap: 10px;
+  }
+
+  .album,
+  .release-date {
+    display: none;
+  }
+}

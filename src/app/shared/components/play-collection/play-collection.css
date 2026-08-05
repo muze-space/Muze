@@ -36,3 +36,17 @@
   transform: none;
   background: #3e3e3e;
 }
+
+@media (max-width: 700px) {
+  .play-collection {
+    flex-wrap: wrap;
+  }
+
+  .play-collection__play {
+    padding: 10px 20px;
+  }
+
+  .play-collection__shuffle {
+    padding: 9px 16px;
+  }
+}

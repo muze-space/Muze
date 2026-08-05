@@ -6,10 +6,36 @@
   --spotify-white: #ffffff;
 }
 
+/*
+ * Padding counts inside a declared width. Without this, `.content` (width: 100%
+ * plus 32px of horizontal padding) ends up 64px wider than the column it sits
+ * in and pushes a horizontal scrollbar onto the whole page.
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
+  /* The shell and footer are full-bleed; the UA's default 8px margin insets them. */
+  margin: 0;
+
   background-color: var(--spotify-black);
   color: var(--spotify-white);
   font-family: "Circular Std", "Helvetica Neue", Arial, sans-serif;
+}
+
+/*
+ * Every list in the app is layout, never prose. The UA's 40px
+ * padding-inline-start was indenting track lists and pushing the collapsed
+ * sidebar's nav past its own edge.
+ */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 a {

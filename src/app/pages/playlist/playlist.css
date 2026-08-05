@@ -80,6 +80,7 @@
 .playlist__actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 8px;
 }
@@ -153,6 +154,11 @@
   .playlist__header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .playlist__cover {
+    width: 140px;
+    height: 140px;
   }
 
   .playlist__name {

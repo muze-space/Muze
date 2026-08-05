@@ -69,3 +69,9 @@
   border-top: 1px solid #282828;
 }
 
+
+@media (max-width: 700px) {
+  .cards {
+    flex-direction: column;
+  }
+}

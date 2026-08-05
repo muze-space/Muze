@@ -20,3 +20,16 @@ header {
     padding: 16px 20px;
   }
 }
+
+/* The search box may shrink; without this it holds its default input width and
+   pushes the login button off-screen on narrow viewports. */
+app-search {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  .login-link {
+    padding: 10px 18px;
+  }
+}
