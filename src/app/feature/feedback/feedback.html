@@ -8,13 +8,6 @@
     </p>
   </div>
 
-  @if (submitSuccess()) {
-    <div class="alert alert-success">
-      <strong>Thanks!</strong> Your feedback was validated. This is a demo form, so it wasn't sent
-      anywhere.
-    </div>
-  }
-
   @if (submitError()) {
     <div class="alert alert-error"><strong>Error!</strong> {{ submitError() }}</div>
   }
@@ -114,5 +107,12 @@
       </button>
       <button (click)="resetForm()" class="btn btn-secondary" type="button">Clear</button>
     </div>
+
+    @if (submitSuccess()) {
+      <div class="alert alert-success" role="status">
+        <strong>Thanks!</strong> Your feedback was validated. This is a demo form, so it wasn't sent
+        anywhere.
+      </div>
+    }
   </form>
 </div>
