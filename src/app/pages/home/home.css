@@ -13,7 +13,7 @@
   color: var(--spotify-white);
 
   background: var(--spotify-dark-gray);
-  border: 1px solid #282828;
+  border: 1px solid var(--spotify-surface);
   border-radius: 18px;
 
   box-shadow:

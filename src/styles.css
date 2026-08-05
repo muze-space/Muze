@@ -1,9 +1,23 @@
 :root {
   --spotify-green: #1db954;
+  --spotify-green-bright: #1ed760;
   --spotify-black: #121212;
   --spotify-dark-gray: #181818;
   --spotify-light-gray: #b3b3b3;
   --spotify-white: #ffffff;
+
+  --spotify-surface: #282828;
+  --spotify-surface-hover: #2a2a2a;
+  --spotify-surface-sunken: #1f1f1f;
+  --spotify-muted: #3e3e3e;
+  --spotify-border: #4e4e4e;
+  --spotify-border-strong: #6a6a6a;
+
+  --spotify-danger: #f15e5e;
+  --spotify-danger-strong: #e2483d;
+  --spotify-danger-strong-hover: #f05a4e;
+  --spotify-like: #f15e9c;
+  --spotify-like-hover: #f582b3;
 }
 
 *,
@@ -44,5 +58,5 @@ button {
 
 button:hover {
   transform: scale(1.04);
-  background-color: #1ed760;
+  background-color: var(--spotify-green-bright);
 }

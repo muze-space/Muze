@@ -29,10 +29,10 @@
 
 .delete-playlist__confirm {
   padding: 10px 28px;
-  background: #e2483d;
+  background: var(--spotify-danger-strong);
   color: var(--spotify-white);
 }
 
 .delete-playlist__confirm:hover {
-  background: #f05a4e;
+  background: var(--spotify-danger-strong-hover);
 }

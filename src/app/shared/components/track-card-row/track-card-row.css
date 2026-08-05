@@ -34,7 +34,7 @@
 }
 
 .card-row__card:hover {
-  background: #282828;
+  background: var(--spotify-surface);
 }
 
 .card-row__play {

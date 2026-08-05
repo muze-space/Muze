@@ -61,7 +61,7 @@
 }
 
 .login-btn:hover {
-  background: #1ed760;
+  background: var(--spotify-green-bright);
   transform: translateY(-1px);
 }
 

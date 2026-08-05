@@ -16,7 +16,7 @@
   overflow-y: auto;
 
   background: var(--spotify-dark-gray);
-  border-left: 1px solid #282828;
+  border-left: 1px solid var(--spotify-surface);
   box-shadow: -8px 0 24px rgba(0, 0, 0, 0.4);
 
   animation: queue-slide-in 0.2s ease-out;
@@ -92,7 +92,7 @@
 }
 
 .queue__row:hover {
-  background: #282828;
+  background: var(--spotify-surface);
 }
 
 .queue__row--current {

@@ -6,7 +6,7 @@
 
 .search__input {
   padding: 8px 12px;
-  border: 1px solid #282828;
+  border: 1px solid var(--spotify-surface);
   border-radius: 4px;
   background: var(--spotify-dark-gray);
   color: var(--spotify-white);
@@ -45,8 +45,8 @@
 
   padding: 8px;
 
-  background: #282828;
-  border: 1px solid #3e3e3e;
+  background: var(--spotify-surface);
+  border: 1px solid var(--spotify-muted);
   border-radius: 6px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
@@ -100,7 +100,7 @@
 }
 
 .search__history-item:hover {
-  background: #3e3e3e;
+  background: var(--spotify-muted);
 }
 
 .search__history-query {

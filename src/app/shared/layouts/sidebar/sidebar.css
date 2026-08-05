@@ -71,7 +71,7 @@
 
 .sidebar__nav a.active {
   color: var(--spotify-white);
-  background-color: #282828;
+  background-color: var(--spotify-surface);
 }
 
 .sidebar__nav a.active .sidebar__icon {
@@ -97,7 +97,7 @@
 
   min-height: 0;
   padding-top: 16px;
-  border-top: 1px solid #282828;
+  border-top: 1px solid var(--spotify-surface);
 }
 
 .sidebar__section-head {
@@ -132,7 +132,7 @@
 }
 
 .sidebar__create:hover {
-  background: #282828;
+  background: var(--spotify-surface);
   color: var(--spotify-white);
   transform: none;
 }
@@ -174,12 +174,12 @@
 
 .sidebar__playlist-list a.active {
   color: var(--spotify-white);
-  background-color: #282828;
+  background-color: var(--spotify-surface);
 }
 
 .sidebar__playlist-empty {
   padding: 8px 12px;
-  color: #6a6a6a;
+  color: var(--spotify-border-strong);
   font-size: 0.8rem;
 }
 

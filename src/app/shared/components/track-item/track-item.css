@@ -11,7 +11,7 @@ li {
 }
 
 li:hover {
-  background-color: #282828;
+  background-color: var(--spotify-surface);
 }
 
 li.active {
@@ -156,11 +156,11 @@ li.active .artist {
 }
 
 .like-btn.liked {
-  color: #f15e9c;
+  color: var(--spotify-like);
 }
 
 .like-btn.liked:hover {
-  color: #f582b3;
+  color: var(--spotify-like-hover);
   background-color: rgba(241, 94, 156, 0.15);
 }
 

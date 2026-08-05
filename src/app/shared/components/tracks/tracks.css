@@ -4,7 +4,7 @@
   background-color: rgba(241, 94, 94, 0.15);
   border: 1px solid rgba(241, 94, 94, 0.4);
   border-radius: 4px;
-  color: #f15e5e;
+  color: var(--spotify-danger);
   font-weight: 500;
 }
 
@@ -27,7 +27,7 @@
 
   background-color: var(--spotify-dark-gray);
   color: var(--spotify-white);
-  border: 1px solid #282828;
+  border: 1px solid var(--spotify-surface);
   border-radius: 20px;
 
   font-weight: 600;
@@ -39,7 +39,7 @@
 }
 
 .load-more:hover:not(:disabled) {
-  background-color: #282828;
+  background-color: var(--spotify-surface);
   border-color: var(--spotify-green);
   color: var(--spotify-green);
 }

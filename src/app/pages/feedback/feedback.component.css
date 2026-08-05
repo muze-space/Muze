@@ -8,7 +8,7 @@
 .form-select,
 .form-textarea {
   padding: 0.75rem;
-  border: 1px solid #282828;
+  border: 1px solid var(--spotify-surface);
   border-radius: 4px;
   font-size: 1rem;
   font-family: inherit;
@@ -46,7 +46,7 @@
 
 .error-text {
   font-size: 0.85rem;
-  color: #f15e5e;
+  color: var(--spotify-danger);
 }
 
 .form-actions {
@@ -77,7 +77,7 @@
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #1ed760;
+  background-color: var(--spotify-green-bright);
   box-shadow: 0 2px 8px rgba(29, 185, 84, 0.3);
 }
 
@@ -87,12 +87,12 @@
 }
 
 .btn-secondary {
-  background-color: #282828;
+  background-color: var(--spotify-surface);
   color: var(--spotify-white);
 }
 
 .btn-secondary:hover {
-  background-color: #3a3a3a;
+  background-color: var(--spotify-muted);
 }
 
 .feedback-demo-note {

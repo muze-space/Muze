@@ -24,10 +24,10 @@
 .playlist-form__input {
   padding: 10px 12px;
 
-  border: 1px solid #3e3e3e;
+  border: 1px solid var(--spotify-muted);
   border-radius: 6px;
 
-  background: #2a2a2a;
+  background: var(--spotify-surface-hover);
   color: var(--spotify-white);
   font-family: inherit;
   font-size: 0.95rem;
@@ -45,7 +45,7 @@
 .playlist-form__error {
   margin-top: -8px;
   font-size: 0.8rem;
-  color: #f15e5e;
+  color: var(--spotify-danger);
 }
 
 .playlist-form__actions {

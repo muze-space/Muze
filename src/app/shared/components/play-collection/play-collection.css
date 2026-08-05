@@ -20,7 +20,7 @@
   padding: 11px 22px;
 
   background: transparent;
-  border: 1px solid #4e4e4e;
+  border: 1px solid var(--spotify-border);
   color: var(--spotify-white);
   font-size: 0.9rem;
 }
@@ -32,8 +32,8 @@
 
 .play-collection__play:disabled,
 .play-collection__shuffle:disabled {
-  background: #3e3e3e;
-  border-color: #3e3e3e;
+  background: var(--spotify-muted);
+  border-color: var(--spotify-muted);
   color: var(--spotify-light-gray);
   cursor: not-allowed;
 }
@@ -41,7 +41,7 @@
 .play-collection__play:disabled:hover,
 .play-collection__shuffle:disabled:hover {
   transform: none;
-  background: #3e3e3e;
+  background: var(--spotify-muted);
 }
 
 @media (max-width: 700px) {

@@ -47,8 +47,8 @@
 
   list-style: none;
 
-  background: #282828;
-  border: 1px solid #3e3e3e;
+  background: var(--spotify-surface);
+  border: 1px solid var(--spotify-muted);
   border-radius: 6px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
@@ -79,7 +79,7 @@
 }
 
 .track-menu__item:hover:not(:disabled) {
-  background: #3e3e3e;
+  background: var(--spotify-muted);
   transform: none;
 }
 
@@ -99,7 +99,7 @@
 }
 
 .track-menu__item--danger {
-  color: #f1706a;
+  color: var(--spotify-danger);
 }
 
 .track-menu__name {
@@ -116,7 +116,7 @@
 .track-menu__divider {
   height: 1px;
   margin: 4px 0;
-  background: #3e3e3e;
+  background: var(--spotify-muted);
 }
 
 .track-menu__empty {

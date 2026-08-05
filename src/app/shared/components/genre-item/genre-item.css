@@ -7,7 +7,7 @@ li {
 }
 
 li:hover {
-  background-color: #282828;
+  background-color: var(--spotify-surface);
   color: var(--spotify-green);
   cursor: pointer;
 }
