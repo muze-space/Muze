@@ -8,6 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
+    "format:check": "prettier --check src",
+    "format": "prettier --write src",
     "build:gh-pages": "ng build --configuration production --base-href /Muze/",
     "deploy:gh-pages": "npm run build:gh-pages && npx angular-cli-ghpages --dir=dist/muze/browser"
   },
