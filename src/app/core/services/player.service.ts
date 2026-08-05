@@ -51,8 +51,16 @@ export class PlayerService {
       return;
     }
 
+    const startIndex = Math.floor(Math.random() * tracks.length);
+    const rest = this.shuffle(tracks.filter((_, position) => position !== startIndex));
+
     this.isShuffled.set(true);
-    this.play(tracks[Math.floor(Math.random() * tracks.length)], tracks);
+    this.originalQueue = [...tracks];
+
+    // The picked track leads the queue, so everything else stays ahead of it
+    // instead of only the tail that happened to follow its original position.
+    this.applyPosition([tracks[startIndex], ...rest], 0);
+    this.isPlaying.set(true);
   }
 
   playAt(index: number): void {
@@ -269,13 +277,19 @@ export class PlayerService {
     }
   }
 
-  private shuffleKeepingCurrent(queue: Track[], index: number): Track[] {
-    const rest = queue.filter((_, position) => position !== index);
+  private shuffle(tracks: Track[]): Track[] {
+    const shuffled = [...tracks];
 
-    for (let i = rest.length - 1; i > 0; i--) {
+    for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [rest[i], rest[j]] = [rest[j], rest[i]];
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
+
+    return shuffled;
+  }
+
+  private shuffleKeepingCurrent(queue: Track[], index: number): Track[] {
+    const rest = this.shuffle(queue.filter((_, position) => position !== index));
 
     if (index < 0 || index >= queue.length) {
       return rest;

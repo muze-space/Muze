@@ -285,6 +285,24 @@ describe('PlayerService', () => {
     expect(service.queue().length).toBe(3);
   });
 
+  it('playShuffled() queues every other track after the one it starts on', () => {
+    for (let attempt = 0; attempt < 20; attempt++) {
+      service.playShuffled([trackA, trackB, trackC]);
+
+      expect(service.currentIndex()).toBe(0);
+      expect(service.upNext().length).toBe(2);
+      expect([...service.queue()].map((track) => track.id).sort()).toEqual(['a', 'b', 'c']);
+    }
+  });
+
+  it('playShuffled() restores the original order when shuffle is turned off', () => {
+    service.playShuffled([trackA, trackB, trackC]);
+
+    service.toggleShuffle();
+
+    expect(service.queue().map((track) => track.id)).toEqual(['a', 'b', 'c']);
+  });
+
   it('seekTo() moves the time and bumps the seek token', () => {
     const before = service.seekToken();
 
