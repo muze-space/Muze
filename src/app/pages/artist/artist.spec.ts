@@ -6,6 +6,9 @@ import { BehaviorSubject } from 'rxjs';
 
 import { ArtistPage } from './artist';
 import { API_CONFIG_TOKEN } from '../../core/tokens/api-config.token';
+import { AuthService } from '../../core/services/auth.service';
+import { ModalService } from '../../core/services/modal.service';
+import { FollowedArtistsService } from '../../core/services/followed-artists.service';
 
 const BASE_URL = 'https://api.jamendo.com/v3.0/';
 
@@ -26,6 +29,7 @@ describe('ArtistPage', () => {
   beforeEach(async () => {
     paramMap = new BehaviorSubject(convertToParamMap({ id: 'artist-1' }));
 
+    localStorage.clear();
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
       imports: [ArtistPage],
@@ -110,6 +114,55 @@ describe('ArtistPage', () => {
     await fixture.whenStable();
 
     expect(component['artistTracks']().map((track) => track.id)).toEqual(['t1', 't2']);
+  });
+
+  async function showArtist(): Promise<HTMLButtonElement> {
+    fixture.detectChanges();
+    const { artist, albums } = expectArtistRequests();
+    artist.flush(artistsResponse('Daft Punk'));
+    albums.flush(albumsResponse([]));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    return fixture.nativeElement.querySelector('.artist-header__follow');
+  }
+
+  it('asks for a login instead of following while logged out', async () => {
+    const follow = await showArtist();
+
+    follow.click();
+    fixture.detectChanges();
+
+    expect(TestBed.inject(FollowedArtistsService).isFollowed('artist-1')).toBe(false);
+    expect(TestBed.inject(ModalService).isLoginOpen()).toBe(true);
+    expect(follow.textContent?.trim()).toBe('Follow');
+  });
+
+  it('follows the artist when authenticated', async () => {
+    TestBed.inject(AuthService).login();
+    const follow = await showArtist();
+
+    follow.click();
+    fixture.detectChanges();
+
+    expect(TestBed.inject(FollowedArtistsService).isFollowed('artist-1')).toBe(true);
+    expect(follow.textContent?.trim()).toBe('Following');
+    expect(follow.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('shows no followed state while logged out, even with follows in storage', async () => {
+    const auth = TestBed.inject(AuthService);
+    auth.login();
+    const follow = await showArtist();
+    follow.click();
+    fixture.detectChanges();
+    expect(follow.textContent?.trim()).toBe('Following');
+
+    auth.logout();
+    fixture.detectChanges();
+
+    expect(follow.textContent?.trim()).toBe('Follow');
+    expect(TestBed.inject(FollowedArtistsService).isFollowed('artist-1')).toBe(true);
   });
 
   it('surfaces a failure and stops loading', async () => {

@@ -13,6 +13,8 @@ import { AppRoutes } from '../../core/enums/app-routes.enum';
 import { PlayCollection } from '../../shared/components/play-collection/play-collection';
 import { FollowedArtistsService } from '../../core/services/followed-artists.service';
 import { CoverPipe } from '../../shared/pipes/cover.pipe';
+import { AuthService } from '../../core/services/auth.service';
+import { ModalService } from '../../core/services/modal.service';
 
 @Component({
   selector: 'app-artist',
@@ -40,9 +42,11 @@ export class ArtistPage {
   protected readonly artistTracks = signal<Track[]>([]);
 
   private readonly followedArtists = inject(FollowedArtistsService);
+  private readonly authService = inject(AuthService);
+  private readonly modalService = inject(ModalService);
   protected readonly isFollowed = computed(() => {
     const id = this.artist()?.id;
-    return !!id && this.followedArtists.isFollowed(id);
+    return this.authService.isAuthenticated() && !!id && this.followedArtists.isFollowed(id);
   });
 
   protected onTracksLoaded(tracks: Track[]): void {
@@ -50,6 +54,11 @@ export class ArtistPage {
   }
 
   protected onToggleFollow(artist: Artist): void {
+    if (!this.authService.isAuthenticated()) {
+      this.modalService.openLogin();
+      return;
+    }
+
     this.followedArtists.toggle(artist);
   }
 
