@@ -32,14 +32,12 @@ export class PlaylistPage {
   );
 
   protected readonly playlist = computed(() => {
-    // Reading the signal keeps the page live through renames and track edits.
     const playlists = this.playlistService.playlists();
     return playlists.find((item) => item.id === this.playlistId());
   });
 
   protected readonly tracks = computed(() => this.playlist()?.tracks ?? []);
 
-  /** Up to four album covers, tiled like a Spotify playlist thumbnail. */
   protected readonly coverImages = computed(() => {
     const images = this.tracks()
       .map((track) => track.album_image)
@@ -48,7 +46,6 @@ export class PlaylistPage {
     return [...new Set(images)].slice(0, COVER_TILES);
   });
 
-  /** Index being dragged; null when no drag is in progress. */
   protected readonly draggedIndex = signal<number | null>(null);
 
   protected readonly totalDuration = computed(() => {
@@ -61,7 +58,6 @@ export class PlaylistPage {
 
   constructor() {
     effect(() => {
-      // The id can be stale after a deletion or come from a hand-typed URL.
       if (this.playlistId() && !this.playlist()) {
         this.router.navigate(['/' + AppRoutes.NotFound]);
       }
@@ -85,7 +81,6 @@ export class PlaylistPage {
   }
 
   protected onDragOver(event: DragEvent): void {
-    // Without this the browser refuses the drop.
     event.preventDefault();
   }
 

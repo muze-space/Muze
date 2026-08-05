@@ -32,7 +32,6 @@ export class App {
   protected readonly title = signal('muze');
   protected readonly modalService = inject(ModalService);
   protected readonly playerService = inject(PlayerService);
-  // Instantiated for its side effects: session restore, persistence and play history.
   private readonly playerSession = inject(PlayerSessionService);
   search = '';
 

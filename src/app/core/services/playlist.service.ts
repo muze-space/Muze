@@ -29,7 +29,6 @@ export class PlaylistService {
       tracks: [],
     };
 
-    // Newest first, matching how the sidebar lists them.
     this._playlists.update((playlists) => [playlist, ...playlists]);
     this.persist();
 
@@ -56,7 +55,6 @@ export class PlaylistService {
     this.persist();
   }
 
-  /** Returns false when the playlist is unknown or already contains the track. */
   addTrack(id: string, track: Track): boolean {
     const playlist = this.getById(id);
 
@@ -115,8 +113,6 @@ export class PlaylistService {
   }
 
   private createId(): string {
-    // crypto.randomUUID needs a secure context; GitHub Pages qualifies, but a
-    // plain-http dev host would not.
     return crypto.randomUUID?.() ?? `pl-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
   }
 

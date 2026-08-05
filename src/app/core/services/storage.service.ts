@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
 
-/**
- * Thin JSON wrapper around localStorage. Every read and write is guarded:
- * storage can be unavailable (private mode), hold malformed JSON left by an
- * older build, or reject writes once the quota is exhausted — none of which
- * should break the app.
- */
 @Injectable({ providedIn: 'root' })
 export class StorageService {
   read<T>(key: string, fallback: T): T {
@@ -21,7 +15,7 @@ export class StorageService {
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch {
-      // Quota exceeded or storage disabled — the in-memory state stays correct.
+      return;
     }
   }
 
@@ -29,7 +23,7 @@ export class StorageService {
     try {
       localStorage.removeItem(key);
     } catch {
-      // Nothing to do.
+      return;
     }
   }
 }

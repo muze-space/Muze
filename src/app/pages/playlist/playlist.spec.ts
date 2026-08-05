@@ -48,8 +48,6 @@ describe('PlaylistPage', () => {
         provideRouter([]),
         {
           provide: ActivatedRoute,
-          // The id only exists once the playlist is created below, so the stub
-          // reads it lazily when the component subscribes.
           useValue: { paramMap: of({ get: () => playlistId } as never) },
         },
       ],

@@ -7,7 +7,6 @@
 
   list-style: none;
 
-  /* Wide content scrolls inside the shelf, never the page. */
   overflow-x: auto;
   scroll-snap-type: x proximity;
 }

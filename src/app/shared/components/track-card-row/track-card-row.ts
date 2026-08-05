@@ -3,7 +3,6 @@ import { Track } from '../../../core/models/track.model';
 import { PlayerService } from '../../../core/services/player.service';
 import { CoverPipe } from '../../pipes/cover.pipe';
 
-/** Horizontal shelf of cover cards — the Spotify "Jump back in" layout. */
 @Component({
   selector: 'app-track-card-row',
   imports: [CoverPipe],

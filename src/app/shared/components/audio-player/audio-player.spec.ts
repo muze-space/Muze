@@ -36,7 +36,6 @@ describe('AudioPlayer', () => {
   let playerService: PlayerService;
 
   beforeEach(async () => {
-    // jsdom doesn't implement HTMLMediaElement.play(); the component calls it when a track starts.
     HTMLMediaElement.prototype.play = vi.fn().mockResolvedValue(undefined);
 
     await TestBed.configureTestingModule({

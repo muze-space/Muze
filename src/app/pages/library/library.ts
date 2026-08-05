@@ -32,7 +32,6 @@ export class Library {
   protected readonly playlists = inject(PlaylistService).playlists;
   protected readonly followedArtists = inject(FollowedArtistsService).artists;
 
-  /** Kept in the URL so the active tab survives reloads and the back button. */
   private readonly tabParam = toSignal(
     this.route.queryParamMap.pipe(map((params) => params.get('tab'))),
     { initialValue: null },

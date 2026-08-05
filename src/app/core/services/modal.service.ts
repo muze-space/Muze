@@ -3,7 +3,6 @@ import { Track } from '../models/track.model';
 
 export type ModalState =
   | { kind: 'login' }
-  /** `trackToAdd` lets "New playlist" in the add-to-playlist popover create and fill in one step. */
   | { kind: 'createPlaylist'; trackToAdd?: Track }
   | { kind: 'renamePlaylist'; playlistId: string }
   | { kind: 'deletePlaylist'; playlistId: string };

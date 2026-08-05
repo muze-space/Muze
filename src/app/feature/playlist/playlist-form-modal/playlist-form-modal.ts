@@ -13,7 +13,6 @@ import {
 } from '../../../core/services/playlist.service';
 import { AppRoutes } from '../../../core/enums/app-routes.enum';
 
-/** Handles both the "create playlist" and "rename playlist" dialogs. */
 @Component({
   selector: 'app-playlist-form-modal',
   imports: [Modal, ReactiveFormsModule, AutofocusDirective],

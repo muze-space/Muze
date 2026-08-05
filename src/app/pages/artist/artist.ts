@@ -35,13 +35,11 @@ export class ArtistPage {
   protected readonly isLoading = signal<boolean>(false);
   protected readonly error = signal<string | null>(null);
 
-  /** The track list owns its own fetching, so Play/Shuffle reads whatever it has loaded. */
   private readonly trackList = viewChild<Tracks>('artistTrackList');
   protected readonly artistTracks = computed(() => this.trackList()?.tracks() ?? []);
 
   private readonly followedArtists = inject(FollowedArtistsService);
   protected readonly isFollowed = computed(() => {
-    // Reading the signal keeps the button in sync when the list changes elsewhere.
     this.followedArtists.artists();
     const id = this.artist()?.id;
     return !!id && this.followedArtists.isFollowed(id);

@@ -37,10 +37,6 @@ describe('PlaylistFormModal', () => {
   let modalService: ModalService;
   let playlistService: PlaylistService;
 
-  /**
-   * The dialog reads the active modal in its constructor, so the modal has to be
-   * opened before the component is created.
-   */
   function render(): void {
     fixture = TestBed.createComponent(PlaylistFormModal);
     fixture.detectChanges();

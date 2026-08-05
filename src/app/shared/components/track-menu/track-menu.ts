@@ -17,10 +17,8 @@ import { ModalService } from '../../../core/services/modal.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { AppRoutes } from '../../../core/enums/app-routes.enum';
 
-/** Menu pages, so "Add to playlist" can reuse the same popover instead of nesting. */
 type MenuView = 'root' | 'playlists';
 
-/** Space needed below the button before the menu opens downward instead of up. */
 const MENU_HEIGHT_ESTIMATE = 260;
 
 @Component({
@@ -31,7 +29,6 @@ const MENU_HEIGHT_ESTIMATE = 260;
 })
 export class TrackMenu {
   readonly track = input.required<Track>();
-  /** Set on the playlist page, where "remove from this playlist" makes sense. */
   readonly removable = input<boolean>(false);
   readonly removeRequested = output<Track>();
 
@@ -123,11 +120,6 @@ export class TrackMenu {
     this.close();
   }
 
-  /**
-   * The menu sits inside a track row that starts playback on click, so nothing
-   * here may reach the row. Stopping at the host also means the document
-   * listener below only ever sees outside clicks.
-   */
   @HostListener('click', ['$event'])
   @HostListener('keydown.enter', ['$event'])
   @HostListener('keydown.space', ['$event'])

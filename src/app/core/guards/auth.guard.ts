@@ -10,8 +10,6 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
-  // Returning plain `false` would leave the user on the page they came from with
-  // no explanation, so send them home and prompt to log in.
   inject(ModalService).openLogin();
 
   return inject(Router).parseUrl('/');

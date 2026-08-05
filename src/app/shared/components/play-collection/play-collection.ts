@@ -3,7 +3,6 @@ import { Track } from '../../../core/models/track.model';
 import { PlayerService } from '../../../core/services/player.service';
 import { Icon } from '../icon/icon';
 
-/** "Play" / "Shuffle" pair shown in the header of any track collection. */
 @Component({
   selector: 'app-play-collection',
   imports: [Icon],

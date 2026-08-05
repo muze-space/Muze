@@ -7,11 +7,6 @@ import { AppRoutes } from '../../../core/enums/app-routes.enum';
 import { RepeatMode } from '../../../core/enums/repeat-mode.enum';
 import { Icon } from '../icon/icon';
 
-/**
- * Full-screen view of the current track. It drives the same PlayerService as the
- * player bar; the single audio element still lives in AudioPlayer, so opening
- * this never interrupts playback.
- */
 @Component({
   selector: 'app-now-playing',
   imports: [DurationPipe, CoverPipe, RouterLink, Icon],
@@ -56,10 +51,6 @@ export class NowPlaying {
     this.playerService.cycleRepeat();
   }
 
-  /**
-   * Seeking writes the time back to the service; AudioPlayer's seek handler owns
-   * the audio element, so here we only move the shared position.
-   */
   protected onSeek(event: Event): void {
     this.playerService.seekTo(Number((event.target as HTMLInputElement).value));
   }

@@ -6,9 +6,7 @@ import { STORAGE_KEYS } from '../constants/storage-keys.const';
 import { Track } from '../models/track.model';
 import { RepeatMode } from '../enums/repeat-mode.enum';
 
-/** Longest queue worth persisting — localStorage is small and shared. */
 const MAX_PERSISTED_QUEUE = 100;
-/** `timeupdate` fires ~4x a second, far too often to write through. */
 const TIME_SAVE_INTERVAL_MS = 5000;
 
 interface PersistedPlayerState {
@@ -21,12 +19,6 @@ interface PersistedPlayerState {
   isShuffled: boolean;
 }
 
-/**
- * Keeps the player alive across reloads and feeds the play history. Lives apart
- * from PlayerService so that service stays a plain state container.
- *
- * Instantiate it once from the app shell — nothing else references it.
- */
 @Injectable({ providedIn: 'root' })
 export class PlayerSessionService {
   private readonly player = inject(PlayerService);
@@ -36,7 +28,6 @@ export class PlayerSessionService {
   constructor() {
     this.restore();
 
-    // Recording here rather than in play() also catches next/previous and the queue panel.
     effect(() => {
       const track = this.player.currentTrack();
 
@@ -45,7 +36,6 @@ export class PlayerSessionService {
       }
     });
 
-    // Anything but playback position is cheap enough to write on every change.
     effect(() => {
       this.player.queue();
       this.player.currentIndex();
@@ -87,7 +77,6 @@ export class PlayerSessionService {
       return;
     }
 
-    // Window the queue around the current track so a deep position survives the cap.
     const index = this.player.currentIndex();
     const start = Math.max(0, Math.min(index, queue.length - MAX_PERSISTED_QUEUE));
 

@@ -14,7 +14,6 @@
   animation: modal-fade-in 0.2s ease-in-out;
 }
 
-/* Click-outside target; sits behind the panel and is skipped by the keyboard. */
 .overlay__backdrop {
   position: absolute;
   inset: 0;

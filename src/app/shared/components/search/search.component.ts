@@ -47,7 +47,6 @@ export class SearchComponent {
   }
 
   protected onFocus(): void {
-    // Only shown for an empty field; otherwise it would cover what's being typed.
     if (!this.searchForm.controls.query.value.trim()) {
       this.isHistoryOpen.set(true);
     }

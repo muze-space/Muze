@@ -171,8 +171,6 @@
   width: 100px;
 }
 
-/* Grid columns and their flex contents default to min-content, which the seek
-   bar and the button row push past the viewport on a phone. */
 .player-bar {
   grid-template-columns: minmax(0, 1fr) minmax(0, 4fr) minmax(0, 1fr);
 }
@@ -195,7 +193,6 @@
     gap: 10px;
   }
 
-  /* Mute stays; the slider is not usable at this size anyway. */
   .player-bar__range--volume {
     display: none;
   }

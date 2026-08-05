@@ -17,7 +17,6 @@ export class QueuePanel {
   protected readonly currentTrack = this.playerService.currentTrack;
   protected readonly isPlaying = this.playerService.isPlaying;
 
-  /** Index being dragged; null when no drag is in progress. */
   protected readonly draggedIndex = signal<number | null>(null);
 
   protected onClose(): void {
@@ -41,7 +40,6 @@ export class QueuePanel {
   }
 
   protected onDragOver(event: DragEvent): void {
-    // Without this the browser refuses the drop.
     event.preventDefault();
   }
 

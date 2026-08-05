@@ -27,8 +27,6 @@ export class TracksService {
       .set('limit', options.limit || 10)
       .set('offset', options.offset ?? 0)
       .set('order', options.order || TrackOrder.PopularityTotal)
-      // Covers are saved to localStorage as-is, so the baseline has to be big
-      // enough for the largest view; CoverPipe scales each call site down.
       .set('imagesize', options.imageSize || TrackImageSize.Size300);
 
     if (options.genre) {

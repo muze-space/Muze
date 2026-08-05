@@ -19,7 +19,6 @@ export class RecentSearchesService {
       return;
     }
 
-    // Case-insensitive dedupe, keeping the casing the user typed most recently.
     const lower = trimmed.toLowerCase();
     const next = [trimmed, ...this._queries().filter((item) => item.toLowerCase() !== lower)].slice(
       0,

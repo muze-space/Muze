@@ -42,10 +42,8 @@ export class AudioPlayer {
   readonly isQueueOpen = this.playerService.isQueueOpen;
   private readonly audioRef = viewChild<ElementRef<HTMLAudioElement>>('audioElement');
 
-  /** Level to come back to when unmuting. */
   private volumeBeforeMute = 1;
 
-  /** Speaker icon reflects the level, so mute is readable at a glance. */
   readonly volumeIcon = computed<IconName>(() => {
     const volume = this.volume();
 
@@ -87,7 +85,6 @@ export class AudioPlayer {
       }
     });
 
-    // Seeks come from the seek bar and the Now Playing view.
     effect(() => {
       this.playerService.seekToken();
 
@@ -99,7 +96,6 @@ export class AudioPlayer {
       }
     });
 
-    // Puts the track on the OS media controls and wires up hardware media keys.
     effect(() => {
       const track = this.currentTrack();
 
@@ -111,7 +107,6 @@ export class AudioPlayer {
         title: track.name,
         artist: track.artist_name,
         album: track.album_name,
-        // The OS renders this large — a list thumbnail would be a blurry mess.
         artwork: track.album_image
           ? [{ src: resizeCover(track.album_image, MEDIA_SESSION_ARTWORK_SIZE), sizes: '512x512' }]
           : [],
@@ -184,7 +179,6 @@ export class AudioPlayer {
     const audio = event.target as HTMLAudioElement;
     this.playerService.setDuration(audio.duration);
 
-    // A restored session knows the position but the element has only just loaded.
     const resumeAt = this.currentTime();
 
     if (resumeAt > 0 && audio.currentTime === 0) {

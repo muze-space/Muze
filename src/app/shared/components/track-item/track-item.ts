@@ -20,7 +20,6 @@ export class TrackItem {
   protected readonly AppRoutes = AppRoutes;
   track = input.required<Track>();
   queue = input<Track[]>([]);
-  /** Adds a "remove from this playlist" entry to the row menu. */
   removable = input<boolean>(false);
   readonly removeRequested = output<Track>();
   private readonly playerService = inject(PlayerService);

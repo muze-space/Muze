@@ -5,7 +5,6 @@ import { STORAGE_KEYS } from '../constants/storage-keys.const';
 
 const HISTORY_LIMIT = 20;
 
-/** Most-recently-played tracks, newest first, deduplicated by track id. */
 @Injectable({ providedIn: 'root' })
 export class PlayHistoryService {
   private readonly storage = inject(StorageService);
@@ -17,7 +16,6 @@ export class PlayHistoryService {
   add(track: Track): void {
     const current = this._history();
 
-    // Replaying the track that's already on top would be a pointless write.
     if (current[0]?.id === track.id) {
       return;
     }

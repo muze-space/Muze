@@ -31,7 +31,6 @@ function makeTrack(id: string): Track {
   };
 }
 
-/** Boots a fresh injector and returns the player it wired up. */
 function startSession(): PlayerService {
   TestBed.resetTestingModule();
   TestBed.configureTestingModule({});
@@ -77,7 +76,6 @@ describe('PlayerSessionService', () => {
     expect(restored.currentTime()).toBe(37);
     expect(restored.volume()).toBe(0.4);
     expect(restored.repeatMode()).toBe(RepeatMode.All);
-    // Autoplay without a user gesture is blocked, so playback must not resume.
     expect(restored.isPlaying()).toBe(false);
   });
 

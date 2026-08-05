@@ -2,7 +2,6 @@
   position: fixed;
   top: 0;
   right: 0;
-  /* Sits above the 90px player bar. */
   bottom: 90px;
   z-index: 120;
 
