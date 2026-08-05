@@ -1,23 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { noWhitespaceValidator } from '../../shared/utils/no-whitespace.validator';
 
-interface FeedbackForm {
-  name: string;
-  email: string;
-  message: string;
-}
+const SUBMIT_DELAY_MS = 800;
+const SUCCESS_MESSAGE_MS = 5000;
 
 @Component({
   selector: 'app-feedback',
   imports: [ReactiveFormsModule],
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Feedback {
-  isSubmitted = false;
-  submitSuccess = false;
-  submitError: string | null = null;
+  readonly isSubmitted = signal(false);
+  readonly submitSuccess = signal(false);
+  readonly submitError = signal<string | null>(null);
 
   private fb = inject(FormBuilder);
 
@@ -36,31 +34,26 @@ export class Feedback {
   });
 
   onSubmit(): void {
-    this.isSubmitted = true;
-    this.submitError = null;
-    this.submitSuccess = false;
+    this.isSubmitted.set(true);
+    this.submitError.set(null);
+    this.submitSuccess.set(false);
 
     if (this.feedbackForm.invalid) {
-      this.submitError = 'Please fill in all required fields correctly';
+      this.submitError.set('Please fill in all required fields correctly');
       return;
     }
 
-    const formData = this.feedbackForm.value as FeedbackForm;
-    console.log('Feedback submitted:', formData);
-
     setTimeout(() => {
-      this.submitSuccess = true;
-      this.isSubmitted = false;
+      this.submitSuccess.set(true);
+      this.isSubmitted.set(false);
       this.resetForm();
 
-      setTimeout(() => {
-        this.submitSuccess = false;
-      }, 5000);
-    }, 800);
+      setTimeout(() => this.submitSuccess.set(false), SUCCESS_MESSAGE_MS);
+    }, SUBMIT_DELAY_MS);
   }
 
   resetForm(): void {
     this.feedbackForm.reset();
-    this.submitError = null;
+    this.submitError.set(null);
   }
 }
