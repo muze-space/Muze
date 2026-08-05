@@ -140,10 +140,6 @@
   font-size: 1.5rem;
 }
 
-.now-playing__btn--play app-icon {
-  margin-left: 2px;
-}
-
 .now-playing__btn--play:hover {
   background: var(--spotify-white);
   color: var(--spotify-black);

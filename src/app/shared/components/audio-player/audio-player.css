@@ -120,10 +120,6 @@
   position: relative;
 }
 
-.player-bar__btn--play app-icon {
-  margin-left: 1px;
-}
-
 .player-bar__btn--play {
   background-color: var(--spotify-white);
   color: var(--spotify-black);
@@ -138,6 +134,7 @@
 }
 
 .player-bar__btn--play:hover {
+  background-color: var(--spotify-white);
   color: var(--spotify-black);
   transform: scale(1.05);
 }
