@@ -2,7 +2,7 @@ import { computed, Injectable, signal } from '@angular/core';
 import { Track } from '../models/track.model';
 
 export type ModalState =
-  | { kind: 'login' }
+  | { kind: 'login'; redirectTo?: string }
   | { kind: 'createPlaylist'; trackToAdd?: Track }
   | { kind: 'renamePlaylist'; playlistId: string }
   | { kind: 'deletePlaylist'; playlistId: string };
@@ -12,9 +12,14 @@ export class ModalService {
   private readonly _activeModal = signal<ModalState | null>(null);
   readonly activeModal = this._activeModal.asReadonly();
   readonly isLoginOpen = computed(() => this._activeModal()?.kind === 'login');
+  readonly loginRedirect = computed(() => {
+    const modal = this._activeModal();
 
-  openLogin(): void {
-    this._activeModal.set({ kind: 'login' });
+    return modal?.kind === 'login' ? (modal.redirectTo ?? null) : null;
+  });
+
+  openLogin(redirectTo?: string): void {
+    this._activeModal.set({ kind: 'login', redirectTo });
   }
 
   openCreatePlaylist(trackToAdd?: Track): void {

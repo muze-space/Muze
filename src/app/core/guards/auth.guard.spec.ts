@@ -5,9 +5,10 @@ import { authGuard } from './auth.guard';
 import { ModalService } from '../services/modal.service';
 import { STORAGE_KEYS } from '../constants/storage-keys.const';
 
-function runGuard(): boolean | UrlTree {
+function runGuard(url = '/library'): boolean | UrlTree {
   return TestBed.runInInjectionContext(
-    () => authGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot) as boolean | UrlTree,
+    () =>
+      authGuard({} as ActivatedRouteSnapshot, { url } as RouterStateSnapshot) as boolean | UrlTree,
   );
 }
 
@@ -29,6 +30,14 @@ describe('authGuard', () => {
 
     expect(runGuard()).toBe(false);
     expect(TestBed.inject(ModalService).isLoginOpen()).toBe(true);
+  });
+
+  it('remembers the blocked url so the login can return to it', async () => {
+    await TestBed.inject(Router).navigateByUrl('/');
+
+    runGuard('/library?tab=artists');
+
+    expect(TestBed.inject(ModalService).loginRedirect()).toBe('/library?tab=artists');
   });
 
   it('falls back to home when the app opens straight on a guarded url', () => {
