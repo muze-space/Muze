@@ -7,7 +7,6 @@
 }
 
 body {
-  padding-bottom: 90px;
   background-color: var(--spotify-black);
   color: var(--spotify-white);
   font-family: "Circular Std", "Helvetica Neue", Arial, sans-serif;

@@ -4,6 +4,10 @@
   min-height: 100vh;
 }
 
+.app-shell--has-player {
+  padding-bottom: 90px;
+}
+
 .app-body {
   display: flex;
   flex: 1;

@@ -1,13 +1,13 @@
-<div class="player-bar">
-  <audio
-    #audioElement
-    (ended)="onEnded()"
-    (loadedmetadata)="onLoadedMetadata($event)"
-    (timeupdate)="onTimeUpdate($event)"
-    hidden
-  ></audio>
+@if (currentTrack(); as track) {
+  <div class="player-bar">
+    <audio
+      #audioElement
+      (ended)="onEnded()"
+      (loadedmetadata)="onLoadedMetadata($event)"
+      (timeupdate)="onTimeUpdate($event)"
+      hidden
+    ></audio>
 
-  @if (currentTrack(); as track) {
     <div class="player-bar__track">
       <img [alt]="track.album_name" [src]="track.album_image" class="player-bar__cover" />
       <div class="player-bar__info">
@@ -58,7 +58,5 @@
         type="range"
       />
     </div>
-  } @else {
-    <div class="player-bar__empty">No track selected</div>
-  }
-</div>
+  </div>
+}

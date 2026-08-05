@@ -7,6 +7,7 @@ import { AudioPlayer } from './shared/components/audio-player/audio-player';
 import { Login } from './feature/auth/login/login';
 import { ModalService } from './core/services/modal.service';
 import { Toast } from './shared/components/toast/toast';
+import { PlayerService } from './core/services/player.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ import { Toast } from './shared/components/toast/toast';
 export class App {
   protected readonly title = signal('muze');
   protected readonly modalService = inject(ModalService);
+  protected readonly playerService = inject(PlayerService);
   search = '';
 
   onSearchChange(value: string): void {

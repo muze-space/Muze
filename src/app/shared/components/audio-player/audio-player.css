@@ -19,12 +19,6 @@
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.player-bar__empty {
-  grid-column: 1 / -1;
-  text-align: center;
-  color: var(--spotify-light-gray);
-}
-
 .player-bar__track {
   display: flex;
   align-items: center;
