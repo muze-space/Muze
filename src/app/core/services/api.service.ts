@@ -9,21 +9,19 @@ export class ApiService {
   private readonly _httpClient = inject(HttpClient);
 
   get<T>(url: string, params: HttpParams): Observable<T> {
-    return this._httpClient.get<T>(url, { params }).pipe(
-      catchError((error) => {
-        console.error('API error:', error);
-        return throwError(() => this.formatErrorMessage(error));
-      }),
-    );
+    return this._httpClient.get<T>(url, { params }).pipe(catchError((error) => this.fail(error)));
   }
 
   post<B, R>(url: string, body: B, params: HttpParams): Observable<R> {
-    return this._httpClient.post<R>(url, body, { params }).pipe(
-      catchError((error) => {
-        console.error('API error:', error);
-        return throwError(() => this.formatErrorMessage(error));
-      }),
-    );
+    return this._httpClient
+      .post<R>(url, body, { params })
+      .pipe(catchError((error) => this.fail(error)));
+  }
+
+  private fail(error: unknown): Observable<never> {
+    console.error('API error:', error);
+
+    return throwError(() => this.formatErrorMessage(error));
   }
 
   private formatErrorMessage(error: unknown): string {
