@@ -34,15 +34,23 @@ li.active .artist {
 .info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .title {
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .artist {
-  width: fit-content;
+  min-width: 0;
+  max-width: fit-content;
   color: var(--spotify-light-gray);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .artist:hover {
@@ -51,7 +59,7 @@ li.active .artist {
 }
 
 .album {
-  width: fit-content;
+  min-width: 0;
   color: var(--spotify-light-gray);
   text-decoration: none;
   overflow: hidden;
