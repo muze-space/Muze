@@ -46,7 +46,7 @@
 
   <h2>Tracks</h2>
   <app-tracks
-    #artistTrackList
+    (loaded)="onTracksLoaded($event)"
     [artistId]="artistId()"
     [order]="trackOrder.PopularityTotal"
     emptyMessage="No tracks found for this artist."

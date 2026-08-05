@@ -96,6 +96,22 @@ describe('ArtistPage', () => {
     expect(component['artist']()?.name).toBe('Justice');
   });
 
+  it('collects the track list from the nested component for the play button', async () => {
+    fixture.detectChanges();
+    const { artist, albums } = expectArtistRequests();
+    artist.flush(artistsResponse('Daft Punk'));
+    albums.flush(albumsResponse([]));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    httpMock
+      .expectOne((r) => r.url === `${BASE_URL}tracks/`)
+      .flush({ headers: {}, results: [{ id: 't1' }, { id: 't2' }] });
+    await fixture.whenStable();
+
+    expect(component['artistTracks']().map((track) => track.id)).toEqual(['t1', 't2']);
+  });
+
   it('surfaces a failure and stops loading', async () => {
     fixture.detectChanges();
 

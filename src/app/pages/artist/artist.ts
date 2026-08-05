@@ -1,17 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
 import { catchError, EMPTY, filter, forkJoin, map, switchMap, tap } from 'rxjs';
 import { ArtistService } from '../../core/services/artist.service';
 import { Artist } from '../../core/models/artist.model';
+import { Track } from '../../core/models/track.model';
 import { ArtistAlbum } from '../../core/models/artist-albums-response.model';
 import { Tracks } from '../../shared/components/tracks/tracks';
 import { TrackOrder } from '../../core/enums/track-order.enum';
@@ -43,15 +37,17 @@ export class ArtistPage {
   protected readonly isLoading = signal<boolean>(false);
   protected readonly error = signal<string | null>(null);
 
-  private readonly trackList = viewChild<Tracks>('artistTrackList');
-  protected readonly artistTracks = computed(() => this.trackList()?.tracks() ?? []);
+  protected readonly artistTracks = signal<Track[]>([]);
 
   private readonly followedArtists = inject(FollowedArtistsService);
   protected readonly isFollowed = computed(() => {
-    this.followedArtists.artists();
     const id = this.artist()?.id;
     return !!id && this.followedArtists.isFollowed(id);
   });
+
+  protected onTracksLoaded(tracks: Track[]): void {
+    this.artistTracks.set(tracks);
+  }
 
   protected onToggleFollow(artist: Artist): void {
     this.followedArtists.toggle(artist);

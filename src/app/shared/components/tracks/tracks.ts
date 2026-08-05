@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { catchError, EMPTY, map, merge, Subject, switchMap, tap } from 'rxjs';
 import { Track } from '../../../core/models/track.model';
@@ -35,6 +43,7 @@ export class Tracks {
   search = input<string>();
   artistId = input<string>();
   emptyMessage = input<string>('No tracks found.');
+  readonly loaded = output<Track[]>();
   tracks = signal<Track[]>([]);
   isLoading = signal<boolean>(false);
   isLoadingMore = signal<boolean>(false);
@@ -129,5 +138,6 @@ export class Tracks {
     }
 
     this.hasMore.set(!!response.headers.next);
+    this.loaded.emit(this.tracks());
   }
 }
