@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, distinctUntilChanged, Observable, shareReplay, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +10,6 @@ export class ApiService {
 
   get<T>(url: string, params: HttpParams): Observable<T> {
     return this._httpClient.get<T>(url, { params }).pipe(
-      shareReplay(1),
-      distinctUntilChanged(),
       catchError((error) => {
         console.error('API error:', error);
         return throwError(() => this.formatErrorMessage(error));

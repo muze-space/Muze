@@ -1,8 +1,8 @@
-import { Component, computed, effect, inject, signal, viewChild } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, signal, viewChild } from '@angular/core';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
-import { finalize, forkJoin, map } from 'rxjs';
+import { catchError, EMPTY, filter, forkJoin, map, switchMap, tap } from 'rxjs';
 import { ArtistService } from '../../core/services/artist.service';
 import { Artist } from '../../core/models/artist.model';
 import { ArtistAlbum } from '../../core/models/artist-albums-response.model';
@@ -50,28 +50,31 @@ export class ArtistPage {
   }
 
   constructor() {
-    effect(() => {
-      const id = this.artistId();
-
-      if (!id) {
-        return;
-      }
-
-      this.isLoading.set(true);
-      this.error.set(null);
-
-      forkJoin({
-        artist: this.artistService.getArtist(id),
-        albums: this.artistService.getArtistAlbums(id),
-      })
-        .pipe(finalize(() => this.isLoading.set(false)))
-        .subscribe({
-          next: ({ artist, albums }) => {
-            this.artist.set(artist);
-            this.albums.set(albums);
-          },
-          error: (err) => this.error.set(err),
-        });
-    });
+    toObservable(this.artistId)
+      .pipe(
+        filter((id): id is string => !!id),
+        tap(() => {
+          this.isLoading.set(true);
+          this.error.set(null);
+        }),
+        switchMap((id) =>
+          forkJoin({
+            artist: this.artistService.getArtist(id),
+            albums: this.artistService.getArtistAlbums(id),
+          }).pipe(
+            catchError((err) => {
+              this.error.set(err);
+              this.isLoading.set(false);
+              return EMPTY;
+            }),
+          ),
+        ),
+        takeUntilDestroyed(),
+      )
+      .subscribe(({ artist, albums }) => {
+        this.artist.set(artist);
+        this.albums.set(albums);
+        this.isLoading.set(false);
+      });
   }
 }

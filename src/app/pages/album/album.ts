@@ -1,8 +1,8 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
-import { finalize, map } from 'rxjs';
+import { catchError, EMPTY, filter, map, switchMap, tap } from 'rxjs';
 import { TracksService } from '../../core/services/tracks.service';
 import { TrackOrder } from '../../core/enums/track-order.enum';
 import { TrackImageSize } from '../../core/enums/track-image-size.enum';
@@ -36,28 +36,34 @@ export class AlbumPage {
   protected readonly album = computed(() => this.tracks()[0]);
 
   constructor() {
-    effect(() => {
-      const id = this.albumId();
-
-      if (!id) {
-        return;
-      }
-
-      this.isLoading.set(true);
-      this.error.set(null);
-
-      this.tracksService
-        .getTracks({
-          albumId: id,
-          order: TrackOrder.Id,
-          limit: ALBUM_TRACKS_LIMIT,
-          imageSize: TrackImageSize.Size300,
-        })
-        .pipe(finalize(() => this.isLoading.set(false)))
-        .subscribe({
-          next: (response) => this.tracks.set(response.results),
-          error: (err) => this.error.set(err),
-        });
-    });
+    toObservable(this.albumId)
+      .pipe(
+        filter((id): id is string => !!id),
+        tap(() => {
+          this.isLoading.set(true);
+          this.error.set(null);
+        }),
+        switchMap((id) =>
+          this.tracksService
+            .getTracks({
+              albumId: id,
+              order: TrackOrder.Id,
+              limit: ALBUM_TRACKS_LIMIT,
+              imageSize: TrackImageSize.Size300,
+            })
+            .pipe(
+              catchError((err) => {
+                this.error.set(err);
+                this.isLoading.set(false);
+                return EMPTY;
+              }),
+            ),
+        ),
+        takeUntilDestroyed(),
+      )
+      .subscribe((response) => {
+        this.tracks.set(response.results);
+        this.isLoading.set(false);
+      });
   }
 }

@@ -85,6 +85,53 @@ describe('Tracks', () => {
     expect(component.tracks().map((t) => t.id)).toEqual(['1']);
   });
 
+  it('cancels the in-flight first page when the criteria change', async () => {
+    fixture.detectChanges();
+    const stale = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+
+    fixture.componentRef.setInput('search', 'daft punk');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(stale.cancelled).toBe(true);
+
+    const fresh = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    expect(fresh.request.params.get('offset')).toBe('0');
+    fresh.flush(pageResponse(['9'], false));
+
+    expect(component.tracks().map((t) => t.id)).toEqual(['9']);
+  });
+
+  it('cancels an in-flight loadMore when the criteria change', async () => {
+    fixture.detectChanges();
+    httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['1', '2'], true));
+
+    component.loadMore();
+    const stale = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+
+    fixture.componentRef.setInput('search', 'daft punk');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(stale.cancelled).toBe(true);
+    expect(component.isLoadingMore()).toBe(false);
+
+    httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['3'], false));
+
+    expect(component.tracks().map((t) => t.id)).toEqual(['3']);
+  });
+
+  it('stops loading and surfaces the message when the request fails', () => {
+    fixture.detectChanges();
+
+    httpMock
+      .expectOne((r) => r.url === `${BASE_URL}tracks/`)
+      .flush('boom', { status: 500, statusText: 'Server Error' });
+
+    expect(component.error()).toBeTruthy();
+    expect(component.isLoading()).toBe(false);
+  });
+
   it('changing the search input resets pagination and refetches from the first page', () => {
     fixture.detectChanges();
     httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['1', '2'], true));
