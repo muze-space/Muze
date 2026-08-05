@@ -7,6 +7,8 @@ import { AppRoutes } from '../../../core/enums/app-routes.enum';
 import { QUERY_PARAMS } from '../../../core/constants/query-params.const';
 import { RecentSearchesService } from '../../../core/services/recent-searches.service';
 
+const TYPING_DEBOUNCE_MS = 1000;
+
 @Component({
   selector: 'app-search',
   imports: [ReactiveFormsModule],
@@ -28,12 +30,12 @@ export class SearchComponent {
     this.searchForm.controls.query.valueChanges
       .pipe(
         map((value) => value.trim()),
-        debounceTime(1000),
+        debounceTime(TYPING_DEBOUNCE_MS),
         distinctUntilChanged(),
         filter((query) => !!query),
         takeUntilDestroyed(),
       )
-      .subscribe((query) => this.navigateToSearch(query));
+      .subscribe((query) => this.showResults(query, { remember: false, replaceUrl: true }));
   }
 
   submitSearch(): void {
@@ -43,7 +45,7 @@ export class SearchComponent {
       return;
     }
 
-    this.navigateToSearch(query);
+    this.showResults(query, { remember: true, replaceUrl: false });
   }
 
   protected onFocus(): void {
@@ -54,7 +56,7 @@ export class SearchComponent {
 
   protected onPickRecent(query: string): void {
     this.searchForm.controls.query.setValue(query, { emitEvent: false });
-    this.navigateToSearch(query);
+    this.showResults(query, { remember: true, replaceUrl: false });
   }
 
   protected onRemoveRecent(query: string): void {
@@ -78,9 +80,15 @@ export class SearchComponent {
     this.isHistoryOpen.set(false);
   }
 
-  private navigateToSearch(query: string): void {
-    this.recentSearchesService.add(query);
+  private showResults(query: string, options: { remember: boolean; replaceUrl: boolean }): void {
+    if (options.remember) {
+      this.recentSearchesService.add(query);
+    }
+
     this.isHistoryOpen.set(false);
-    this._router.navigate([AppRoutes.Search], { queryParams: { [QUERY_PARAMS.query]: query } });
+    this._router.navigate([AppRoutes.Search], {
+      queryParams: { [QUERY_PARAMS.query]: query },
+      replaceUrl: options.replaceUrl,
+    });
   }
 }
