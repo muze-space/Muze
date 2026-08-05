@@ -8,10 +8,11 @@ import { PlayerService } from '../../../core/services/player.service';
 import { LikedTracksService } from '../../../core/services/liked-tracks.service';
 import { AppRoutes } from '../../../core/enums/app-routes.enum';
 import { TrackMenu } from '../track-menu/track-menu';
+import { Icon } from '../icon/icon';
 
 @Component({
   selector: 'app-track-item',
-  imports: [DurationPipe, CoverPipe, DatePipe, RouterLink, TrackMenu],
+  imports: [DurationPipe, CoverPipe, DatePipe, RouterLink, TrackMenu, Icon],
   templateUrl: './track-item.html',
   styleUrl: './track-item.css',
 })

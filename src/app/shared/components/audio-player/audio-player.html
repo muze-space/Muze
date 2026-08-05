@@ -17,7 +17,11 @@
         title="Now playing"
         type="button"
       >
-        <img [alt]="track.album_name" [src]="track.album_image | cover: 130" class="player-bar__cover" />
+        <img
+          [alt]="track.album_name"
+          [src]="track.album_image | cover: 130"
+          class="player-bar__cover"
+        />
       </button>
       <div class="player-bar__info">
         <span class="player-bar__title">{{ track.name }}</span>
@@ -36,18 +40,27 @@
           title="Shuffle"
           type="button"
         >
-          🔀
+          <app-icon name="shuffle"></app-icon>
         </button>
-        <button (click)="onPrevious()" aria-label="Previous track" class="player-bar__btn" type="button">⏮</button>
+        <button
+          (click)="onPrevious()"
+          aria-label="Previous track"
+          class="player-bar__btn"
+          type="button"
+        >
+          <app-icon name="previous"></app-icon>
+        </button>
         <button
           (click)="onTogglePlay()"
           [attr.aria-label]="isPlaying() ? 'Pause' : 'Play'"
           class="player-bar__btn player-bar__btn--play"
           type="button"
         >
-          {{ isPlaying() ? '⏸' : '▶' }}
+          <app-icon [name]="isPlaying() ? 'pause' : 'play'"></app-icon>
         </button>
-        <button (click)="onNext()" aria-label="Next track" class="player-bar__btn" type="button">⏭</button>
+        <button (click)="onNext()" aria-label="Next track" class="player-bar__btn" type="button">
+          <app-icon name="next"></app-icon>
+        </button>
         <button
           (click)="onCycleRepeat()"
           [attr.aria-label]="'Repeat: ' + repeatMode()"
@@ -56,10 +69,7 @@
           class="player-bar__btn player-bar__btn--repeat"
           type="button"
         >
-          🔁
-          @if (isRepeatOne()) {
-            <span aria-hidden="true" class="player-bar__repeat-one">1</span>
-          }
+          <app-icon [name]="isRepeatOne() ? 'repeat-one' : 'repeat'"></app-icon>
         </button>
       </div>
 
@@ -88,7 +98,7 @@
         title="Queue"
         type="button"
       >
-        ☰
+        <app-icon name="queue"></app-icon>
       </button>
       <button
         (click)="onToggleMute()"
@@ -97,7 +107,7 @@
         title="Mute (M)"
         type="button"
       >
-        {{ volumeIcon() }}
+        <app-icon [name]="volumeIcon()"></app-icon>
       </button>
       <input
         (input)="onVolumeChange($event)"

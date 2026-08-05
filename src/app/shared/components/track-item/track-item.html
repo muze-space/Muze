@@ -27,7 +27,7 @@
     class="album"
     >{{ track().album_name }}</a
   >
-  <span class="release-date">{{ track().releasedate | date:'yyyy' }}</span>
+  <span class="release-date">{{ track().releasedate | date: 'yyyy' }}</span>
   <span class="duration">{{ track().duration | duration }}</span>
   <app-track-menu
     (removeRequested)="onRemoveRequested($event)"
@@ -44,7 +44,7 @@
     class="like-btn"
     type="button"
   >
-    {{ isLiked() ? '♥' : '♡' }}
+    <app-icon [name]="isLiked() ? 'heart-filled' : 'heart'"></app-icon>
   </button>
   @if (isCurrentTrack()) {
     <span [attr.aria-label]="isPlaying() ? 'Playing' : 'Paused'" class="play-btn">
@@ -55,7 +55,7 @@
           <span class="equalizer__bar"></span>
         </span>
       } @else {
-        <span aria-hidden="true">▶</span>
+        <app-icon name="play"></app-icon>
       }
     </span>
   }

@@ -1,6 +1,7 @@
 <div class="play-collection">
   <button (click)="onPlay()" [disabled]="isDisabled()" class="play-collection__play" type="button">
-    ▶ Play
+    <app-icon name="play"></app-icon>
+    Play
   </button>
   <button
     (click)="onShuffle()"
@@ -8,6 +9,7 @@
     class="play-collection__shuffle"
     type="button"
   >
-    🔀 Shuffle
+    <app-icon name="shuffle"></app-icon>
+    Shuffle
   </button>
 </div>

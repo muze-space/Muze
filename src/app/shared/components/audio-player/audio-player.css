@@ -114,15 +114,9 @@
   position: relative;
 }
 
-/* Distinguishes repeat-one from repeat-all without a second icon. */
-.player-bar__repeat-one {
-  position: absolute;
-  right: 2px;
-  bottom: 0;
-
-  font-size: 0.6rem;
-  font-weight: 700;
-  line-height: 1;
+.player-bar__btn--play app-icon {
+  /* Nudges the play triangle onto the optical centre of the circle. */
+  margin-left: 1px;
 }
 
 .player-bar__btn--play {
@@ -134,7 +128,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding: 0;
 }
 

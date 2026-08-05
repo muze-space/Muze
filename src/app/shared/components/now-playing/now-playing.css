@@ -26,7 +26,7 @@
   background: transparent;
   border: none;
   color: var(--spotify-light-gray);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
 }
 
@@ -137,7 +137,11 @@
   border-radius: 50%;
   background: var(--spotify-white);
   color: var(--spotify-black);
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+}
+
+.now-playing__btn--play app-icon {
+  margin-left: 2px;
 }
 
 .now-playing__btn--play:hover {
@@ -148,16 +152,6 @@
 
 .now-playing__btn--repeat {
   position: relative;
-}
-
-.now-playing__repeat-one {
-  position: absolute;
-  right: 2px;
-  bottom: 0;
-
-  font-size: 0.65rem;
-  font-weight: 700;
-  line-height: 1;
 }
 
 @keyframes now-playing-fade-in {

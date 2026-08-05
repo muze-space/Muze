@@ -4,6 +4,13 @@
   gap: 12px;
 }
 
+.play-collection__play,
+.play-collection__shuffle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .play-collection__play {
   padding: 12px 28px;
   font-size: 0.95rem;

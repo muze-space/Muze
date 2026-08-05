@@ -5,6 +5,7 @@ import { DurationPipe } from '../../pipes/duration.pipe';
 import { CoverPipe } from '../../pipes/cover.pipe';
 import { AppRoutes } from '../../../core/enums/app-routes.enum';
 import { RepeatMode } from '../../../core/enums/repeat-mode.enum';
+import { Icon } from '../icon/icon';
 
 /**
  * Full-screen view of the current track. It drives the same PlayerService as the
@@ -13,7 +14,7 @@ import { RepeatMode } from '../../../core/enums/repeat-mode.enum';
  */
 @Component({
   selector: 'app-now-playing',
-  imports: [DurationPipe, CoverPipe, RouterLink],
+  imports: [DurationPipe, CoverPipe, RouterLink, Icon],
   templateUrl: './now-playing.html',
   styleUrl: './now-playing.css',
 })

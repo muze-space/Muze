@@ -16,6 +16,7 @@ import { RepeatMode } from '../../../core/enums/repeat-mode.enum';
 import { QueuePanel } from '../queue-panel/queue-panel';
 import { NowPlaying } from '../now-playing/now-playing';
 import { resizeCover } from '../../utils/cover-url';
+import { Icon, IconName } from '../icon/icon';
 
 const VOLUME_STEP = 0.1;
 const MEDIA_SESSION_ARTWORK_SIZE = 500;
@@ -23,7 +24,7 @@ const MEDIA_SESSION_ARTWORK_SIZE = 500;
 @Component({
   selector: 'app-audio-player',
   standalone: true,
-  imports: [DurationPipe, CoverPipe, QueuePanel, NowPlaying],
+  imports: [DurationPipe, CoverPipe, QueuePanel, NowPlaying, Icon],
   templateUrl: './audio-player.html',
   styleUrl: './audio-player.css',
 })
@@ -45,14 +46,14 @@ export class AudioPlayer {
   private volumeBeforeMute = 1;
 
   /** Speaker icon reflects the level, so mute is readable at a glance. */
-  readonly volumeIcon = computed(() => {
+  readonly volumeIcon = computed<IconName>(() => {
     const volume = this.volume();
 
     if (volume === 0) {
-      return '🔇';
+      return 'volume-mute';
     }
 
-    return volume < 0.5 ? '🔉' : '🔊';
+    return volume < 0.5 ? 'volume-low' : 'volume-high';
   });
 
   constructor() {
