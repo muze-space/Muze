@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-/** Names of the inline SVG icons the app ships with. */
 export type IconName =
   | 'play'
   | 'pause'
@@ -17,7 +16,6 @@ export type IconName =
   | 'volume-low'
   | 'volume-mute';
 
-/** Inline SVG icon that inherits the current text color and font size. */
 @Component({
   selector: 'app-icon',
   imports: [],

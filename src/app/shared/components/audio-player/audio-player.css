@@ -115,7 +115,6 @@
 }
 
 .player-bar__btn--play app-icon {
-  /* Nudges the play triangle onto the optical centre of the circle. */
   margin-left: 1px;
 }
 
