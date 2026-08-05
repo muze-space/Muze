@@ -57,8 +57,6 @@ export class PlayerService {
     this.isShuffled.set(true);
     this.originalQueue = [...tracks];
 
-    // The picked track leads the queue, so everything else stays ahead of it
-    // instead of only the tail that happened to follow its original position.
     this.applyPosition([tracks[startIndex], ...rest], 0);
     this.isPlaying.set(true);
   }
