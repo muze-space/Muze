@@ -1,33 +1,29 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Track } from '../models/track.model';
 import { StorageService } from './storage.service';
+import { PersistedCollection } from './persisted-collection';
 import { STORAGE_KEYS } from '../constants/storage-keys.const';
 
 const HISTORY_LIMIT = 20;
 
 @Injectable({ providedIn: 'root' })
 export class PlayHistoryService {
-  private readonly storage = inject(StorageService);
-  private readonly _history = signal<Track[]>(
-    this.storage.read<Track[]>(STORAGE_KEYS.playHistory, []).slice(0, HISTORY_LIMIT),
+  private readonly collection = new PersistedCollection<Track>(
+    inject(StorageService),
+    STORAGE_KEYS.playHistory,
+    { limit: HISTORY_LIMIT },
   );
-  readonly history = this._history.asReadonly();
+  readonly history = this.collection.items;
 
   add(track: Track): void {
-    const current = this._history();
-
-    if (current[0]?.id === track.id) {
+    if (this.history()[0]?.id === track.id) {
       return;
     }
 
-    const next = [track, ...current.filter((item) => item.id !== track.id)].slice(0, HISTORY_LIMIT);
-
-    this._history.set(next);
-    this.storage.write(STORAGE_KEYS.playHistory, next);
+    this.collection.update((tracks) => [track, ...tracks.filter((item) => item.id !== track.id)]);
   }
 
   clear(): void {
-    this._history.set([]);
-    this.storage.remove(STORAGE_KEYS.playHistory);
+    this.collection.clear();
   }
 }

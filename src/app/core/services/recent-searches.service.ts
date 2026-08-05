@@ -1,16 +1,18 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
+import { PersistedCollection } from './persisted-collection';
 import { STORAGE_KEYS } from '../constants/storage-keys.const';
 
 const SEARCH_LIMIT = 8;
 
 @Injectable({ providedIn: 'root' })
 export class RecentSearchesService {
-  private readonly storage = inject(StorageService);
-  private readonly _queries = signal<string[]>(
-    this.storage.read<string[]>(STORAGE_KEYS.recentSearches, []).slice(0, SEARCH_LIMIT),
+  private readonly collection = new PersistedCollection<string>(
+    inject(StorageService),
+    STORAGE_KEYS.recentSearches,
+    { limit: SEARCH_LIMIT },
   );
-  readonly queries = this._queries.asReadonly();
+  readonly queries = this.collection.items;
 
   add(query: string): void {
     const trimmed = query.trim();
@@ -20,24 +22,18 @@ export class RecentSearchesService {
     }
 
     const lower = trimmed.toLowerCase();
-    const next = [trimmed, ...this._queries().filter((item) => item.toLowerCase() !== lower)].slice(
-      0,
-      SEARCH_LIMIT,
-    );
 
-    this._queries.set(next);
-    this.storage.write(STORAGE_KEYS.recentSearches, next);
+    this.collection.update((queries) => [
+      trimmed,
+      ...queries.filter((item) => item.toLowerCase() !== lower),
+    ]);
   }
 
   remove(query: string): void {
-    const next = this._queries().filter((item) => item !== query);
-
-    this._queries.set(next);
-    this.storage.write(STORAGE_KEYS.recentSearches, next);
+    this.collection.update((queries) => queries.filter((item) => item !== query));
   }
 
   clear(): void {
-    this._queries.set([]);
-    this.storage.remove(STORAGE_KEYS.recentSearches);
+    this.collection.clear();
   }
 }
