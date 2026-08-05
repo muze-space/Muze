@@ -1,34 +1,28 @@
 import { Routes } from '@angular/router';
-import { AboutUs } from './pages/about-us/about-us';
-import { Home } from './pages/home/home';
 import { AppRoutes } from './core/enums/app-routes.enum';
-import { Search } from './pages/search/search';
-import { Library } from './pages/library/library';
-import { ArtistPage } from './pages/artist/artist';
-import { AlbumPage } from './pages/album/album';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: AppRoutes.Home,
-    component: Home,
+    loadComponent: () => import('./pages/home/home').then((m) => m.Home),
   },
   {
     path: AppRoutes.Search,
-    component: Search,
+    loadComponent: () => import('./pages/search/search').then((m) => m.Search),
   },
   {
     path: AppRoutes.Library,
-    component: Library,
+    loadComponent: () => import('./pages/library/library').then((m) => m.Library),
     canActivate: [authGuard],
   },
   {
     path: `${AppRoutes.Artist}/:id`,
-    component: ArtistPage,
+    loadComponent: () => import('./pages/artist/artist').then((m) => m.ArtistPage),
   },
   {
     path: `${AppRoutes.Album}/:id`,
-    component: AlbumPage,
+    loadComponent: () => import('./pages/album/album').then((m) => m.AlbumPage),
   },
   {
     path: `${AppRoutes.Playlist}/:id`,
@@ -37,7 +31,7 @@ export const routes: Routes = [
   },
   {
     path: AppRoutes.About,
-    component: AboutUs,
+    loadComponent: () => import('./pages/about-us/about-us').then((m) => m.AboutUs),
   },
   {
     path: AppRoutes.NotFound,
