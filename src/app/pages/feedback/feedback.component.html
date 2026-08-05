@@ -32,19 +32,19 @@
       <div class="error-messages">
         @if (
           feedbackForm.get('name')?.hasError('required') &&
-          (feedbackForm.get('name')?.touched || isSubmitted())
+          (feedbackForm.get('name')?.touched || hasAttemptedSubmit())
         ) {
           <span class="error-text">Name is required</span>
         }
         @if (
           feedbackForm.get('name')?.hasError('minlength') &&
-          (feedbackForm.get('name')?.touched || isSubmitted())
+          (feedbackForm.get('name')?.touched || hasAttemptedSubmit())
         ) {
           <span class="error-text">Name must be at least 3 characters</span>
         }
         @if (
           feedbackForm.get('name')?.hasError('whitespace') &&
-          (feedbackForm.get('name')?.touched || isSubmitted())
+          (feedbackForm.get('name')?.touched || hasAttemptedSubmit())
         ) {
           <span class="error-text">Name cannot be only whitespace</span>
         }
@@ -63,13 +63,13 @@
       <div class="error-messages">
         @if (
           feedbackForm.get('email')?.hasError('required') &&
-          (feedbackForm.get('email')?.touched || isSubmitted())
+          (feedbackForm.get('email')?.touched || hasAttemptedSubmit())
         ) {
           <span class="error-text">Email is required</span>
         }
         @if (
           feedbackForm.get('email')?.hasError('email') &&
-          (feedbackForm.get('email')?.touched || isSubmitted())
+          (feedbackForm.get('email')?.touched || hasAttemptedSubmit())
         ) {
           <span class="error-text">Please enter a valid email address</span>
         }
@@ -91,13 +91,13 @@
       <div class="error-messages">
         @if (
           feedbackForm.get('message')?.hasError('required') &&
-          (feedbackForm.get('message')?.touched || isSubmitted())
+          (feedbackForm.get('message')?.touched || hasAttemptedSubmit())
         ) {
           <span class="error-text">Message is required</span>
         }
         @if (
           feedbackForm.get('message')?.hasError('minlength') &&
-          (feedbackForm.get('message')?.touched || isSubmitted())
+          (feedbackForm.get('message')?.touched || hasAttemptedSubmit())
         ) {
           <span class="error-text">Message must be at least 10 characters</span>
         }
@@ -105,8 +105,12 @@
     </div>
 
     <div class="form-actions">
-      <button [disabled]="isSubmitted()" class="btn btn-primary" type="submit">
-        {{ isSubmitted() ? 'Sending...' : 'Send Feedback' }}
+      <button
+        [disabled]="feedbackForm.invalid || isSending()"
+        class="btn btn-primary"
+        type="submit"
+      >
+        {{ isSending() ? 'Sending...' : 'Send Feedback' }}
       </button>
       <button (click)="resetForm()" class="btn btn-secondary" type="button">Clear</button>
     </div>

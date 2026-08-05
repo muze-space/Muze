@@ -43,13 +43,50 @@ describe('Feedback', () => {
     expect(fixture.nativeElement.textContent).toContain('Name is required');
   });
 
-  it('rejects an empty submit without pretending to send', () => {
+  function submitButton(): HTMLButtonElement {
+    return fixture.nativeElement.querySelector('.btn-primary');
+  }
+
+  it('keeps the submit button disabled until the form is valid', () => {
+    expect(submitButton().disabled).toBe(true);
+
+    fillIn();
+    fixture.detectChanges();
+
+    expect(submitButton().disabled).toBe(false);
+  });
+
+  it('rejects an invalid submit and points at the offending fields', () => {
     component.onSubmit();
     fixture.detectChanges();
 
     expect(component.submitError()).toBe('Please fill in all required fields correctly');
     expect(alertText()).toContain('Please fill in all required fields correctly');
+    expect(fixture.nativeElement.textContent).toContain('Name is required');
     expect(component.submitSuccess()).toBe(false);
+  });
+
+  it('leaves the button usable after a rejected submit', () => {
+    component.onSubmit();
+    fillIn();
+    fixture.detectChanges();
+
+    expect(submitButton().disabled).toBe(false);
+    expect(submitButton().textContent?.trim()).toBe('Send Feedback');
+  });
+
+  it('shows a sending state only while the fake send is in flight', () => {
+    fillIn();
+
+    component.onSubmit();
+    fixture.detectChanges();
+
+    expect(submitButton().textContent?.trim()).toBe('Sending...');
+
+    vi.advanceTimersByTime(800);
+    fixture.detectChanges();
+
+    expect(component.isSending()).toBe(false);
   });
 
   it('renders the success message once the fake send finishes', () => {

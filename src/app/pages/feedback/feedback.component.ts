@@ -13,7 +13,8 @@ const SUCCESS_MESSAGE_MS = 5000;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Feedback {
-  readonly isSubmitted = signal(false);
+  readonly hasAttemptedSubmit = signal(false);
+  readonly isSending = signal(false);
   readonly submitSuccess = signal(false);
   readonly submitError = signal<string | null>(null);
 
@@ -34,18 +35,21 @@ export class Feedback {
   });
 
   onSubmit(): void {
-    this.isSubmitted.set(true);
+    this.hasAttemptedSubmit.set(true);
     this.submitError.set(null);
     this.submitSuccess.set(false);
 
     if (this.feedbackForm.invalid) {
+      this.feedbackForm.markAllAsTouched();
       this.submitError.set('Please fill in all required fields correctly');
       return;
     }
 
+    this.isSending.set(true);
+
     setTimeout(() => {
+      this.isSending.set(false);
       this.submitSuccess.set(true);
-      this.isSubmitted.set(false);
       this.resetForm();
 
       setTimeout(() => this.submitSuccess.set(false), SUCCESS_MESSAGE_MS);
@@ -54,6 +58,7 @@ export class Feedback {
 
   resetForm(): void {
     this.feedbackForm.reset();
+    this.hasAttemptedSubmit.set(false);
     this.submitError.set(null);
   }
 }
