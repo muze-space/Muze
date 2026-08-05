@@ -1,7 +1,7 @@
 <div class="search-section">
   <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="search" role="search">
-    <input (focus)="onFocus()" class="search__input" formControlName="query" id="header-search" name="query"
-           placeholder="Search…" type="search" />
+    <input (focus)="onFocus()" autocomplete="off" class="search__input" formControlName="query" id="header-search"
+           name="query" placeholder="Search…" spellcheck="false" type="search" />
     <button class="search__button" type="submit">Find</button>
   </form>
 
