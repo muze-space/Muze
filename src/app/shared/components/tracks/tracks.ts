@@ -8,22 +8,17 @@ import {
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { catchError, EMPTY, map, merge, Subject, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, filter, map, merge, Subject, switchMap, tap } from 'rxjs';
 import { Track } from '../../../core/models/track.model';
 import { TrackItem } from '../track-item/track-item';
 import { TracksService } from '../../../core/services/tracks.service';
 import { TracksResponse } from '../../../core/models/tracks-response.model';
 import { TrackOrder } from '../../../core/enums/track-order.enum';
 import { TrackGenre } from '../../../core/constants/genre.const';
+import { TrackCriteria } from '../../../core/models/track-criteria.model';
+import { TracksCacheService } from '../../../core/services/tracks-cache.service';
 
 const PAGE_SIZE = 10;
-
-interface TrackCriteria {
-  order: TrackOrder;
-  genre?: TrackGenre;
-  search?: string;
-  artistId?: string;
-}
 
 interface PageRequest {
   criteria: TrackCriteria;
@@ -51,6 +46,7 @@ export class Tracks {
   error = signal<string | null>(null);
 
   private readonly trackService = inject(TracksService);
+  private readonly cache = inject(TracksCacheService);
   private offset = 0;
 
   private readonly criteria = computed<TrackCriteria>(() => ({
@@ -64,6 +60,7 @@ export class Tracks {
 
   constructor() {
     const firstPage$ = toObservable(this.criteria).pipe(
+      filter((criteria) => !this.restoreFromCache(criteria)),
       map((criteria): PageRequest => ({ criteria, offset: 0 })),
     );
 
@@ -89,6 +86,24 @@ export class Tracks {
     }
 
     this.loadMoreTrigger.next();
+  }
+
+  private restoreFromCache(criteria: TrackCriteria): boolean {
+    const cached = this.cache.read(criteria);
+
+    if (!cached) {
+      return false;
+    }
+
+    this.error.set(null);
+    this.isLoading.set(false);
+    this.isLoadingMore.set(false);
+    this.offset = cached.offset;
+    this.hasMore.set(cached.hasMore);
+    this.tracks.set(cached.tracks);
+    this.loaded.emit(cached.tracks);
+
+    return true;
   }
 
   private startRequest(request: PageRequest): void {
@@ -138,6 +153,11 @@ export class Tracks {
     }
 
     this.hasMore.set(!!response.headers.next);
+    this.cache.write(request.criteria, {
+      tracks: this.tracks(),
+      offset: this.offset,
+      hasMore: this.hasMore(),
+    });
     this.loaded.emit(this.tracks());
   }
 }

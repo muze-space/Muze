@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 
 import { Tracks } from './tracks';
 import { API_CONFIG_TOKEN } from '../../../core/tokens/api-config.token';
@@ -25,6 +26,7 @@ describe('Tracks', () => {
     await TestBed.configureTestingModule({
       imports: [Tracks],
       providers: [
+        provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: API_CONFIG_TOKEN, useValue: { baseUrl: BASE_URL, clientId: 'test-client' } },
@@ -119,6 +121,93 @@ describe('Tracks', () => {
     httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['3'], false));
 
     expect(component.tracks().map((t) => t.id)).toEqual(['3']);
+  });
+
+  function remount(inputs: Record<string, unknown> = {}): ComponentFixture<Tracks> {
+    fixture.destroy();
+    fixture = TestBed.createComponent(Tracks);
+    fixture.componentRef.setInput('order', TrackOrder.PopularityTotal);
+
+    for (const [name, value] of Object.entries(inputs)) {
+      fixture.componentRef.setInput(name, value);
+    }
+
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    return fixture;
+  }
+
+  it('reuses the cached list instead of refetching when remounted', () => {
+    fixture.detectChanges();
+    httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['1', '2'], true));
+
+    remount();
+
+    httpMock.verify();
+    expect(component.tracks().map((t) => t.id)).toEqual(['1', '2']);
+    expect(component.hasMore()).toBe(true);
+    expect(component.isLoading()).toBe(false);
+  });
+
+  it('keeps the loaded pages so remounting does not fall back to the first page', () => {
+    fixture.detectChanges();
+    httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['1', '2'], true));
+    component.loadMore();
+    httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['3', '4'], true));
+
+    remount();
+
+    expect(component.tracks().map((t) => t.id)).toEqual(['1', '2', '3', '4']);
+
+    component.loadMore();
+
+    const req = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    expect(req.request.params.get('offset')).toBe('4');
+    req.flush(pageResponse(['5'], false));
+
+    expect(component.tracks().map((t) => t.id)).toEqual(['1', '2', '3', '4', '5']);
+  });
+
+  it('fetches again when the remounted criteria differ from the cached ones', () => {
+    fixture.detectChanges();
+    httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['1'], false));
+
+    remount({ search: 'daft punk' });
+
+    const req = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    expect(req.request.params.get('search')).toBe('daft punk');
+    req.flush(pageResponse(['9'], false));
+
+    expect(component.tracks().map((t) => t.id)).toEqual(['9']);
+  });
+
+  it('reports the restored list to the parent', () => {
+    fixture.detectChanges();
+    httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['1', '2'], true));
+
+    fixture.destroy();
+    fixture = TestBed.createComponent(Tracks);
+    fixture.componentRef.setInput('order', TrackOrder.PopularityTotal);
+    component = fixture.componentInstance;
+
+    const loaded: string[][] = [];
+    component.loaded.subscribe((tracks) => loaded.push(tracks.map((t) => t.id)));
+    fixture.detectChanges();
+
+    expect(loaded).toEqual([['1', '2']]);
+  });
+
+  it('does not cache a failed request', () => {
+    fixture.detectChanges();
+    httpMock
+      .expectOne((r) => r.url === `${BASE_URL}tracks/`)
+      .flush('boom', { status: 500, statusText: 'Server Error' });
+
+    remount();
+
+    httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`).flush(pageResponse(['1'], false));
+    expect(component.tracks().map((t) => t.id)).toEqual(['1']);
   });
 
   it('stops loading and surfaces the message when the request fails', () => {
