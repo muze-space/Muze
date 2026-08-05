@@ -1,6 +1,6 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { ModalService } from '../../../core/services/modal.service';
-import { STORAGE_KEYS } from '../../../core/constants/storage-keys.const';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +10,7 @@ import { STORAGE_KEYS } from '../../../core/constants/storage-keys.const';
 })
 export class Login {
   protected readonly modalService = inject(ModalService);
+  private readonly authService = inject(AuthService);
 
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
@@ -22,7 +23,7 @@ export class Login {
   // requires a client secret and a redirect URI registered with Jamendo, which this
   // project doesn't have. Swap this out for a proper OAuth flow once those are available.
   onLogin(): void {
-    localStorage.setItem(STORAGE_KEYS.isAuthenticated, 'true');
+    this.authService.login();
     this.modalService.closeLogin();
   }
 }

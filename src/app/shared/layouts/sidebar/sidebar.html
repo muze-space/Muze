@@ -54,33 +54,35 @@
     </ul>
   </nav>
 
-  <section aria-label="Playlists" class="sidebar__playlists">
-    <div class="sidebar__section-head">
-      <h2 class="sidebar__section-title">Playlists</h2>
-      <button
-        (click)="onCreatePlaylist()"
-        aria-label="Create playlist"
-        class="sidebar__create"
-        title="Create playlist"
-        type="button"
-      >
-        +
-      </button>
-    </div>
+  @if (isAuthenticated()) {
+    <section aria-label="Playlists" class="sidebar__playlists">
+      <div class="sidebar__section-head">
+        <h2 class="sidebar__section-title">Playlists</h2>
+        <button
+          (click)="onCreatePlaylist()"
+          aria-label="Create playlist"
+          class="sidebar__create"
+          title="Create playlist"
+          type="button"
+        >
+          +
+        </button>
+      </div>
 
-    <ul class="sidebar__playlist-list">
-      @for (playlist of playlists(); track playlist.id) {
-        <li>
-          <a
-            [routerLink]="['/' + AppRoutes.Playlist, playlist.id]"
-            [title]="playlist.name"
-            routerLinkActive="active"
-            >{{ playlist.name }}</a
-          >
-        </li>
-      } @empty {
-        <li class="sidebar__playlist-empty">No playlists yet</li>
-      }
-    </ul>
-  </section>
+      <ul class="sidebar__playlist-list">
+        @for (playlist of playlists(); track playlist.id) {
+          <li>
+            <a
+              [routerLink]="['/' + AppRoutes.Playlist, playlist.id]"
+              [title]="playlist.name"
+              routerLinkActive="active"
+              >{{ playlist.name }}</a
+            >
+          </li>
+        } @empty {
+          <li class="sidebar__playlist-empty">No playlists yet</li>
+        }
+      </ul>
+    </section>
+  }
 </aside>

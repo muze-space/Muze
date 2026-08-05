@@ -4,6 +4,8 @@ import { TrackMenu } from './track-menu';
 import { PlayerService } from '../../../core/services/player.service';
 import { PlaylistService } from '../../../core/services/playlist.service';
 import { LikedTracksService } from '../../../core/services/liked-tracks.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { ModalService } from '../../../core/services/modal.service';
 import { Track } from '../../../core/models/track.model';
 
 function makeTrack(id: string): Track {
@@ -52,6 +54,7 @@ describe('TrackMenu', () => {
       imports: [TrackMenu],
       providers: [provideRouter([])],
     });
+    TestBed.inject(AuthService).login();
     fixture = TestBed.createComponent(TrackMenu);
     fixture.componentRef.setInput('track', makeTrack('a'));
     await fixture.whenStable();
@@ -115,5 +118,39 @@ describe('TrackMenu', () => {
     itemLabelled('Chill')!.click();
 
     expect(playlists.containsTrack(playlist.id, 'a')).toBe(true);
+  });
+
+  describe('while logged out', () => {
+    beforeEach(() => {
+      TestBed.inject(LikedTracksService).toggle(makeTrack('a'));
+      TestBed.inject(AuthService).logout();
+    });
+
+    it('asks for a login instead of touching the liked songs', async () => {
+      const liked = TestBed.inject(LikedTracksService);
+
+      await open();
+      itemLabelled('Save to Liked Songs')!.click();
+      await fixture.whenStable();
+
+      expect(liked.isLiked('a')).toBe(true);
+      expect(TestBed.inject(ModalService).isLoginOpen()).toBe(true);
+    });
+
+    it('offers to save rather than remove a track liked in another session', async () => {
+      await open();
+
+      expect(itemLabelled('Remove from Liked Songs')).toBeUndefined();
+      expect(itemLabelled('Save to Liked Songs')).toBeTruthy();
+    });
+
+    it('asks for a login instead of opening the playlist submenu', async () => {
+      await open();
+      itemLabelled('Add to playlist')!.click();
+      await fixture.whenStable();
+
+      expect(fixture.nativeElement.querySelector('.track-menu__list')).toBeFalsy();
+      expect(TestBed.inject(ModalService).isLoginOpen()).toBe(true);
+    });
   });
 });

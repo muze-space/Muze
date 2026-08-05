@@ -9,6 +9,8 @@ import { LikedTracksService } from '../../../core/services/liked-tracks.service'
 import { AppRoutes } from '../../../core/enums/app-routes.enum';
 import { TrackMenu } from '../track-menu/track-menu';
 import { Icon } from '../icon/icon';
+import { AuthService } from '../../../core/services/auth.service';
+import { ModalService } from '../../../core/services/modal.service';
 
 @Component({
   selector: 'app-track-item',
@@ -24,11 +26,15 @@ export class TrackItem {
   readonly removeRequested = output<Track>();
   private readonly playerService = inject(PlayerService);
   private readonly likedTracksService = inject(LikedTracksService);
+  private readonly authService = inject(AuthService);
+  private readonly modalService = inject(ModalService);
   readonly isCurrentTrack = computed(
     () => this.playerService.currentTrack()?.id === this.track().id,
   );
   readonly isPlaying = computed(() => this.isCurrentTrack() && this.playerService.isPlaying());
-  readonly isLiked = computed(() => this.likedTracksService.isLiked(this.track().id));
+  readonly isLiked = computed(
+    () => this.authService.isAuthenticated() && this.likedTracksService.isLiked(this.track().id),
+  );
 
   onTrackClick() {
     this.playerService.toggle(this.track(), this.queue());
@@ -36,6 +42,12 @@ export class TrackItem {
 
   onLikeClick(event: Event) {
     event.stopPropagation();
+
+    if (!this.authService.isAuthenticated()) {
+      this.modalService.openLogin();
+      return;
+    }
+
     this.likedTracksService.toggle(this.track());
   }
 

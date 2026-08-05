@@ -24,7 +24,14 @@ describe('authGuard', () => {
     expect(runGuard()).toBe(true);
   });
 
-  it('redirects home and opens the login modal when not authenticated', () => {
+  it('cancels the navigation and opens the login modal, leaving the page as is', async () => {
+    await TestBed.inject(Router).navigateByUrl('/');
+
+    expect(runGuard()).toBe(false);
+    expect(TestBed.inject(ModalService).isLoginOpen()).toBe(true);
+  });
+
+  it('falls back to home when the app opens straight on a guarded url', () => {
     const result = runGuard();
 
     expect(result).toEqual(TestBed.inject(Router).parseUrl('/'));

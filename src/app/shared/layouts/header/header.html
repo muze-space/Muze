@@ -1,8 +1,10 @@
 <header>
   <app-search></app-search>
   <nav class="header-nav">
-    <button (click)="modalService.openLogin()" class="login-link" type="button">
-      Login
-    </button>
+    @if (isAuthenticated()) {
+      <button (click)="onLogout()" class="login-link" type="button">Logout</button>
+    } @else {
+      <button (click)="modalService.openLogin()" class="login-link" type="button">Login</button>
+    }
   </nav>
 </header>

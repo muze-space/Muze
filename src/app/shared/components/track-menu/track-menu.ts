@@ -16,6 +16,7 @@ import { LikedTracksService } from '../../../core/services/liked-tracks.service'
 import { ModalService } from '../../../core/services/modal.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { AppRoutes } from '../../../core/enums/app-routes.enum';
+import { AuthService } from '../../../core/services/auth.service';
 
 type MenuView = 'root' | 'playlists';
 
@@ -44,8 +45,11 @@ export class TrackMenu {
   private readonly likedTracksService = inject(LikedTracksService);
   private readonly modalService = inject(ModalService);
   private readonly toastService = inject(ToastService);
+  private readonly authService = inject(AuthService);
 
-  protected readonly isLiked = computed(() => this.likedTracksService.isLiked(this.track().id));
+  protected readonly isLiked = computed(
+    () => this.authService.isAuthenticated() && this.likedTracksService.isLiked(this.track().id),
+  );
 
   protected onToggle(): void {
     if (this.isOpen()) {
@@ -65,6 +69,10 @@ export class TrackMenu {
   }
 
   protected onShowPlaylists(): void {
+    if (!this.requireAccount()) {
+      return;
+    }
+
     this.view.set('playlists');
   }
 
@@ -101,6 +109,10 @@ export class TrackMenu {
   }
 
   protected onToggleLike(): void {
+    if (!this.requireAccount()) {
+      return;
+    }
+
     this.likedTracksService.toggle(this.track());
     this.close();
   }
@@ -135,6 +147,17 @@ export class TrackMenu {
   @HostListener('document:keydown.escape')
   protected onEscape(): void {
     this.close();
+  }
+
+  private requireAccount(): boolean {
+    if (this.authService.isAuthenticated()) {
+      return true;
+    }
+
+    this.close();
+    this.modalService.openLogin();
+
+    return false;
   }
 
   private close(): void {

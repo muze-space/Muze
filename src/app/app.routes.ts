@@ -33,6 +33,7 @@ export const routes: Routes = [
   {
     path: `${AppRoutes.Playlist}/:id`,
     loadComponent: () => import('./pages/playlist/playlist').then((m) => m.PlaylistPage),
+    canActivate: [authGuard],
   },
   {
     path: AppRoutes.About,
