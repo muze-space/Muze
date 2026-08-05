@@ -1,0 +1,69 @@
+@if (isOpen() && track(); as track) {
+  <div class="now-playing">
+    <button (click)="onClose()" aria-label="Close" class="now-playing__close" type="button">✕</button>
+
+    <img [alt]="track.album_name" [src]="track.album_image | cover: 600" class="now-playing__art" />
+
+    <div class="now-playing__meta">
+      <h1 class="now-playing__title">{{ track.name }}</h1>
+      <p class="now-playing__links">
+        <a (click)="onClose()" [routerLink]="['/' + AppRoutes.Artist, track.artist_id]">{{
+          track.artist_name
+        }}</a>
+        <span aria-hidden="true">·</span>
+        <a (click)="onClose()" [routerLink]="['/' + AppRoutes.Album, track.album_id]">{{
+          track.album_name
+        }}</a>
+      </p>
+    </div>
+
+    <div class="now-playing__seek">
+      <span class="now-playing__time">{{ currentTime() | duration }}</span>
+      <input
+        (input)="onSeek($event)"
+        [max]="duration() || 0"
+        [value]="currentTime()"
+        aria-label="Seek"
+        class="now-playing__range"
+        min="0"
+        type="range"
+      />
+      <span class="now-playing__time">{{ duration() | duration }}</span>
+    </div>
+
+    <div class="now-playing__controls">
+      <button
+        (click)="onToggleShuffle()"
+        [attr.aria-pressed]="isShuffled()"
+        [class.now-playing__btn--active]="isShuffled()"
+        aria-label="Shuffle"
+        class="now-playing__btn"
+        type="button"
+      >
+        🔀
+      </button>
+      <button (click)="onPrevious()" aria-label="Previous track" class="now-playing__btn" type="button">⏮</button>
+      <button
+        (click)="onTogglePlay()"
+        [attr.aria-label]="isPlaying() ? 'Pause' : 'Play'"
+        class="now-playing__btn now-playing__btn--play"
+        type="button"
+      >
+        {{ isPlaying() ? '⏸' : '▶' }}
+      </button>
+      <button (click)="onNext()" aria-label="Next track" class="now-playing__btn" type="button">⏭</button>
+      <button
+        (click)="onCycleRepeat()"
+        [attr.aria-label]="'Repeat: ' + repeatMode()"
+        [class.now-playing__btn--active]="repeatMode() !== RepeatMode.Off"
+        class="now-playing__btn now-playing__btn--repeat"
+        type="button"
+      >
+        🔁
+        @if (isRepeatOne()) {
+          <span aria-hidden="true" class="now-playing__repeat-one">1</span>
+        }
+      </button>
+    </div>
+  </div>
+}

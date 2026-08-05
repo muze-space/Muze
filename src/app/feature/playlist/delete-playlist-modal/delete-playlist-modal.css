@@ -1,0 +1,38 @@
+.delete-playlist__text {
+  color: var(--spotify-light-gray);
+  line-height: 1.5;
+}
+
+.delete-playlist__text strong {
+  color: var(--spotify-white);
+}
+
+.delete-playlist__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.delete-playlist__cancel {
+  padding: 10px 24px;
+
+  background: transparent;
+  color: var(--spotify-white);
+  font-weight: 600;
+}
+
+.delete-playlist__cancel:hover {
+  background: transparent;
+  text-decoration: underline;
+}
+
+.delete-playlist__confirm {
+  padding: 10px 28px;
+  background: #e2483d;
+  color: var(--spotify-white);
+}
+
+.delete-playlist__confirm:hover {
+  background: #f05a4e;
+}

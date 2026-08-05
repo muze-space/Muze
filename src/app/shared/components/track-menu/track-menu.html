@@ -1,0 +1,104 @@
+<div (contextmenu)="onContextMenu($event)" class="track-menu">
+  <button
+    (click)="onToggle()"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="menu"
+    aria-label="More options"
+    class="track-menu__btn"
+    type="button"
+  >
+    ⋯
+  </button>
+
+  @if (isOpen()) {
+    <ul
+      [class.track-menu__list--down]="opensDownward()"
+      class="track-menu__list"
+      role="menu"
+    >
+      @if (view() === 'root') {
+        <li role="none">
+          <button (click)="onShowPlaylists()" class="track-menu__item" role="menuitem" type="button">
+            <span>Add to playlist</span>
+            <span aria-hidden="true">›</span>
+          </button>
+        </li>
+        <li role="none">
+          <button (click)="onAddToQueue()" class="track-menu__item" role="menuitem" type="button">
+            Add to queue
+          </button>
+        </li>
+        <li role="none">
+          <button (click)="onPlayNext()" class="track-menu__item" role="menuitem" type="button">
+            Play next
+          </button>
+        </li>
+        <li class="track-menu__divider" role="separator"></li>
+        <li role="none">
+          <button (click)="onToggleLike()" class="track-menu__item" role="menuitem" type="button">
+            {{ isLiked() ? 'Remove from Liked Songs' : 'Save to Liked Songs' }}
+          </button>
+        </li>
+        <li role="none">
+          <button (click)="onGoToArtist()" class="track-menu__item" role="menuitem" type="button">
+            Go to artist
+          </button>
+        </li>
+        <li role="none">
+          <button (click)="onGoToAlbum()" class="track-menu__item" role="menuitem" type="button">
+            Go to album
+          </button>
+        </li>
+        @if (removable()) {
+          <li class="track-menu__divider" role="separator"></li>
+          <li role="none">
+            <button
+              (click)="onRemove()"
+              class="track-menu__item track-menu__item--danger"
+              role="menuitem"
+              type="button"
+            >
+              Remove from this playlist
+            </button>
+          </li>
+        }
+      } @else {
+        <li role="none">
+          <button (click)="onBack()" class="track-menu__item track-menu__item--back" role="menuitem" type="button">
+            <span aria-hidden="true">‹</span>
+            <span>Add to playlist</span>
+          </button>
+        </li>
+        <li class="track-menu__divider" role="separator"></li>
+        @for (playlist of playlists(); track playlist.id) {
+          <li role="none">
+            <button
+              (click)="onAddToPlaylist(playlist.id, playlist.name)"
+              [disabled]="containsTrack(playlist.id)"
+              class="track-menu__item"
+              role="menuitem"
+              type="button"
+            >
+              <span class="track-menu__name">{{ playlist.name }}</span>
+              @if (containsTrack(playlist.id)) {
+                <span aria-hidden="true" class="track-menu__check">✓</span>
+              }
+            </button>
+          </li>
+        } @empty {
+          <li class="track-menu__empty" role="none">No playlists yet</li>
+        }
+        <li role="none">
+          <button
+            (click)="onNewPlaylist()"
+            class="track-menu__item track-menu__item--new"
+            role="menuitem"
+            type="button"
+          >
+            + New playlist
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</div>

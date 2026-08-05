@@ -1,0 +1,17 @@
+<div class="overlay">
+  <button
+    (click)="onClose()"
+    aria-hidden="true"
+    class="overlay__backdrop"
+    tabindex="-1"
+    type="button"
+  ></button>
+
+  <div aria-modal="true" class="modal" role="dialog">
+    <button (click)="onClose()" aria-label="Close" class="modal__close" type="button">✕</button>
+
+    <h2 class="modal__title">{{ title() }}</h2>
+
+    <ng-content></ng-content>
+  </div>
+</div>

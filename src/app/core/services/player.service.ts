@@ -1,33 +1,87 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { Track } from '../models/track.model';
+import { RepeatMode } from '../enums/repeat-mode.enum';
+
+const REPEAT_CYCLE: readonly RepeatMode[] = [RepeatMode.Off, RepeatMode.All, RepeatMode.One];
 
 @Injectable({ providedIn: 'root' })
 export class PlayerService {
-  readonly currentTrack = signal<Track | null>(null);
+  private readonly _queue = signal<Track[]>([]);
+  readonly queue = this._queue.asReadonly();
+
+  /**
+   * Position in the queue rather than an id lookup: the same track can
+   * legitimately appear twice in a user playlist, and shuffle reorders the
+   * queue in place.
+   */
+  private readonly _currentIndex = signal<number>(-1);
+  readonly currentIndex = this._currentIndex.asReadonly();
+  // Explicitly nullable: indexing a Track[] is typed non-null, but an empty
+  // queue or index -1 really does yield null here.
+  readonly currentTrack = computed<Track | null>(
+    () => this._queue()[this._currentIndex()] ?? null,
+  );
+  readonly upNext = computed(() => this._queue().slice(this._currentIndex() + 1));
+
   readonly isPlaying = signal<boolean>(false);
-  readonly queue = signal<Track[]>([]);
   readonly currentTime = signal<number>(0);
+  readonly seekToken = signal<number>(0);
   readonly duration = signal<number>(0);
   readonly volume = signal<number>(1);
 
+  readonly repeatMode = signal<RepeatMode>(RepeatMode.Off);
+  readonly isRepeatOne = computed(() => this.repeatMode() === RepeatMode.One);
+  readonly isShuffled = signal<boolean>(false);
+  readonly isQueueOpen = signal<boolean>(false);
+  readonly isNowPlayingOpen = signal<boolean>(false);
+
+  /** Pre-shuffle order, so turning shuffle off restores the original sequence. */
+  private originalQueue: Track[] = [];
+
   play(track: Track, queue?: Track[]): void {
-    const isDifferentTrack = this.currentTrack()?.id !== track.id;
-
-    this.currentTrack.set(track);
-    this.isPlaying.set(true);
-
-    if (isDifferentTrack) {
-      this.currentTime.set(0);
-      this.duration.set(0);
-    }
-
     if (queue) {
-      this.queue.set(queue);
+      this.replaceQueue(queue, track);
+    } else {
+      const index = this._queue().findIndex((queued) => queued.id === track.id);
+
+      if (index === -1) {
+        this.replaceQueue([track], track);
+      } else {
+        this.applyPosition(this._queue(), index);
+      }
     }
+
+    this.isPlaying.set(true);
+  }
+
+  /** Turns shuffle on and starts the collection from a random track. */
+  playShuffled(tracks: Track[]): void {
+    if (!tracks.length) {
+      return;
+    }
+
+    this.isShuffled.set(true);
+    this.play(tracks[Math.floor(Math.random() * tracks.length)], tracks);
+  }
+
+  /** Plays a specific queue position — the only unambiguous way to pick among duplicates. */
+  playAt(index: number): void {
+    if (index < 0 || index >= this._queue().length) {
+      return;
+    }
+
+    this.applyPosition(this._queue(), index);
+    this.isPlaying.set(true);
   }
 
   pause(): void {
     this.isPlaying.set(false);
+  }
+
+  resume(): void {
+    if (this.currentTrack()) {
+      this.isPlaying.set(true);
+    }
   }
 
   toggle(track: Track, queue?: Track[]): void {
@@ -56,8 +110,150 @@ export class PlayerService {
     this.skip(-1);
   }
 
+  /**
+   * Called when the audio element reaches the end. Repeat-one never gets here:
+   * the player loops that natively through the audio element's `loop` flag.
+   */
+  trackEnded(): void {
+    this.skip(1);
+  }
+
+  cycleRepeat(): void {
+    const nextIndex = (REPEAT_CYCLE.indexOf(this.repeatMode()) + 1) % REPEAT_CYCLE.length;
+    this.repeatMode.set(REPEAT_CYCLE[nextIndex]);
+  }
+
+  toggleShuffle(): void {
+    if (this.isShuffled()) {
+      this.isShuffled.set(false);
+
+      const current = this.currentTrack();
+      const restored = [...this.originalQueue];
+      const index = current ? restored.findIndex((track) => track.id === current.id) : -1;
+
+      this.applyPosition(restored, index);
+      return;
+    }
+
+    this.isShuffled.set(true);
+    this.originalQueue = [...this._queue()];
+
+    const index = this._currentIndex();
+    this.applyPosition(this.shuffleKeepingCurrent(this._queue(), index), index);
+  }
+
+  addToQueue(track: Track): void {
+    this.originalQueue = [...this.originalQueue, track];
+    this._queue.update((queue) => [...queue, track]);
+  }
+
+  playNext(track: Track): void {
+    const insertAt = this._currentIndex() + 1;
+
+    const original = [...this.originalQueue];
+    original.splice(Math.min(insertAt, original.length), 0, track);
+    this.originalQueue = original;
+
+    this._queue.update((queue) => {
+      const next = [...queue];
+      next.splice(insertAt, 0, track);
+      return next;
+    });
+  }
+
+  removeFromQueue(index: number): void {
+    const queue = this._queue();
+
+    if (index < 0 || index >= queue.length) {
+      return;
+    }
+
+    const removed = queue[index];
+    const next = queue.filter((_, position) => position !== index);
+    this.originalQueue = this.originalQueue.filter((track) => track !== removed);
+
+    let currentIndex = this._currentIndex();
+
+    if (index < currentIndex) {
+      currentIndex -= 1;
+    }
+
+    if (!next.length) {
+      currentIndex = -1;
+      this.isPlaying.set(false);
+    } else if (currentIndex >= next.length) {
+      currentIndex = next.length - 1;
+    }
+
+    this.applyPosition(next, currentIndex);
+  }
+
+  moveInQueue(from: number, to: number): void {
+    const queue = this._queue();
+    const isOutOfRange =
+      from < 0 || to < 0 || from >= queue.length || to >= queue.length || from === to;
+
+    if (isOutOfRange) {
+      return;
+    }
+
+    const next = [...queue];
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved);
+
+    // Reordering must not restart playback, so the index follows the track object.
+    const current = this.currentTrack();
+
+    this._queue.set(next);
+    this._currentIndex.set(current ? next.indexOf(current) : -1);
+  }
+
+  /**
+   * Restores a saved queue and position without starting playback — browsers
+   * block autoplay before the first user gesture.
+   */
+  loadQueue(queue: Track[], index: number, originalQueue = queue): void {
+    this.originalQueue = [...originalQueue];
+    this._queue.set([...queue]);
+    this._currentIndex.set(index >= 0 && index < queue.length ? index : -1);
+    this.isPlaying.set(false);
+  }
+
+  /** Snapshot of the unshuffled order, for session persistence. */
+  getOriginalQueue(): Track[] {
+    return this.originalQueue;
+  }
+
+  clearQueue(): void {
+    this.originalQueue = [];
+    this.isPlaying.set(false);
+    this.applyPosition([], -1);
+  }
+
+  toggleQueuePanel(): void {
+    this.isQueueOpen.update((isOpen) => !isOpen);
+  }
+
+  openNowPlaying(): void {
+    this.isNowPlayingOpen.set(true);
+  }
+
+  closeNowPlaying(): void {
+    this.isNowPlayingOpen.set(false);
+  }
+
   setCurrentTime(time: number): void {
     this.currentTime.set(time);
+  }
+
+  /**
+   * Requests a jump to `time`. The audio element lives in AudioPlayer, so the
+   * counter is what tells it a seek was asked for — the time alone can't, since
+   * it also ticks on every `timeupdate`.
+   */
+  seekTo(time: number): void {
+    this.currentTime.set(time);
+    this.seekToken.update((token) => token + 1);
   }
 
   setDuration(duration: number): void {
@@ -68,21 +264,77 @@ export class PlayerService {
     this.volume.set(volume);
   }
 
+  private replaceQueue(queue: Track[], startTrack: Track): void {
+    let next = [...queue];
+    let index = next.findIndex((track) => track.id === startTrack.id);
+
+    if (index === -1) {
+      next = [startTrack, ...next];
+      index = 0;
+    }
+
+    this.originalQueue = next;
+
+    if (this.isShuffled()) {
+      next = this.shuffleKeepingCurrent(next, index);
+    }
+
+    this.applyPosition(next, index);
+  }
+
+  /** Single write path for queue + position, so playback time resets exactly once. */
+  private applyPosition(queue: Track[], index: number): void {
+    const previousId = this.currentTrack()?.id;
+
+    this._queue.set(queue);
+    this._currentIndex.set(index);
+
+    if (queue[index]?.id !== previousId) {
+      this.currentTime.set(0);
+      this.duration.set(0);
+    }
+  }
+
+  /** Fisher–Yates over everything but the playing track, which keeps its slot. */
+  private shuffleKeepingCurrent(queue: Track[], index: number): Track[] {
+    const rest = queue.filter((_, position) => position !== index);
+
+    for (let i = rest.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [rest[i], rest[j]] = [rest[j], rest[i]];
+    }
+
+    if (index < 0 || index >= queue.length) {
+      return rest;
+    }
+
+    rest.splice(index, 0, queue[index]);
+    return rest;
+  }
+
   private skip(offset: number): void {
-    const queue = this.queue();
-    const current = this.currentTrack();
+    const queue = this._queue();
+    const index = this._currentIndex();
 
-    if (!queue.length || !current) {
+    if (!queue.length || index === -1) {
       return;
     }
 
-    const currentIndex = queue.findIndex((track) => track.id === current.id);
+    const target = index + offset;
 
-    if (currentIndex === -1) {
+    if (target >= 0 && target < queue.length) {
+      this.applyPosition(queue, target);
       return;
     }
 
-    const nextIndex = (currentIndex + offset + queue.length) % queue.length;
-    this.play(queue[nextIndex], queue);
+    if (this.repeatMode() === RepeatMode.Off) {
+      // Running off the end stops playback instead of looping back.
+      if (target >= queue.length) {
+        this.isPlaying.set(false);
+      }
+      return;
+    }
+
+    this.applyPosition(queue, (target + queue.length) % queue.length);
   }
 }

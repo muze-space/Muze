@@ -6,7 +6,7 @@
   <div class="error-message" role="alert">{{ error() }}</div>
 } @else if (album(); as currentAlbum) {
   <section class="album-header">
-    <img [alt]="currentAlbum.album_name" [src]="currentAlbum.album_image" class="album-header__image" />
+    <img [alt]="currentAlbum.album_name" [src]="currentAlbum.album_image | cover: 400" class="album-header__image" />
     <div class="album-header__info">
       <span class="album-header__label">Album</span>
       <h1 class="album-header__name">{{ currentAlbum.album_name }}</h1>
@@ -14,6 +14,7 @@
         currentAlbum.artist_name
       }}</a>
       <span class="album-header__year">{{ currentAlbum.releasedate | date: 'yyyy' }}</span>
+      <app-play-collection [tracks]="tracks()"></app-play-collection>
     </div>
   </section>
 

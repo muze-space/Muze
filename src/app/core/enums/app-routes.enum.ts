@@ -6,5 +6,6 @@ export enum AppRoutes {
   Login = 'login',
   Artist = 'artist',
   Album = 'album',
+  Playlist = 'playlist',
   NotFound = 'not-found',
 }

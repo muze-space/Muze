@@ -45,7 +45,7 @@ describe('TracksService', () => {
     const req = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
     expect(req.request.params.get('client_id')).toBe('test-client');
     expect(req.request.params.get('order')).toBe(TrackOrder.PopularityTotal);
-    expect(req.request.params.get('imagesize')).toBe(String(TrackImageSize.Size50));
+    expect(req.request.params.get('imagesize')).toBe(String(TrackImageSize.Size300));
     req.flush(nonEmptyResponse());
   });
 

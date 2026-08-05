@@ -1,5 +1,6 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { ModalService } from '../../../core/services/modal.service';
+import { STORAGE_KEYS } from '../../../core/constants/storage-keys.const';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class Login {
   // requires a client secret and a redirect URI registered with Jamendo, which this
   // project doesn't have. Swap this out for a proper OAuth flow once those are available.
   onLogin(): void {
-    localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem(STORAGE_KEYS.isAuthenticated, 'true');
     this.modalService.closeLogin();
   }
 }

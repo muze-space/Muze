@@ -2,11 +2,16 @@
   <div class="feedback-header">
     <h1>Send Feedback</h1>
     <p>We'd love to hear from you! Share your thoughts or suggestions.</p>
+    <p class="feedback-demo-note">
+      Demo form — Muze has no backend, so nothing actually leaves your browser. Reach us at the
+      addresses on the About Us page.
+    </p>
   </div>
 
   @if (submitSuccess) {
     <div class="alert alert-success">
-      <strong>Success!</strong> Your feedback has been sent successfully. Thank you for your input!
+      <strong>Thanks!</strong> Your feedback was validated. This is a demo form, so it wasn't sent
+      anywhere.
     </div>
   }
 

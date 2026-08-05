@@ -1,22 +1,59 @@
-import { Component, effect, ElementRef, HostListener, inject, viewChild } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  HostListener,
+  inject,
+  untracked,
+  viewChild,
+} from '@angular/core';
 import { PlayerService } from '../../../core/services/player.service';
 import { DurationPipe } from '../../pipes/duration.pipe';
+import { CoverPipe } from '../../pipes/cover.pipe';
+import { RepeatMode } from '../../../core/enums/repeat-mode.enum';
+import { QueuePanel } from '../queue-panel/queue-panel';
+import { NowPlaying } from '../now-playing/now-playing';
+import { resizeCover } from '../../utils/cover-url';
+
+const VOLUME_STEP = 0.1;
+const MEDIA_SESSION_ARTWORK_SIZE = 500;
 
 @Component({
   selector: 'app-audio-player',
   standalone: true,
-  imports: [DurationPipe],
+  imports: [DurationPipe, CoverPipe, QueuePanel, NowPlaying],
   templateUrl: './audio-player.html',
   styleUrl: './audio-player.css',
 })
 export class AudioPlayer {
+  protected readonly RepeatMode = RepeatMode;
   private readonly playerService = inject(PlayerService);
   readonly currentTrack = this.playerService.currentTrack;
   readonly isPlaying = this.playerService.isPlaying;
   readonly currentTime = this.playerService.currentTime;
   readonly duration = this.playerService.duration;
   readonly volume = this.playerService.volume;
+  readonly repeatMode = this.playerService.repeatMode;
+  readonly isRepeatOne = this.playerService.isRepeatOne;
+  readonly isShuffled = this.playerService.isShuffled;
+  readonly isQueueOpen = this.playerService.isQueueOpen;
   private readonly audioRef = viewChild<ElementRef<HTMLAudioElement>>('audioElement');
+
+  /** Level to come back to when unmuting. */
+  private volumeBeforeMute = 1;
+
+  /** Speaker icon reflects the level, so mute is readable at a glance. */
+  readonly volumeIcon = computed(() => {
+    const volume = this.volume();
+
+    if (volume === 0) {
+      return '🔇';
+    }
+
+    return volume < 0.5 ? '🔉' : '🔊';
+  });
 
   constructor() {
     effect(() => {
@@ -48,6 +85,65 @@ export class AudioPlayer {
         audio.volume = this.volume();
       }
     });
+
+    // Seeks come from the seek bar and the Now Playing view.
+    effect(() => {
+      this.playerService.seekToken();
+
+      const audio = this.audioRef()?.nativeElement;
+      const time = untracked(this.currentTime);
+
+      if (audio && audio.readyState > 0) {
+        audio.currentTime = time;
+      }
+    });
+
+    // Puts the track on the OS media controls and wires up hardware media keys.
+    effect(() => {
+      const track = this.currentTrack();
+
+      if (!this.hasMediaSession() || !track) {
+        return;
+      }
+
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: track.name,
+        artist: track.artist_name,
+        album: track.album_name,
+        // The OS renders this large — a list thumbnail would be a blurry mess.
+        artwork: track.album_image
+          ? [{ src: resizeCover(track.album_image, MEDIA_SESSION_ARTWORK_SIZE), sizes: '512x512' }]
+          : [],
+      });
+    });
+
+    effect(() => {
+      if (this.hasMediaSession()) {
+        navigator.mediaSession.playbackState = this.isPlaying() ? 'playing' : 'paused';
+      }
+    });
+
+    afterNextRender(() => this.registerMediaSessionHandlers());
+  }
+
+  private hasMediaSession(): boolean {
+    return typeof navigator !== 'undefined' && 'mediaSession' in navigator;
+  }
+
+  private registerMediaSessionHandlers(): void {
+    if (!this.hasMediaSession()) {
+      return;
+    }
+
+    navigator.mediaSession.setActionHandler('play', () => this.playerService.resume());
+    navigator.mediaSession.setActionHandler('pause', () => this.playerService.pause());
+    navigator.mediaSession.setActionHandler('previoustrack', () => this.playerService.previous());
+    navigator.mediaSession.setActionHandler('nexttrack', () => this.playerService.next());
+    navigator.mediaSession.setActionHandler('seekto', (details) => {
+      if (details.seekTime !== undefined) {
+        this.playerService.seekTo(details.seekTime);
+      }
+    });
   }
 
   onTogglePlay(): void {
@@ -62,6 +158,22 @@ export class AudioPlayer {
     this.playerService.next();
   }
 
+  onToggleShuffle(): void {
+    this.playerService.toggleShuffle();
+  }
+
+  onCycleRepeat(): void {
+    this.playerService.cycleRepeat();
+  }
+
+  onToggleQueue(): void {
+    this.playerService.toggleQueuePanel();
+  }
+
+  onOpenNowPlaying(): void {
+    this.playerService.openNowPlaying();
+  }
+
   onTimeUpdate(event: Event): void {
     const audio = event.target as HTMLAudioElement;
     this.playerService.setCurrentTime(audio.currentTime);
@@ -70,26 +182,40 @@ export class AudioPlayer {
   onLoadedMetadata(event: Event): void {
     const audio = event.target as HTMLAudioElement;
     this.playerService.setDuration(audio.duration);
+
+    // A restored session knows the position but the element has only just loaded.
+    const resumeAt = this.currentTime();
+
+    if (resumeAt > 0 && audio.currentTime === 0) {
+      audio.currentTime = Math.min(resumeAt, audio.duration || resumeAt);
+    }
   }
 
   onEnded(): void {
-    this.playerService.next();
+    this.playerService.trackEnded();
   }
 
   onSeek(event: Event): void {
-    const value = Number((event.target as HTMLInputElement).value);
-    const audio = this.audioRef()?.nativeElement;
-
-    if (audio) {
-      audio.currentTime = value;
-    }
-
-    this.playerService.setCurrentTime(value);
+    this.playerService.seekTo(Number((event.target as HTMLInputElement).value));
   }
 
   onVolumeChange(event: Event): void {
     const value = Number((event.target as HTMLInputElement).value);
+
+    if (value > 0) {
+      this.volumeBeforeMute = value;
+    }
+
     this.playerService.setVolume(value);
+  }
+
+  onToggleMute(): void {
+    if (this.volume() > 0) {
+      this.volumeBeforeMute = this.volume();
+      this.playerService.setVolume(0);
+    } else {
+      this.playerService.setVolume(this.volumeBeforeMute);
+    }
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -111,11 +237,15 @@ export class AudioPlayer {
         break;
       case 'ArrowUp':
         event.preventDefault();
-        this.playerService.setVolume(Math.min(1, this.volume() + 0.1));
+        this.playerService.setVolume(Math.min(1, this.volume() + VOLUME_STEP));
         break;
       case 'ArrowDown':
         event.preventDefault();
-        this.playerService.setVolume(Math.max(0, this.volume() - 0.1));
+        this.playerService.setVolume(Math.max(0, this.volume() - VOLUME_STEP));
+        break;
+      case 'KeyM':
+        event.preventDefault();
+        this.onToggleMute();
         break;
     }
   }

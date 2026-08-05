@@ -110,3 +110,30 @@
   color: var(--spotify-light-gray);
   font-weight: 500;
 }
+
+.artist-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.artist-header__follow {
+  padding: 11px 22px;
+
+  background: transparent;
+  border: 1px solid #4e4e4e;
+  color: var(--spotify-white);
+  font-size: 0.9rem;
+}
+
+.artist-header__follow:hover {
+  background: transparent;
+  border-color: var(--spotify-white);
+}
+
+.artist-header__follow--active {
+  border-color: var(--spotify-green);
+  color: var(--spotify-green);
+}

@@ -46,6 +46,8 @@ export class Feedback {
       return;
     }
 
+    // No backend to post to — the form validates and reports success locally.
+    // The UI says so explicitly so nobody expects a message to arrive.
     const formData = this.feedbackForm.value as FeedbackForm;
     console.log('Feedback submitted:', formData);
 

@@ -8,10 +8,23 @@ import { Login } from './feature/auth/login/login';
 import { ModalService } from './core/services/modal.service';
 import { Toast } from './shared/components/toast/toast';
 import { PlayerService } from './core/services/player.service';
+import { PlayerSessionService } from './core/services/player-session.service';
+import { PlaylistFormModal } from './feature/playlist/playlist-form-modal/playlist-form-modal';
+import { DeletePlaylistModal } from './feature/playlist/delete-playlist-modal/delete-playlist-modal';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Sidebar, Footer, AudioPlayer, Login, Toast],
+  imports: [
+    RouterOutlet,
+    Header,
+    Sidebar,
+    Footer,
+    AudioPlayer,
+    Login,
+    Toast,
+    PlaylistFormModal,
+    DeletePlaylistModal,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -19,6 +32,8 @@ export class App {
   protected readonly title = signal('muze');
   protected readonly modalService = inject(ModalService);
   protected readonly playerService = inject(PlayerService);
+  // Instantiated for its side effects: session restore, persistence and play history.
+  private readonly playerSession = inject(PlayerSessionService);
   search = '';
 
   onSearchChange(value: string): void {

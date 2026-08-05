@@ -9,12 +9,14 @@ import { TrackImageSize } from '../../core/enums/track-image-size.enum';
 import { Track } from '../../core/models/track.model';
 import { TrackItem } from '../../shared/components/track-item/track-item';
 import { AppRoutes } from '../../core/enums/app-routes.enum';
+import { PlayCollection } from '../../shared/components/play-collection/play-collection';
+import { CoverPipe } from '../../shared/pipes/cover.pipe';
 
 const ALBUM_TRACKS_LIMIT = 50;
 
 @Component({
   selector: 'app-album',
-  imports: [TrackItem, DatePipe, RouterLink],
+  imports: [TrackItem, DatePipe, RouterLink, PlayCollection, CoverPipe],
   templateUrl: './album.html',
   styleUrl: './album.css',
 })

@@ -1,3 +1,7 @@
+@if (recentlyPlayed().length) {
+  <h2>Jump back in</h2>
+  <app-track-card-row [tracks]="recentlyPlayed()"></app-track-card-row>
+}
 <h2>Popular tracks</h2>
 <app-tracks [order]="trackOrder.PopularityTotal"></app-tracks>
 <h2>New Releases</h2>

@@ -1,0 +1,66 @@
+@if (isOpen()) {
+  <aside aria-label="Play queue" class="queue">
+    <header class="queue__header">
+      <h2 class="queue__title">Queue</h2>
+      <div class="queue__header-actions">
+        <button (click)="onClear()" class="queue__text-btn" type="button">Clear</button>
+        <button (click)="onClose()" aria-label="Close queue" class="queue__close" type="button">✕</button>
+      </div>
+    </header>
+
+    @if (currentTrack(); as track) {
+      <h3 class="queue__section">Now playing</h3>
+      <div class="queue__row queue__row--current">
+        <img [alt]="track.album_name" [src]="track.album_image | cover: 100" class="queue__cover" />
+        <div class="queue__info">
+          <span class="queue__name">{{ track.name }}</span>
+          <span class="queue__artist">{{ track.artist_name }}</span>
+        </div>
+        <span class="queue__duration">{{ track.duration | duration }}</span>
+      </div>
+    }
+
+    <h3 class="queue__section">Next up</h3>
+    <ol class="queue__list">
+      @for (track of queue(); track $index; let i = $index) {
+        @if (i > currentIndex()) {
+          <li
+            (dragend)="onDragEnd()"
+            (dragover)="onDragOver($event)"
+            (dragstart)="onDragStart(i)"
+            (drop)="onDrop(i)"
+            [class.queue__row--dragging]="draggedIndex() === i"
+            class="queue__row"
+            draggable="true"
+          >
+            <button
+              (click)="onPlayAt(i)"
+              [attr.aria-label]="'Play ' + track.name"
+              class="queue__play"
+              type="button"
+            >
+              <img [alt]="track.album_name" [src]="track.album_image | cover: 100" class="queue__cover" />
+              <span class="queue__info">
+                <span class="queue__name">{{ track.name }}</span>
+                <span class="queue__artist">{{ track.artist_name }}</span>
+              </span>
+            </button>
+            <span class="queue__duration">{{ track.duration | duration }}</span>
+            <button
+              (click)="onRemove(i)"
+              [attr.aria-label]="'Remove ' + track.name + ' from queue'"
+              class="queue__remove"
+              type="button"
+            >
+              ✕
+            </button>
+          </li>
+        }
+      }
+    </ol>
+
+    @if (!queue().length || currentIndex() >= queue().length - 1) {
+      <p class="queue__empty">Nothing queued after this track.</p>
+    }
+  </aside>
+}

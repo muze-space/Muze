@@ -1,5 +1,12 @@
+import { TestBed } from '@angular/core/testing';
 import { LikedTracksService } from './liked-tracks.service';
 import { Track } from '../models/track.model';
+
+function createService(): LikedTracksService {
+  TestBed.resetTestingModule();
+  TestBed.configureTestingModule({});
+  return TestBed.inject(LikedTracksService);
+}
 
 function makeTrack(id: string): Track {
   return {
@@ -36,12 +43,12 @@ describe('LikedTracksService', () => {
   });
 
   it('starts empty when localStorage has no saved tracks', () => {
-    const service = new LikedTracksService();
+    const service = createService();
     expect(service.likedTracks()).toEqual([]);
   });
 
   it('like() adds a track and isLiked() reflects it', () => {
-    const service = new LikedTracksService();
+    const service = createService();
     service.like(trackA);
 
     expect(service.isLiked('a')).toBe(true);
@@ -49,7 +56,7 @@ describe('LikedTracksService', () => {
   });
 
   it('like() is a no-op if the track is already liked', () => {
-    const service = new LikedTracksService();
+    const service = createService();
     service.like(trackA);
     service.like(trackA);
 
@@ -57,7 +64,7 @@ describe('LikedTracksService', () => {
   });
 
   it('unlike() removes a track', () => {
-    const service = new LikedTracksService();
+    const service = createService();
     service.like(trackA);
     service.like(trackB);
     service.unlike('a');
@@ -67,7 +74,7 @@ describe('LikedTracksService', () => {
   });
 
   it('toggle() likes an unliked track and unlikes a liked track', () => {
-    const service = new LikedTracksService();
+    const service = createService();
     service.toggle(trackA);
     expect(service.isLiked('a')).toBe(true);
 
@@ -76,10 +83,10 @@ describe('LikedTracksService', () => {
   });
 
   it('persists liked tracks to localStorage and restores them on init', () => {
-    const service = new LikedTracksService();
+    const service = createService();
     service.like(trackA);
 
-    const restored = new LikedTracksService();
+    const restored = createService();
     expect(restored.likedTracks()).toEqual([trackA]);
   });
 });

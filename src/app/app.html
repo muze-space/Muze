@@ -12,8 +12,19 @@
   <app-footer></app-footer>
 </div>
 
-@if (modalService.isLoginOpen()) {
-  <app-login></app-login>
+@switch (modalService.activeModal()?.kind) {
+  @case ('login') {
+    <app-login></app-login>
+  }
+  @case ('createPlaylist') {
+    <app-playlist-form-modal></app-playlist-form-modal>
+  }
+  @case ('renamePlaylist') {
+    <app-playlist-form-modal></app-playlist-form-modal>
+  }
+  @case ('deletePlaylist') {
+    <app-delete-playlist-modal></app-delete-playlist-modal>
+  }
 }
 <app-audio-player></app-audio-player>
 <app-toast></app-toast>

@@ -1,22 +1,93 @@
 <section class="library">
   <h1 class="library__title">Your Library</h1>
 
-  @if (likedTracks().length) {
-    <ol>
-      @for (track of likedTracks(); track track.id) {
-        <app-track-item [queue]="likedTracks()" [track]="track"></app-track-item>
+  <nav aria-label="Library sections" class="library__tabs">
+    @for (tab of tabs; track tab) {
+      <a
+        [class.library__tab--active]="activeTab() === tab"
+        [queryParams]="{ tab }"
+        [routerLink]="[]"
+        class="library__tab"
+        >{{ tab }}</a
+      >
+    }
+  </nav>
+
+  @switch (activeTab()) {
+    @case ('playlists') {
+      @if (playlists().length) {
+        <ul class="library__grid">
+          @for (playlist of playlists(); track playlist.id) {
+            <li>
+              <a [routerLink]="['/' + AppRoutes.Playlist, playlist.id]" class="library__card">
+                <span class="library__card-cover">
+                  @if (playlist.tracks[0]?.album_image; as cover) {
+                    <img [src]="cover | cover: 300" alt="" class="library__card-image" />
+                  } @else {
+                    <span aria-hidden="true" class="library__card-placeholder">♫</span>
+                  }
+                </span>
+                <span class="library__card-name">{{ playlist.name }}</span>
+                <span class="library__card-meta">
+                  {{ playlist.tracks.length }} {{ playlist.tracks.length === 1 ? 'song' : 'songs' }}
+                </span>
+              </a>
+            </li>
+          }
+        </ul>
+      } @else {
+        <div class="library__empty">
+          <h2>No playlists yet</h2>
+          <p>Create one and start collecting the tracks you like together.</p>
+          <button (click)="onCreatePlaylist()" class="library__cta-btn" type="button">
+            Create playlist
+          </button>
+        </div>
       }
-    </ol>
-  } @else {
-    <div class="library__empty">
-      <div class="library__empty-icon">
-        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" />
-        </svg>
-      </div>
-      <h2>Saved tracks will show up here</h2>
-      <p>Songs you like will appear in your library once you start saving them.</p>
-      <a routerLink="/" class="library__cta">Find something to play</a>
-    </div>
+    }
+    @case ('artists') {
+      @if (followedArtists().length) {
+        <ul class="library__grid">
+          @for (artist of followedArtists(); track artist.id) {
+            <li>
+              <a [routerLink]="['/' + AppRoutes.Artist, artist.id]" class="library__card">
+                <span class="library__card-cover library__card-cover--round">
+                  <img [alt]="artist.name" [src]="artist.image | cover: 300" class="library__card-image" />
+                </span>
+                <span class="library__card-name">{{ artist.name }}</span>
+                <span class="library__card-meta">Artist</span>
+              </a>
+            </li>
+          }
+        </ul>
+      } @else {
+        <div class="library__empty">
+          <h2>You aren't following anyone yet</h2>
+          <p>Open an artist page and hit Follow to see them here.</p>
+          <a class="library__cta" routerLink="/">Find something to play</a>
+        </div>
+      }
+    }
+    @default {
+      @if (likedTracks().length) {
+        <app-play-collection [tracks]="likedTracks()"></app-play-collection>
+        <ol>
+          @for (track of likedTracks(); track track.id) {
+            <app-track-item [queue]="likedTracks()" [track]="track"></app-track-item>
+          }
+        </ol>
+      } @else {
+        <div class="library__empty">
+          <div class="library__empty-icon">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" />
+            </svg>
+          </div>
+          <h2>Saved tracks will show up here</h2>
+          <p>Songs you like will appear in your library once you start saving them.</p>
+          <a class="library__cta" routerLink="/">Find something to play</a>
+        </div>
+      }
+    }
   }
 </section>

@@ -1,6 +1,6 @@
 li {
   display: grid;
-  grid-template-columns: 50px 3fr 2fr 1fr 1fr 28px 20px;
+  grid-template-columns: 50px 3fr 2fr 1fr 1fr 28px 28px 20px;
   align-items: center;
   gap: 16px;
   list-style: none;
@@ -88,6 +88,48 @@ li.active .artist {
   justify-content: center;
   color: var(--spotify-green);
   font-size: 0.8rem;
+}
+
+/* Three bouncing bars: the standard "this one is playing" cue. */
+.equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+
+.equalizer__bar {
+  width: 3px;
+  height: 100%;
+  border-radius: 1px;
+  background: var(--spotify-green);
+  transform-origin: bottom;
+  animation: equalizer-bounce 0.9s ease-in-out infinite;
+}
+
+.equalizer__bar:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.equalizer__bar:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes equalizer-bounce {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .equalizer__bar {
+    animation: none;
+    transform: scaleY(0.6);
+  }
 }
 
 .like-btn {

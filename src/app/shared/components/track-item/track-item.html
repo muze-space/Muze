@@ -9,7 +9,7 @@
   role="button"
   tabindex="0"
 >
-  <img [alt]="track().album_name" [src]="track().album_image" class="cover" />
+  <img [alt]="track().album_name" [src]="track().album_image | cover: 100" class="cover" />
   <div class="info">
     <span class="title">{{ track().name }}</span>
     <a
@@ -29,6 +29,11 @@
   >
   <span class="release-date">{{ track().releasedate | date:'yyyy' }}</span>
   <span class="duration">{{ track().duration | duration }}</span>
+  <app-track-menu
+    (removeRequested)="onRemoveRequested($event)"
+    [removable]="removable()"
+    [track]="track()"
+  ></app-track-menu>
   <button
     (click)="onLikeClick($event)"
     (keydown.enter)="$event.stopPropagation()"
@@ -42,8 +47,16 @@
     {{ isLiked() ? '♥' : '♡' }}
   </button>
   @if (isCurrentTrack()) {
-    <span class="play-btn">
-      {{ isPlaying() ? '⏸' : '▶' }}
+    <span [attr.aria-label]="isPlaying() ? 'Playing' : 'Paused'" class="play-btn">
+      @if (isPlaying()) {
+        <span aria-hidden="true" class="equalizer">
+          <span class="equalizer__bar"></span>
+          <span class="equalizer__bar"></span>
+          <span class="equalizer__bar"></span>
+        </span>
+      } @else {
+        <span aria-hidden="true">▶</span>
+      }
     </span>
   }
 </li>

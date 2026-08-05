@@ -1,15 +1,17 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Track } from '../../../core/models/track.model';
 import { DurationPipe } from '../../pipes/duration.pipe';
+import { CoverPipe } from '../../pipes/cover.pipe';
 import { DatePipe } from '@angular/common';
 import { PlayerService } from '../../../core/services/player.service';
 import { LikedTracksService } from '../../../core/services/liked-tracks.service';
 import { AppRoutes } from '../../../core/enums/app-routes.enum';
+import { TrackMenu } from '../track-menu/track-menu';
 
 @Component({
   selector: 'app-track-item',
-  imports: [DurationPipe, DatePipe, RouterLink],
+  imports: [DurationPipe, CoverPipe, DatePipe, RouterLink, TrackMenu],
   templateUrl: './track-item.html',
   styleUrl: './track-item.css',
 })
@@ -17,6 +19,9 @@ export class TrackItem {
   protected readonly AppRoutes = AppRoutes;
   track = input.required<Track>();
   queue = input<Track[]>([]);
+  /** Adds a "remove from this playlist" entry to the row menu. */
+  removable = input<boolean>(false);
+  readonly removeRequested = output<Track>();
   private readonly playerService = inject(PlayerService);
   private readonly likedTracksService = inject(LikedTracksService);
   readonly isCurrentTrack = computed(
@@ -32,5 +37,9 @@ export class TrackItem {
   onLikeClick(event: Event) {
     event.stopPropagation();
     this.likedTracksService.toggle(this.track());
+  }
+
+  onRemoveRequested(track: Track) {
+    this.removeRequested.emit(track);
   }
 }

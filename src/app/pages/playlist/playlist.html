@@ -1,0 +1,60 @@
+@if (playlist(); as playlist) {
+  <section class="playlist">
+    <header class="playlist__header">
+      <div class="playlist__cover" aria-hidden="true">
+        @for (image of coverImages(); track image) {
+          <img [src]="image | cover: 400" alt="" class="playlist__cover-tile" />
+        } @empty {
+          <span class="playlist__cover-placeholder">♫</span>
+        }
+      </div>
+
+      <div class="playlist__meta">
+        <span class="playlist__kind">Playlist</span>
+        <h1 class="playlist__name">{{ playlist.name }}</h1>
+
+        @if (playlist.description) {
+          <p class="playlist__description">{{ playlist.description }}</p>
+        }
+
+        <p class="playlist__stats">
+          {{ tracks().length }} {{ tracks().length === 1 ? 'song' : 'songs' }}
+          @if (tracks().length) {
+            <span aria-hidden="true">·</span> {{ totalDuration() }}
+          }
+        </p>
+
+        <div class="playlist__actions">
+          <app-play-collection [tracks]="tracks()"></app-play-collection>
+          <button (click)="onEdit()" class="playlist__action" type="button">Edit</button>
+          <button (click)="onDelete()" class="playlist__action" type="button">Delete</button>
+        </div>
+      </div>
+    </header>
+
+    @if (tracks().length) {
+      <ol class="playlist__tracks">
+        @for (track of tracks(); track track.id; let i = $index) {
+          <app-track-item
+            (dragend)="onDragEnd()"
+            (dragover)="onDragOver($event)"
+            (dragstart)="onDragStart(i)"
+            (drop)="onDrop(i)"
+            (removeRequested)="onRemoveTrack($event)"
+            [class.playlist__track--dragging]="draggedIndex() === i"
+            [queue]="tracks()"
+            [removable]="true"
+            [track]="track"
+            draggable="true"
+          ></app-track-item>
+        }
+      </ol>
+    } @else {
+      <div class="playlist__empty">
+        <h2>This playlist is empty</h2>
+        <p>Use the ＋ button on any track to add it here.</p>
+        <a class="playlist__cta" routerLink="/">Find something to play</a>
+      </div>
+    }
+  </section>
+}

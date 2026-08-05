@@ -1,11 +1,14 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Track } from '../models/track.model';
-
-const STORAGE_KEY = 'likedTracks';
+import { StorageService } from './storage.service';
+import { STORAGE_KEYS } from '../constants/storage-keys.const';
 
 @Injectable({ providedIn: 'root' })
 export class LikedTracksService {
-  private readonly _likedTracks = signal<Track[]>(this.readFromStorage());
+  private readonly storage = inject(StorageService);
+  private readonly _likedTracks = signal<Track[]>(
+    this.storage.read<Track[]>(STORAGE_KEYS.likedTracks, []),
+  );
   readonly likedTracks = this._likedTracks.asReadonly();
 
   isLiked(trackId: string): boolean {
@@ -26,24 +29,15 @@ export class LikedTracksService {
     }
 
     this._likedTracks.update((tracks) => [...tracks, track]);
-    this.writeToStorage();
+    this.persist();
   }
 
   unlike(trackId: string): void {
     this._likedTracks.update((tracks) => tracks.filter((track) => track.id !== trackId));
-    this.writeToStorage();
+    this.persist();
   }
 
-  private readFromStorage(): Track[] {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch {
-      return [];
-    }
-  }
-
-  private writeToStorage(): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(this._likedTracks()));
+  private persist(): void {
+    this.storage.write(STORAGE_KEYS.likedTracks, this._likedTracks());
   }
 }

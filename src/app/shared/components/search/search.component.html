@@ -1,7 +1,33 @@
 <div class="search-section">
   <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="search" role="search">
-    <input class="search__input" formControlName="query" id="header-search" name="query"
+    <input (focus)="onFocus()" class="search__input" formControlName="query" id="header-search" name="query"
            placeholder="Search…" type="search" />
     <button class="search__button" type="submit">Find</button>
   </form>
+
+  @if (isHistoryOpen() && recentSearches().length) {
+    <div class="search__history">
+      <div class="search__history-head">
+        <span class="search__history-title">Recent searches</span>
+        <button (click)="onClearRecent()" class="search__history-clear" type="button">Clear</button>
+      </div>
+      <ul class="search__history-list">
+        @for (query of recentSearches(); track query) {
+          <li class="search__history-item">
+            <button (click)="onPickRecent(query)" class="search__history-query" type="button">
+              {{ query }}
+            </button>
+            <button
+              (click)="onRemoveRecent(query)"
+              [attr.aria-label]="'Remove ' + query + ' from recent searches'"
+              class="search__history-remove"
+              type="button"
+            >
+              ✕
+            </button>
+          </li>
+        }
+      </ul>
+    </div>
+  }
 </div>

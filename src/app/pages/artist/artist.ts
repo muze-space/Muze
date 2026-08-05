@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
@@ -9,10 +9,13 @@ import { ArtistAlbum } from '../../core/models/artist-albums-response.model';
 import { Tracks } from '../../shared/components/tracks/tracks';
 import { TrackOrder } from '../../core/enums/track-order.enum';
 import { AppRoutes } from '../../core/enums/app-routes.enum';
+import { PlayCollection } from '../../shared/components/play-collection/play-collection';
+import { FollowedArtistsService } from '../../core/services/followed-artists.service';
+import { CoverPipe } from '../../shared/pipes/cover.pipe';
 
 @Component({
   selector: 'app-artist',
-  imports: [Tracks, DatePipe, RouterLink],
+  imports: [Tracks, DatePipe, RouterLink, PlayCollection, CoverPipe],
   templateUrl: './artist.html',
   styleUrl: './artist.css',
 })
@@ -31,6 +34,22 @@ export class ArtistPage {
   protected readonly albums = signal<ArtistAlbum[]>([]);
   protected readonly isLoading = signal<boolean>(false);
   protected readonly error = signal<string | null>(null);
+
+  /** The track list owns its own fetching, so Play/Shuffle reads whatever it has loaded. */
+  private readonly trackList = viewChild<Tracks>('artistTrackList');
+  protected readonly artistTracks = computed(() => this.trackList()?.tracks() ?? []);
+
+  private readonly followedArtists = inject(FollowedArtistsService);
+  protected readonly isFollowed = computed(() => {
+    // Reading the signal keeps the button in sync when the list changes elsewhere.
+    this.followedArtists.artists();
+    const id = this.artist()?.id;
+    return !!id && this.followedArtists.isFollowed(id);
+  });
+
+  protected onToggleFollow(artist: Artist): void {
+    this.followedArtists.toggle(artist);
+  }
 
   constructor() {
     effect(() => {

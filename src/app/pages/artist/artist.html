@@ -6,10 +6,22 @@
   <div class="error-message" role="alert">{{ error() }}</div>
 } @else if (artist(); as currentArtist) {
   <section class="artist-header">
-    <img [alt]="currentArtist.name" [src]="currentArtist.image" class="artist-header__image" />
+    <img [alt]="currentArtist.name" [src]="currentArtist.image | cover: 400" class="artist-header__image" />
     <div class="artist-header__info">
       <span class="artist-header__label">Artist</span>
       <h1 class="artist-header__name">{{ currentArtist.name }}</h1>
+      <div class="artist-header__actions">
+        <app-play-collection [tracks]="artistTracks()"></app-play-collection>
+        <button
+          (click)="onToggleFollow(currentArtist)"
+          [attr.aria-pressed]="isFollowed()"
+          [class.artist-header__follow--active]="isFollowed()"
+          class="artist-header__follow"
+          type="button"
+        >
+          {{ isFollowed() ? 'Following' : 'Follow' }}
+        </button>
+      </div>
     </div>
   </section>
 
@@ -19,7 +31,7 @@
       @for (album of albums(); track album.id) {
         <li class="album-card">
           <a [routerLink]="['/' + AppRoutes.Album, album.id]" class="album-card__link">
-            <img [alt]="album.name" [src]="album.image" class="album-card__image" />
+            <img [alt]="album.name" [src]="album.image | cover: 400" class="album-card__image" />
             <span class="album-card__name">{{ album.name }}</span>
             <span class="album-card__year">{{ album.releasedate | date: 'yyyy' }}</span>
           </a>
@@ -30,6 +42,7 @@
 
   <h2>Tracks</h2>
   <app-tracks
+    #artistTrackList
     [artistId]="artistId()"
     [order]="trackOrder.PopularityTotal"
     emptyMessage="No tracks found for this artist."

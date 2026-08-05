@@ -1,0 +1,36 @@
+<app-modal (closed)="onClose()" [title]="title()">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" class="playlist-form">
+    <label class="playlist-form__field">
+      <span class="playlist-form__label">Name</span>
+      <input
+        [maxlength]="nameMaxLength"
+        appAutofocus
+        class="playlist-form__input"
+        formControlName="name"
+        placeholder="My playlist"
+        type="text"
+      />
+    </label>
+
+    @let nameControl = form.controls.name;
+    @if (nameControl.touched && nameControl.invalid) {
+      <p class="playlist-form__error">Please enter a playlist name.</p>
+    }
+
+    <label class="playlist-form__field">
+      <span class="playlist-form__label">Description <em>(optional)</em></span>
+      <textarea
+        [maxlength]="descriptionMaxLength"
+        class="playlist-form__input playlist-form__input--area"
+        formControlName="description"
+        placeholder="Add an optional description"
+        rows="3"
+      ></textarea>
+    </label>
+
+    <div class="playlist-form__actions">
+      <button (click)="onClose()" class="playlist-form__cancel" type="button">Cancel</button>
+      <button class="playlist-form__submit" type="submit">{{ submitLabel() }}</button>
+    </div>
+  </form>
+</app-modal>

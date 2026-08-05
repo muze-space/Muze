@@ -1,0 +1,10 @@
+<app-modal (closed)="onClose()" title="Delete playlist?">
+  <p class="delete-playlist__text">
+    <strong>{{ playlistName() }}</strong> will be removed from your library. This can't be undone.
+  </p>
+
+  <div class="delete-playlist__actions">
+    <button (click)="onClose()" class="delete-playlist__cancel" type="button">Cancel</button>
+    <button (click)="onConfirm()" class="delete-playlist__confirm" type="button">Delete</button>
+  </div>
+</app-modal>

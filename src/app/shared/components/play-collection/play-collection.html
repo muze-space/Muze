@@ -1,0 +1,13 @@
+<div class="play-collection">
+  <button (click)="onPlay()" [disabled]="isDisabled()" class="play-collection__play" type="button">
+    ▶ Play
+  </button>
+  <button
+    (click)="onShuffle()"
+    [disabled]="isDisabled()"
+    class="play-collection__shuffle"
+    type="button"
+  >
+    🔀 Shuffle
+  </button>
+</div>

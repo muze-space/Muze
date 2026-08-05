@@ -1,0 +1,176 @@
+.now-playing {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  padding: 48px 24px;
+
+  background: linear-gradient(180deg, #1f1f1f 0%, var(--spotify-black) 60%);
+
+  animation: now-playing-fade-in 0.2s ease-out;
+}
+
+.now-playing__close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+
+  padding: 8px 12px;
+
+  background: transparent;
+  border: none;
+  color: var(--spotify-light-gray);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.now-playing__close:hover {
+  background: transparent;
+  color: var(--spotify-white);
+  transform: none;
+}
+
+.now-playing__art {
+  width: min(360px, 60vh);
+  height: min(360px, 60vh);
+
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
+.now-playing__meta {
+  text-align: center;
+  max-width: 640px;
+}
+
+.now-playing__title {
+  font-size: 2rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.now-playing__links {
+  margin-top: 6px;
+
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  color: var(--spotify-light-gray);
+}
+
+.now-playing__links a {
+  color: var(--spotify-light-gray);
+}
+
+.now-playing__links a:hover {
+  color: var(--spotify-white);
+  text-decoration: underline;
+}
+
+.now-playing__seek {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: min(640px, 100%);
+}
+
+.now-playing__time {
+  min-width: 40px;
+  font-size: 0.8rem;
+  color: var(--spotify-light-gray);
+  text-align: center;
+}
+
+.now-playing__range {
+  flex: 1;
+  accent-color: var(--spotify-green);
+  cursor: pointer;
+}
+
+.now-playing__controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.now-playing__btn {
+  padding: 4px 8px;
+
+  background: none;
+  border: none;
+  color: var(--spotify-light-gray);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.now-playing__btn:hover {
+  background: none;
+  color: var(--spotify-white);
+  transform: none;
+}
+
+.now-playing__btn--active,
+.now-playing__btn--active:hover {
+  color: var(--spotify-green);
+}
+
+.now-playing__btn--play {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: var(--spotify-white);
+  color: var(--spotify-black);
+  font-size: 1.2rem;
+}
+
+.now-playing__btn--play:hover {
+  background: var(--spotify-white);
+  color: var(--spotify-black);
+  transform: scale(1.05);
+}
+
+.now-playing__btn--repeat {
+  position: relative;
+}
+
+.now-playing__repeat-one {
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+@keyframes now-playing-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .now-playing {
+    animation: none;
+  }
+}

@@ -1,0 +1,38 @@
+.play-collection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.play-collection__play {
+  padding: 12px 28px;
+  font-size: 0.95rem;
+}
+
+.play-collection__shuffle {
+  padding: 11px 22px;
+
+  background: transparent;
+  border: 1px solid #4e4e4e;
+  color: var(--spotify-white);
+  font-size: 0.9rem;
+}
+
+.play-collection__shuffle:hover:not(:disabled) {
+  background: transparent;
+  border-color: var(--spotify-white);
+}
+
+.play-collection__play:disabled,
+.play-collection__shuffle:disabled {
+  background: #3e3e3e;
+  border-color: #3e3e3e;
+  color: var(--spotify-light-gray);
+  cursor: not-allowed;
+}
+
+.play-collection__play:disabled:hover,
+.play-collection__shuffle:disabled:hover {
+  transform: none;
+  background: #3e3e3e;
+}

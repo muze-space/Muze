@@ -18,7 +18,9 @@ export class ArtistService {
   private readonly _apiConfig = inject(API_CONFIG_TOKEN);
 
   getArtist(artistId: string): Observable<Artist | undefined> {
-    const params = this.buildParams(artistId, TrackImageSize.Size300);
+    // Followed artists are persisted with this URL, and the artist header
+    // renders at 200px — 400 keeps it sharp on high-DPI screens.
+    const params = this.buildParams(artistId, TrackImageSize.Size400);
 
     return this._apiService
       .get<ArtistsResponse>(`${this._apiConfig.baseUrl}${API_ENDPOINTS.artists}`, params)
@@ -26,7 +28,7 @@ export class ArtistService {
   }
 
   getArtistAlbums(artistId: string): Observable<ArtistAlbum[]> {
-    const params = this.buildParams(artistId, TrackImageSize.Size300);
+    const params = this.buildParams(artistId, TrackImageSize.Size400);
 
     return this._apiService
       .get<ArtistAlbumsResponse>(`${this._apiConfig.baseUrl}${API_ENDPOINTS.artistAlbums}`, params)

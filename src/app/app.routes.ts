@@ -31,6 +31,10 @@ export const routes: Routes = [
     component: AlbumPage,
   },
   {
+    path: `${AppRoutes.Playlist}/:id`,
+    loadComponent: () => import('./pages/playlist/playlist').then((m) => m.PlaylistPage),
+  },
+  {
     path: AppRoutes.About,
     component: AboutUs,
   },

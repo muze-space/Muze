@@ -1,0 +1,116 @@
+.card-row {
+  display: flex;
+  gap: 16px;
+
+  padding: 4px 0 12px;
+  margin: 0;
+
+  list-style: none;
+
+  /* Wide content scrolls inside the shelf, never the page. */
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+
+.card-row__item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.card-row__card {
+  width: 150px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  padding: 12px;
+
+  border: none;
+  border-radius: 8px;
+  background: var(--spotify-dark-gray);
+
+  color: var(--spotify-white);
+  font-weight: 400;
+  text-align: left;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.card-row__card:hover {
+  background: #282828;
+  transform: none;
+}
+
+.card-row__card--active .card-row__name {
+  color: var(--spotify-green);
+}
+
+.card-row__cover-wrap {
+  position: relative;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.card-row__cover {
+  width: 126px;
+  height: 126px;
+
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-row__badge {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: var(--spotify-green);
+  color: var(--spotify-black);
+  font-size: 0.75rem;
+
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card-row__card:hover .card-row__badge,
+.card-row__card--active .card-row__badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-row__name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.card-row__artist {
+  font-size: 0.8rem;
+  color: var(--spotify-light-gray);
+}
+
+.card-row__name,
+.card-row__artist {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-row__badge {
+    transition: none;
+  }
+}
