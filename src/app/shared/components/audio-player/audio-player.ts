@@ -9,6 +9,7 @@ import {
   untracked,
   viewChild,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PlayerService } from '../../../core/services/player.service';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { CoverPipe } from '../../pipes/cover.pipe';
@@ -17,6 +18,7 @@ import { QueuePanel } from '../queue-panel/queue-panel';
 import { NowPlaying } from '../now-playing/now-playing';
 import { resizeCover } from '../../utils/cover-url';
 import { Icon, IconName } from '../icon/icon';
+import { AppRoutes } from '../../../core/enums/app-routes.enum';
 
 const VOLUME_STEP = 0.1;
 const MEDIA_SESSION_ARTWORK_SIZE = 500;
@@ -24,12 +26,13 @@ const MEDIA_SESSION_ARTWORK_SIZE = 500;
 @Component({
   selector: 'app-audio-player',
   standalone: true,
-  imports: [DurationPipe, CoverPipe, QueuePanel, NowPlaying, Icon],
+  imports: [DurationPipe, CoverPipe, QueuePanel, NowPlaying, Icon, RouterLink],
   templateUrl: './audio-player.html',
   styleUrl: './audio-player.css',
 })
 export class AudioPlayer {
   protected readonly RepeatMode = RepeatMode;
+  protected readonly AppRoutes = AppRoutes;
   private readonly playerService = inject(PlayerService);
   readonly currentTrack = this.playerService.currentTrack;
   readonly isPlaying = this.playerService.isPlaying;

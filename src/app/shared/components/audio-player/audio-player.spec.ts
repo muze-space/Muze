@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { AudioPlayer } from './audio-player';
 import { PlayerService } from '../../../core/services/player.service';
@@ -40,6 +41,7 @@ describe('AudioPlayer', () => {
 
     await TestBed.configureTestingModule({
       imports: [AudioPlayer],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AudioPlayer);
@@ -56,6 +58,15 @@ describe('AudioPlayer', () => {
     fixture.detectChanges();
     const playerBar = fixture.nativeElement.querySelector('.player-bar');
     expect(playerBar).toBeFalsy();
+  });
+
+  it('links the artist name to the artist page', () => {
+    playerService.play(makeTrack());
+    fixture.detectChanges();
+
+    const link: HTMLAnchorElement = fixture.nativeElement.querySelector('.player-bar__artist');
+
+    expect(link.getAttribute('href')).toBe('/artist/artist-1');
   });
 
   it('renders the audio element once a track is playing', () => {

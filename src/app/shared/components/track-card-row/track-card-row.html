@@ -1,22 +1,25 @@
 <ul class="card-row">
   @for (track of tracks(); track track.id) {
     <li class="card-row__item">
-      <button
-        (click)="onPlay(track)"
-        [attr.aria-label]="'Play ' + track.name + ' by ' + track.artist_name"
-        [class.card-row__card--active]="currentTrack()?.id === track.id"
-        class="card-row__card"
-        type="button"
-      >
-        <span class="card-row__cover-wrap">
-          <img [alt]="track.album_name" [src]="track.album_image | cover: 300" class="card-row__cover" />
-          <span aria-hidden="true" class="card-row__badge">
-            {{ currentTrack()?.id === track.id && isPlaying() ? '⏸' : '▶' }}
+      <div [class.card-row__card--active]="currentTrack()?.id === track.id" class="card-row__card">
+        <button
+          (click)="onPlay(track)"
+          [attr.aria-label]="'Play ' + track.name + ' by ' + track.artist_name"
+          class="card-row__play"
+          type="button"
+        >
+          <span class="card-row__cover-wrap">
+            <img [alt]="track.album_name" [src]="track.album_image | cover: 300" class="card-row__cover" />
+            <span aria-hidden="true" class="card-row__badge">
+              <app-icon [name]="currentTrack()?.id === track.id && isPlaying() ? 'pause' : 'play'"></app-icon>
+            </span>
           </span>
-        </span>
-        <span class="card-row__name">{{ track.name }}</span>
-        <span class="card-row__artist">{{ track.artist_name }}</span>
-      </button>
+          <span class="card-row__name">{{ track.name }}</span>
+        </button>
+        <a [routerLink]="['/' + AppRoutes.Artist, track.artist_id]" class="card-row__artist">{{
+          track.artist_name
+        }}</a>
+      </div>
     </li>
   }
 </ul>

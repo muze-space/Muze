@@ -65,9 +65,15 @@
 .player-bar__artist {
   color: var(--spotify-light-gray);
   font-size: 0.85rem;
+  text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.player-bar__artist:hover {
+  color: var(--spotify-white);
+  text-decoration: underline;
 }
 
 .player-bar__center {

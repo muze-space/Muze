@@ -25,7 +25,9 @@
       </button>
       <div class="player-bar__info">
         <span class="player-bar__title">{{ track.name }}</span>
-        <span class="player-bar__artist">{{ track.artist_name }}</span>
+        <a [routerLink]="['/' + AppRoutes.Artist, track.artist_id]" class="player-bar__artist">{{
+          track.artist_name
+        }}</a>
       </div>
     </div>
 
