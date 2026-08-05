@@ -58,6 +58,31 @@ describe('TrackItem', () => {
     expect(TestBed.inject(PlayerService).currentTrack()?.id).toBe('a');
   });
 
+  it('plays the track from anywhere on the row', () => {
+    fixture.nativeElement.querySelector('.title').click();
+
+    expect(TestBed.inject(PlayerService).currentTrack()?.id).toBe('a');
+  });
+
+  it('leaves the track alone when the row is clicked through a nested control', () => {
+    TestBed.inject(AuthService).login();
+
+    likeButton().click();
+    fixture.nativeElement.querySelector('.track-menu__btn').click();
+
+    expect(TestBed.inject(PlayerService).currentTrack()).toBeNull();
+  });
+
+  it('toggles once when the play button is clicked', () => {
+    playButton().click();
+    fixture.detectChanges();
+    playButton().click();
+    fixture.detectChanges();
+
+    expect(TestBed.inject(PlayerService).isPlaying()).toBe(false);
+    expect(TestBed.inject(PlayerService).currentTrack()?.id).toBe('a');
+  });
+
   it('reflects the playing state on that same control', () => {
     playButton().click();
     fixture.detectChanges();

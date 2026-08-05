@@ -1,6 +1,11 @@
-<li [class.active]="isCurrentTrack()" [class.playing]="isPlaying()" class="row">
+<li
+  (click)="onTrackClick()"
+  [class.active]="isCurrentTrack()"
+  [class.playing]="isPlaying()"
+  class="row"
+>
   <button
-    (click)="onTrackClick()"
+    (click)="onPlayButtonClick($event)"
     [attr.aria-label]="playLabel()"
     [attr.aria-pressed]="isPlaying()"
     class="play-btn"
@@ -28,6 +33,7 @@
   <span class="release-date">{{ track().releasedate | date: 'yyyy' }}</span>
   <span class="duration">{{ track().duration | duration }}</span>
   <app-track-menu
+    (click)="$event.stopPropagation()"
     (removeRequested)="onRemoveRequested($event)"
     [removable]="removable()"
     [track]="track()"

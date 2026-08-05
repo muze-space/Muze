@@ -48,6 +48,11 @@ export class TrackItem {
     this.playerService.toggle(this.track(), this.queue());
   }
 
+  onPlayButtonClick(event: Event) {
+    event.stopPropagation();
+    this.onTrackClick();
+  }
+
   onLikeClick(event: Event) {
     event.stopPropagation();
 
