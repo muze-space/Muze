@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TeamMember } from '../../core/models/team-member.model';
-import { Feedback } from '../feedback/feedback.component';
+import { Feedback } from '../../feature/feedback/feedback';
 
 @Component({
   selector: 'app-about-us',

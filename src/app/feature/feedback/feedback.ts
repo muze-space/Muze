@@ -8,8 +8,8 @@ const SUCCESS_MESSAGE_MS = 5000;
 @Component({
   selector: 'app-feedback',
   imports: [ReactiveFormsModule],
-  templateUrl: './feedback.component.html',
-  styleUrl: './feedback.component.css',
+  templateUrl: './feedback.html',
+  styleUrl: './feedback.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Feedback {
