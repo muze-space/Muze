@@ -11,14 +11,15 @@
   </button>
 
   @if (isOpen()) {
-    <ul
-      [class.track-menu__list--down]="opensDownward()"
-      class="track-menu__list"
-      role="menu"
-    >
+    <ul [class.track-menu__list--down]="opensDownward()" class="track-menu__list" role="menu">
       @if (view() === 'root') {
         <li role="none">
-          <button (click)="onShowPlaylists()" class="track-menu__item" role="menuitem" type="button">
+          <button
+            (click)="onShowPlaylists()"
+            class="track-menu__item"
+            role="menuitem"
+            type="button"
+          >
             <span>Add to playlist</span>
             <span aria-hidden="true">›</span>
           </button>
@@ -64,7 +65,12 @@
         }
       } @else {
         <li role="none">
-          <button (click)="onBack()" class="track-menu__item track-menu__item--back" role="menuitem" type="button">
+          <button
+            (click)="onBack()"
+            class="track-menu__item track-menu__item--back"
+            role="menuitem"
+            type="button"
+          >
             <span aria-hidden="true">‹</span>
             <span>Add to playlist</span>
           </button>

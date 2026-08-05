@@ -11,9 +11,7 @@ export class PlayerService {
 
   private readonly _currentIndex = signal<number>(-1);
   readonly currentIndex = this._currentIndex.asReadonly();
-  readonly currentTrack = computed<Track | null>(
-    () => this._queue()[this._currentIndex()] ?? null,
-  );
+  readonly currentTrack = computed<Track | null>(() => this._queue()[this._currentIndex()] ?? null);
   readonly upNext = computed(() => this._queue().slice(this._currentIndex() + 1));
 
   readonly isPlaying = signal<boolean>(false);

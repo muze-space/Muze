@@ -74,7 +74,9 @@ describe('ArtistService', () => {
     };
     req.flush(response);
 
-    expect(result).toEqual([{ id: 'album-1', name: 'Album', releasedate: '2024-01-01', image: '' }]);
+    expect(result).toEqual([
+      { id: 'album-1', name: 'Album', releasedate: '2024-01-01', image: '' },
+    ]);
   });
 
   it('getArtistAlbums() returns an empty array when there are no results', () => {

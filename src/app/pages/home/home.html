@@ -8,7 +8,14 @@
 <app-tracks [order]="trackOrder.ReleaseDateDesc"></app-tracks>
 <h2>Genre Tags</h2>
 <ul class="genres">
-  @for(genre of genres; track genre.value) {
-  <app-genre-item [genreLabel]="genre.label" (click)=onGenreClick(genre.value) (keydown.enter)="onGenreClick(genre.value)" (keydown.space)="$event.preventDefault(); onGenreClick(genre.value)" role="button" tabindex="0"></app-genre-item>
+  @for (genre of genres; track genre.value) {
+    <app-genre-item
+      [genreLabel]="genre.label"
+      (click)="onGenreClick(genre.value)"
+      (keydown.enter)="onGenreClick(genre.value)"
+      (keydown.space)="$event.preventDefault(); onGenreClick(genre.value)"
+      role="button"
+      tabindex="0"
+    ></app-genre-item>
   }
 </ul>

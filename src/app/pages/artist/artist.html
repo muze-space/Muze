@@ -6,7 +6,11 @@
   <div class="error-message" role="alert">{{ error() }}</div>
 } @else if (artist(); as currentArtist) {
   <section class="artist-header">
-    <img [alt]="currentArtist.name" [src]="currentArtist.image | cover: 400" class="artist-header__image" />
+    <img
+      [alt]="currentArtist.name"
+      [src]="currentArtist.image | cover: 400"
+      class="artist-header__image"
+    />
     <div class="artist-header__info">
       <span class="artist-header__label">Artist</span>
       <h1 class="artist-header__name">{{ currentArtist.name }}</h1>

@@ -52,7 +52,11 @@
             <li>
               <a [routerLink]="['/' + AppRoutes.Artist, artist.id]" class="library__card">
                 <span class="library__card-cover library__card-cover--round">
-                  <img [alt]="artist.name" [src]="artist.image | cover: 300" class="library__card-image" />
+                  <img
+                    [alt]="artist.name"
+                    [src]="artist.image | cover: 300"
+                    class="library__card-image"
+                  />
                 </span>
                 <span class="library__card-name">{{ artist.name }}</span>
                 <span class="library__card-meta">Artist</span>
@@ -79,8 +83,17 @@
       } @else {
         <div class="library__empty">
           <div class="library__empty-icon">
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" />
+            <svg
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"
+              />
             </svg>
           </div>
           <h2>Saved tracks will show up here</h2>

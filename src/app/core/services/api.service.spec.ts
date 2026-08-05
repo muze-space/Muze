@@ -64,11 +64,15 @@ describe('ApiService', () => {
   it('post() returns the response body on success', () => {
     let result: { ok: boolean } | undefined;
 
-    service.post<{ id: string }, { ok: boolean }>('https://example.com/api', { id: '1' }, new HttpParams()).subscribe(
-      (res) => {
+    service
+      .post<{ id: string }, { ok: boolean }>(
+        'https://example.com/api',
+        { id: '1' },
+        new HttpParams(),
+      )
+      .subscribe((res) => {
         result = res;
-      },
-    );
+      });
 
     const req = httpMock.expectOne('https://example.com/api');
     expect(req.request.method).toBe('POST');

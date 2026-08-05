@@ -26,7 +26,7 @@ import { DeletePlaylistModal } from './feature/playlist/delete-playlist-modal/de
     DeletePlaylistModal,
   ],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('muze');

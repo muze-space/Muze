@@ -111,7 +111,9 @@ describe('TracksService', () => {
     const firstReq = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
     firstReq.flush(emptyResponse());
 
-    const secondReq = await vi.waitFor(() => httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`));
+    const secondReq = await vi.waitFor(() =>
+      httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`),
+    );
     secondReq.flush(nonEmptyResponse());
 
     expect(result?.results.length).toBe(1);
@@ -124,7 +126,9 @@ describe('TracksService', () => {
     const firstReq = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
     firstReq.flush(emptyResponse());
 
-    const secondReq = await vi.waitFor(() => httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`));
+    const secondReq = await vi.waitFor(() =>
+      httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`),
+    );
     secondReq.flush(nonEmptyResponse());
 
     expect(result?.results.length).toBe(1);

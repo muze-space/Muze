@@ -31,7 +31,9 @@ describe('CoverPipe', () => {
   });
 
   it('scales down as well as up', () => {
-    expect(widthOf(pipe.transform(JAMENDO_COVER.replace('width=50', 'width=600'), 100))).toBe('100');
+    expect(widthOf(pipe.transform(JAMENDO_COVER.replace('width=50', 'width=600'), 100))).toBe(
+      '100',
+    );
   });
 
   it('returns an empty string for a missing URL', () => {

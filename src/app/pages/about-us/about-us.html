@@ -3,15 +3,15 @@
 
   <div class="cards">
     @for (member of teamMembers; track member.githubUrl) {
-    <div class="member-card">
-      <img class="photo" [src]="member.photoUrl" [alt]="member.name" loading="lazy" />
-      <h2 class="name">{{ member.name }}</h2>
-      <p class="role">{{ member.role }}</p>
-      <p class="bio">{{ member.bio }}</p>
-      <a class="link" [href]="member.githubUrl" target="_blank" rel="noopener noreferrer">
-        GitHub Profile
-      </a>
-    </div>
+      <div class="member-card">
+        <img class="photo" [src]="member.photoUrl" [alt]="member.name" loading="lazy" />
+        <h2 class="name">{{ member.name }}</h2>
+        <p class="role">{{ member.role }}</p>
+        <p class="bio">{{ member.bio }}</p>
+        <a class="link" [href]="member.githubUrl" target="_blank" rel="noopener noreferrer">
+          GitHub Profile
+        </a>
+      </div>
     }
   </div>
 

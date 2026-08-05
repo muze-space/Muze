@@ -32,4 +32,3 @@ describe('AboutUs', () => {
     expect(content).toBeTruthy();
   });
 });
-

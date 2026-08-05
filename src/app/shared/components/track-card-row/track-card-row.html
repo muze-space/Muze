@@ -9,9 +9,15 @@
           type="button"
         >
           <span class="card-row__cover-wrap">
-            <img [alt]="track.album_name" [src]="track.album_image | cover: 300" class="card-row__cover" />
+            <img
+              [alt]="track.album_name"
+              [src]="track.album_image | cover: 300"
+              class="card-row__cover"
+            />
             <span aria-hidden="true" class="card-row__badge">
-              <app-icon [name]="currentTrack()?.id === track.id && isPlaying() ? 'pause' : 'play'"></app-icon>
+              <app-icon
+                [name]="currentTrack()?.id === track.id && isPlaying() ? 'pause' : 'play'"
+              ></app-icon>
             </span>
           </span>
           <span class="card-row__name">{{ track.name }}</span>

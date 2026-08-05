@@ -46,7 +46,10 @@ export class TracksService {
     }
 
     return this.retryOnEmptyResults(() =>
-      this._apiService.get<TracksResponse>(`${this._apiConfig.baseUrl}${API_ENDPOINTS.tracks}`, params),
+      this._apiService.get<TracksResponse>(
+        `${this._apiConfig.baseUrl}${API_ENDPOINTS.tracks}`,
+        params,
+      ),
     );
   }
 

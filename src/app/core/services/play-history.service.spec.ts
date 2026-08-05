@@ -80,7 +80,11 @@ describe('PlayHistoryService', () => {
   it('persists across instances and clear() empties it', () => {
     service.add(makeTrack('a'));
 
-    expect(createService().history().map((track) => track.id)).toEqual(['a']);
+    expect(
+      createService()
+        .history()
+        .map((track) => track.id),
+    ).toEqual(['a']);
 
     service.clear();
     expect(createService().history()).toEqual([]);

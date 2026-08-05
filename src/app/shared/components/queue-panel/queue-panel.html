@@ -4,7 +4,9 @@
       <h2 class="queue__title">Queue</h2>
       <div class="queue__header-actions">
         <button (click)="onClear()" class="queue__text-btn" type="button">Clear</button>
-        <button (click)="onClose()" aria-label="Close queue" class="queue__close" type="button">✕</button>
+        <button (click)="onClose()" aria-label="Close queue" class="queue__close" type="button">
+          ✕
+        </button>
       </div>
     </header>
 
@@ -39,7 +41,11 @@
               class="queue__play"
               type="button"
             >
-              <img [alt]="track.album_name" [src]="track.album_image | cover: 100" class="queue__cover" />
+              <img
+                [alt]="track.album_name"
+                [src]="track.album_image | cover: 100"
+                class="queue__cover"
+              />
               <span class="queue__info">
                 <span class="queue__name">{{ track.name }}</span>
                 <span class="queue__artist">{{ track.artist_name }}</span>
