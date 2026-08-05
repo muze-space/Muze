@@ -14,22 +14,11 @@ function makeTrack(id: string): Track {
     duration: 100,
     artist_id: 'artist-1',
     artist_name: 'Artist',
-    artist_idstr: '',
     album_name: 'Album',
     album_id: 'album-1',
-    license_ccurl: '',
-    position: 0,
     releasedate: '2024-01-01',
     album_image: '',
     audio: '',
-    audiodownload: '',
-    prourl: '',
-    shorturl: '',
-    shareurl: '',
-    waveform: '',
-    image: '',
-    audiodownload_allowed: false,
-    content_id_free: false,
   };
 }
 

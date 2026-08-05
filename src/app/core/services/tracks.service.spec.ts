@@ -7,6 +7,7 @@ import { API_CONFIG_TOKEN } from '../tokens/api-config.token';
 import { TrackOrder } from '../enums/track-order.enum';
 import { TrackImageSize } from '../enums/track-image-size.enum';
 import { TracksResponse } from '../models/tracks-response.model';
+import { Track } from '../models/track.model';
 
 const BASE_URL = 'https://api.jamendo.com/v3.0/';
 
@@ -132,5 +133,45 @@ describe('TracksService', () => {
     secondReq.flush(nonEmptyResponse());
 
     expect(result?.results.length).toBe(1);
+  });
+
+  it('keeps only the fields the app uses so storage stays small', () => {
+    let received: Track[] = [];
+    service.getTracks({}).subscribe((response) => (received = response.results));
+
+    const req = httpMock.expectOne((r) => r.url === `${BASE_URL}tracks/`);
+    req.flush({
+      headers: {},
+      results: [
+        {
+          id: '1',
+          name: 'Track',
+          duration: 100,
+          artist_id: 'a1',
+          artist_name: 'Artist',
+          album_name: 'Album',
+          album_id: 'al1',
+          album_image: 'cover.jpg',
+          releasedate: '2024-01-01',
+          audio: 'audio.mp3',
+          waveform: '{"peaks":[1,2,3]}',
+          shareurl: 'https://example.com/share',
+          audiodownload: 'https://example.com/download',
+        },
+      ],
+    });
+
+    expect(Object.keys(received[0]).sort()).toEqual([
+      'album_id',
+      'album_image',
+      'album_name',
+      'artist_id',
+      'artist_name',
+      'audio',
+      'duration',
+      'id',
+      'name',
+      'releasedate',
+    ]);
   });
 });

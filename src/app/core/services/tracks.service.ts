@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, of, switchMap, timer } from 'rxjs';
+import { map, Observable, of, switchMap, timer } from 'rxjs';
 import { ApiService } from './api.service';
 import { TracksResponse } from '../models/tracks-response.model';
+import { Track } from '../models/track.model';
 import { HttpParams } from '@angular/common/http';
 import { ApiResponseFormat } from '../enums/api-response-format.enum';
 import { TrackOrder } from '../enums/track-order.enum';
@@ -46,10 +47,9 @@ export class TracksService {
     }
 
     return this.retryOnEmptyResults(() =>
-      this._apiService.get<TracksResponse>(
-        `${this._apiConfig.baseUrl}${API_ENDPOINTS.tracks}`,
-        params,
-      ),
+      this._apiService
+        .get<TracksResponse>(`${this._apiConfig.baseUrl}${API_ENDPOINTS.tracks}`, params)
+        .pipe(map((response) => ({ ...response, results: response.results.map(toTrack) }))),
     );
   }
 
@@ -67,6 +67,21 @@ export class TracksService {
       ),
     );
   }
+}
+
+function toTrack(raw: Track): Track {
+  return {
+    id: raw.id,
+    name: raw.name,
+    duration: raw.duration,
+    artist_id: raw.artist_id,
+    artist_name: raw.artist_name,
+    album_name: raw.album_name,
+    album_id: raw.album_id,
+    album_image: raw.album_image,
+    releasedate: raw.releasedate,
+    audio: raw.audio,
+  };
 }
 
 export interface TrackRequestOption {
