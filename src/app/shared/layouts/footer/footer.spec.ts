@@ -1,34 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Footer } from './footer';
 
 describe('Footer', () => {
-  let component: Footer;
   let fixture: ComponentFixture<Footer>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Footer],
-    }).compileComponents();
-
+  beforeEach(() => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [Footer] });
     fixture = TestBed.createComponent(Footer);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should render footer element', () => {
     fixture.detectChanges();
-    const footerElement = fixture.nativeElement.querySelector('footer');
-    expect(footerElement).toBeTruthy();
   });
 
-  it('should render copyright text', () => {
-    fixture.detectChanges();
-    const footerText = fixture.nativeElement.textContent;
-    expect(footerText).toBeTruthy();
+  it('renders the copyright line inside a footer landmark', () => {
+    const footer: HTMLElement = fixture.nativeElement.querySelector('footer');
+
+    expect(footer).toBeTruthy();
+    expect(footer.textContent).toContain('Muze');
   });
 });

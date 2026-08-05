@@ -1,42 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
-
 import { GenreItem } from './genre-item';
 
-@Component({
-  selector: 'app-test-genre-host',
-  template: `<app-genre-item [genreLabel]="'Rock'"></app-genre-item>`,
-  imports: [GenreItem],
-})
-class TestGenreHostComponent {}
-
 describe('GenreItem', () => {
-  let component: GenreItem;
-  let fixture: ComponentFixture<TestGenreHostComponent>;
+  let fixture: ComponentFixture<GenreItem>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestGenreHostComponent, GenreItem],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(TestGenreHostComponent);
-    component = fixture.debugElement.query((el) => el.name === 'app-genre-item').componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should render genre item', () => {
+  beforeEach(() => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [GenreItem] });
+    fixture = TestBed.createComponent(GenreItem);
+    fixture.componentRef.setInput('genreLabel', 'Rock');
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled).toBeTruthy();
   });
 
-  it('should be a list item', () => {
+  it('renders the label it is given', () => {
+    expect(fixture.nativeElement.querySelector('li').textContent.trim()).toBe('Rock');
+  });
+
+  it('follows the label when it changes', () => {
+    fixture.componentRef.setInput('genreLabel', 'Jazz');
     fixture.detectChanges();
-    const liElement = fixture.nativeElement.querySelector('li');
-    expect(liElement).toBeTruthy();
+
+    expect(fixture.nativeElement.querySelector('li').textContent.trim()).toBe('Jazz');
   });
 });

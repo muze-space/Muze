@@ -1,34 +1,45 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { Login } from './login';
+import { AuthService } from '../../../core/services/auth.service';
+import { ModalService } from '../../../core/services/modal.service';
 
 describe('Login', () => {
-  let component: Login;
   let fixture: ComponentFixture<Login>;
+  let auth: AuthService;
+  let modalService: ModalService;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Login],
-    }).compileComponents();
-
+  beforeEach(() => {
+    localStorage.clear();
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({ imports: [Login] });
     fixture = TestBed.createComponent(Login);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should render login form', () => {
+    auth = TestBed.inject(AuthService);
+    modalService = TestBed.inject(ModalService);
+    modalService.openLogin();
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled).toBeTruthy();
   });
 
-  it('should compile without errors', () => {
-    expect(() => {
-      fixture.detectChanges();
-    }).not.toThrow();
+  it('signs the user in and closes itself', () => {
+    fixture.nativeElement.querySelector('.login-btn').click();
+
+    expect(auth.isAuthenticated()).toBe(true);
+    expect(modalService.isLoginOpen()).toBe(false);
+  });
+
+  it('closes without signing in from the close button', () => {
+    fixture.nativeElement.querySelector('.close-btn').click();
+
+    expect(auth.isAuthenticated()).toBe(false);
+    expect(modalService.isLoginOpen()).toBe(false);
+  });
+
+  it('closes on escape', () => {
+    document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' }));
+
+    expect(modalService.isLoginOpen()).toBe(false);
+  });
+
+  it('does not name a provider the app cannot actually use', () => {
+    expect(fixture.nativeElement.textContent).not.toContain('Jamendo');
   });
 });
